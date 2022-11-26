@@ -3,14 +3,19 @@ edition = "2021"
 name = "lebai-sdk"
 version = "0.1.0"
 
+[workspace]
+members = [
+  "proto",
+]
+
 [lib]
 crate-type = ["cdylib"]
 name = "lebai_sdk"
 
 [features]
 default = []
-ffi_lua = ["mlua"]
-ffi_py = ["pyo3"]
+ffi_lua = ["cmod/ffi_lua", "mlua"]
+ffi_py = ["cmod/ffi_py", "pyo3"]
 
 [dependencies]
 cmod = {version = "0"}
@@ -19,6 +24,7 @@ jsonrpsee-core = {version = "0.16.0", features = ["async-client"]}
 jsonrpsee-ws-client = {version = "0.16.0"}
 mlua = {version = "0.8", features = ["lua54"], optional = true}
 once_cell = "1"
+proto = {package = "lebai-proto", path = "proto"}
 pyo3 = {version = "0.17", features = ["abi3-py37"], optional = true}
 serde = {version = "1", features = ["derive"]}
 serde_json = "1"

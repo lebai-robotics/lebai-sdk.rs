@@ -45,11 +45,13 @@ pub mod lebai_sdk {
         }
 
         #[classmethod]
-        pub async fn movej(&self, p: rpc::motion::Pose, v: f64, a: f64, t: f64, r: Option<f64>) -> Result<u32> {
+        #[cmod::tags(args(p))]
+        pub async fn movej(&self, p: proto::posture::Pose, a: f64, v: f64, t: f64, r: Option<f64>) -> Result<u32> {
             self.0.movej(p, v, a, t, r).await
         }
         #[classmethod]
-        pub async fn movel(&self, p: rpc::motion::Pose, v: f64, a: f64, t: f64, r: Option<f64>) -> Result<u32> {
+        #[cmod::tags(args(p))]
+        pub async fn movel(&self, p: proto::posture::Pose, a: f64, v: f64, t: f64, r: Option<f64>) -> Result<u32> {
             self.0.movel(p, v, a, t, r).await
         }
     }
