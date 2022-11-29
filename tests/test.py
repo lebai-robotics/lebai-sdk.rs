@@ -2,38 +2,20 @@ import lebai_sdk
 lebai = lebai_sdk.connect("192.168.2.1", True)
 
 # start_sys
-lebai.call("start_sys", {})
+lebai.call("start_sys", "{}")
 
-# get_speed_factor
-kin_factor = lebai.call("get_kin_factor", {})
-print(kin_factor)
-print(kin_factor['speed_factor'])
+jPose_1 = {"j1":0,"j2":-0.7854,"j3":1.57,"j4":-0.7854,"j5":1.57,"j6":0}
+cPose_1 = [-0.565,-0.12,0.13,-1.57,0,1.57]
+jPose_2 = {"j1":0,"j2":-0.566,"j3":1.12,"j4":-0.55,"j5":1.57,"j6":0}
+cPose_2 = [-0.64,-0.12,0.13,-1.57,0,1.5]
 
-# load_pose
-lebai.call("save_pose", {
-    "name": "home",
-    "data": {"joint":{
-        "base":{
-            "kind":"CURRENT"
-        },
-        "delta":{"joint":[-0.1,-0.1,-0.1,-0.1,-0.1,-0.1]},
-    }},
-})
-p_home = lebai.call("load_pose", {"name": "home"})
-print(p_home)
+lebai.movej(jPose_1, 0, 0, 3)
+lebai.movel(cPose_2, 0, 0, 3)
 
-# move_joint
-lebai.call("move_joint", {
-    "pose": p_home,
-    "param":{"velocity":0.2}
-})
+lebai.movej(cPose_1, 0, 0, 3)
+lebai.movel(jPose_2, 0, 0, 3)
 
-# sub_robot_state
-sub_robot_state = lebai.subscribe("robot_state", {
-    "interval_min":20,
-    "interval_max":10000
-})
-data = sub_robot_state.next()
-while data != None:
-    print(data)
-    data = sub_robot_state.next()
+print(lebai.kinematics_forward(jPose_1))
+print(lebai.kinematics_inverse(cPose_1, None))
+print(lebai.kinematics_inverse(jPose_2, None))
+print(lebai.kinematics_forward(cPose_2))

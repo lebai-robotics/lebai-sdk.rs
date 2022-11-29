@@ -18,6 +18,7 @@ static RT: Lazy<Runtime> = Lazy::new(|| {
 pub mod lebai_sdk {
     use super::*;
     use cmod::Result;
+    use proto::posture::{JointPose, Pose};
 
     #[cmod::function]
     pub fn version() -> Result<String> {
@@ -46,12 +47,28 @@ pub mod lebai_sdk {
 
         #[classmethod]
         #[cmod::tags(args(p))]
-        pub async fn movej(&self, p: proto::posture::Pose, a: f64, v: f64, t: f64, r: Option<f64>) -> Result<u32> {
+        pub async fn kinematics_forward(&self, p: Pose) -> Result<Vec<f64>> {
+            self.0.kinematics_forward(p).await
+        }
+        #[classmethod]
+        #[cmod::tags(args(p, refer), ret)]
+        pub async fn kinematics_inverse(&self, p: Pose, refer: Option<JointPose>) -> Result<JointPose> {
+            self.0.kinematics_inverse(p, refer).await
+        }
+        #[classmethod]
+        #[cmod::tags(ret)]
+        pub async fn load_pose(&self, name: String, dir: Option<String>) -> Result<Pose> {
+            self.0.load_pose(name, dir).await
+        }
+
+        #[classmethod]
+        #[cmod::tags(args(p))]
+        pub async fn movej(&self, p: Pose, a: f64, v: f64, t: f64, r: Option<f64>) -> Result<u32> {
             self.0.movej(p, v, a, t, r).await
         }
         #[classmethod]
         #[cmod::tags(args(p))]
-        pub async fn movel(&self, p: proto::posture::Pose, a: f64, v: f64, t: f64, r: Option<f64>) -> Result<u32> {
+        pub async fn movel(&self, p: Pose, a: f64, v: f64, t: f64, r: Option<f64>) -> Result<u32> {
             self.0.movel(p, v, a, t, r).await
         }
     }

@@ -23,6 +23,20 @@ impl From<JointPose> for posture::JointPose {
         Self { joint: ret }
     }
 }
+impl From<posture::JointPose> for JointPose {
+    fn from(p: posture::JointPose) -> Self {
+        let j = p.joint;
+        Self {
+            j1: j.get(0).copied().unwrap_or_default(),
+            j2: j.get(1).copied().unwrap_or_default(),
+            j3: j.get(2).copied().unwrap_or_default(),
+            j4: j.get(3).copied().unwrap_or_default(),
+            j5: j.get(4).copied().unwrap_or_default(),
+            j6: j.get(5).copied(),
+            j7: j.get(6).copied(),
+        }
+    }
+}
 
 impl From<Vec<f64>> for posture::CartesianPose {
     fn from(cart: Vec<f64>) -> Self {

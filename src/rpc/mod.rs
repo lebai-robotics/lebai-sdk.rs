@@ -1,4 +1,5 @@
 pub mod motion;
+pub mod posture;
 
 use crate::RT;
 use cmod::Result;
