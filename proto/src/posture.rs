@@ -38,8 +38,11 @@ impl From<posture::JointPose> for JointPose {
     }
 }
 
-impl From<Vec<f64>> for posture::CartesianPose {
-    fn from(cart: Vec<f64>) -> Self {
+#[derive(Serialize, Deserialize)]
+pub struct CartesianPose(pub Vec<f64>);
+impl From<CartesianPose> for posture::CartesianPose {
+    fn from(cart: CartesianPose) -> Self {
+        let cart = cart.0;
         let position = posture::Position {
             x: cart.get(0).copied().unwrap_or_default(),
             y: cart.get(1).copied().unwrap_or_default(),
@@ -60,11 +63,11 @@ impl From<Vec<f64>> for posture::CartesianPose {
         }
     }
 }
-impl From<posture::CartesianPose> for Vec<f64> {
+impl From<posture::CartesianPose> for CartesianPose {
     fn from(item: posture::CartesianPose) -> Self {
         let pos = item.position.unwrap_or_default();
         let rot = item.rotation.unwrap_or_default().euler_zyx.unwrap_or_default();
-        vec![pos.x, pos.y, pos.z, rot.z, rot.y, rot.x]
+        CartesianPose(vec![pos.x, pos.y, pos.z, rot.z, rot.y, rot.x])
     }
 }
 
@@ -72,7 +75,7 @@ impl From<posture::CartesianPose> for Vec<f64> {
 #[serde(untagged)]
 pub enum Pose {
     Joint(JointPose),
-    Cart(Vec<f64>),
+    Cart(CartesianPose),
 }
 impl From<Pose> for posture::Pose {
     fn from(p: Pose) -> Self {

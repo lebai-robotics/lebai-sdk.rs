@@ -18,7 +18,7 @@ static RT: Lazy<Runtime> = Lazy::new(|| {
 pub mod lebai_sdk {
     use super::*;
     use cmod::Result;
-    use proto::posture::{JointPose, Pose};
+    use proto::posture::{CartesianPose, JointPose, Pose};
 
     #[cmod::function]
     pub fn version() -> Result<String> {
@@ -46,8 +46,8 @@ pub mod lebai_sdk {
         }
 
         #[classmethod]
-        #[cmod::tags(args(p))]
-        pub async fn kinematics_forward(&self, p: Pose) -> Result<Vec<f64>> {
+        #[cmod::tags(args(p), ret)]
+        pub async fn kinematics_forward(&self, p: Pose) -> Result<CartesianPose> {
             self.0.kinematics_forward(p).await
         }
         #[classmethod]
@@ -56,9 +56,24 @@ pub mod lebai_sdk {
             self.0.kinematics_inverse(p, refer).await
         }
         #[classmethod]
+        #[cmod::tags(args(from, to), ret)]
+        pub async fn pose_trans(&self, from: Pose, to: Pose) -> Result<CartesianPose> {
+            self.0.pose_trans(from, to).await
+        }
+        #[classmethod]
+        #[cmod::tags(args(p), ret)]
+        pub async fn pose_inverse(&self, p: Pose) -> Result<CartesianPose> {
+            self.0.pose_inverse(p).await
+        }
+        #[classmethod]
         #[cmod::tags(ret)]
         pub async fn load_pose(&self, name: String, dir: Option<String>) -> Result<Pose> {
             self.0.load_pose(name, dir).await
+        }
+        #[classmethod]
+        #[cmod::tags(ret)]
+        pub async fn load_frame(&self, name: String, dir: Option<String>) -> Result<CartesianPose> {
+            self.0.load_frame(name, dir).await
         }
 
         #[classmethod]
