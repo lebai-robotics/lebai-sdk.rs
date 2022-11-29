@@ -36,7 +36,7 @@ fn main() -> io::Result<()> {
 
     tonic_build::configure()
         .build_client(false)
-        .build_server(true)
+        .build_server(false)
         .file_descriptor_set_path(&descriptor_path)
         .compile_well_known_types(true)
         .extern_path(".google.protobuf", "::pbjson_types")

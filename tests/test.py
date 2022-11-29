@@ -16,6 +16,6 @@ lebai.movej(cPose_1, 0, 0, 3)
 lebai.movel(jPose_2, 0, 0, 3)
 
 print(lebai.kinematics_forward(jPose_1))
-print(lebai.kinematics_inverse(cPose_1, None))
-print(lebai.kinematics_inverse(jPose_2, None))
+print(lebai.kinematics_inverse(cPose_1))
+print(lebai.kinematics_inverse(jPose_2))
 print(lebai.kinematics_forward(cPose_2))
