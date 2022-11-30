@@ -5,7 +5,7 @@ use futures_util::future::{select, Either};
 use mdns_sd::{ServiceDaemon, ServiceEvent};
 use proto::lebai::multi_devices::DeviceInfo;
 
-const SERVICE_NAME: &'static str = "_lebai._tcp.local";
+const SERVICE_NAME: &'static str = "_lebai._tcp.local.";
 
 pub async fn discover_devices(time: u32) -> Result<Vec<DeviceInfo>> {
     let _rt = RT.enter();
