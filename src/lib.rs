@@ -1,4 +1,6 @@
 mod common;
+#[cfg(feature = "mdns")]
+mod mdns;
 mod rpc;
 
 use once_cell::sync::Lazy;
@@ -18,12 +20,22 @@ static RT: Lazy<Runtime> = Lazy::new(|| {
 pub mod lebai_sdk {
     use super::*;
     use cmod::Result;
+    use proto::lebai::multi_devices::DeviceInfo;
     use proto::posture::{CartesianPose, JointPose, Pose};
 
     #[cmod::function]
     pub fn version() -> Result<String> {
         Ok(common::VERSION.into())
     }
+
+    #[cfg(feature = "mdns")]
+    #[cmod::function]
+    #[cmod::tags(ret)]
+    pub async fn discover_devices(time: u32) -> Result<Vec<DeviceInfo>> {
+        let devices = mdns::discover_devices(time).await?;
+        Ok(devices)
+    }
+
     #[cmod::function]
     pub async fn connect(ip: String, simu: bool) -> Result<Robot> {
         let robot = rpc::connect(ip, simu).await?;
