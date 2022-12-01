@@ -54,19 +54,20 @@ impl Robot {
             dir: dir.unwrap_or_default(),
         };
         let pose = self.c.load_frame(Some(req)).await.map_err(|e| e.to_string())?;
-        let pose = match pose.rotation_kind() {
-            cartesian_frame::Kind::Base => {
-                vec![0.0; 6]
-            }
+        let mut ret = CartesianPose::default();
+        match pose.rotation_kind() {
+            cartesian_frame::Kind::Base => {}
             cartesian_frame::Kind::Flange => todo!(),
             cartesian_frame::Kind::LastFlange => todo!(),
             cartesian_frame::Kind::Tcp => todo!(),
             cartesian_frame::Kind::LastTcp => todo!(),
             cartesian_frame::Kind::Custom => {
                 let rot = pose.rotation.unwrap_or_default().euler_zyx.unwrap_or_default();
-                vec![0.0, 0.0, 0.0, rot.z, rot.y, rot.x]
+                ret.rx = Some(rot.x);
+                ret.ry = Some(rot.y);
+                ret.rz = Some(rot.z);
             }
         };
-        Ok(CartesianPose(pose))
+        Ok(ret)
     }
 }
