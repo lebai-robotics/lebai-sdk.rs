@@ -20,7 +20,6 @@ static RT: Lazy<Runtime> = Lazy::new(|| {
 pub mod lebai_sdk {
     use super::*;
     use cmod::Result;
-    use proto::lebai::multi_devices::DeviceInfo;
     use proto::posture::{CartesianPose, JointPose, Pose};
 
     #[cmod::function]
@@ -28,12 +27,16 @@ pub mod lebai_sdk {
         Ok(common::VERSION.into())
     }
 
-    #[cfg(feature = "mdns")]
     #[cmod::function]
     #[cmod::tags(ret)]
-    pub async fn discover_devices(time: u32) -> Result<Vec<DeviceInfo>> {
-        let devices = mdns::discover_devices(time).await?;
-        Ok(devices)
+    pub async fn discover_devices(time: u32) -> Result<Vec<proto::lebai::multi_devices::DeviceInfo>> {
+        #[cfg(not(feature = "mdns"))]
+        {
+            drop(time);
+            return Err("not support".into());
+        }
+        #[cfg(feature = "mdns")]
+        mdns::discover_devices(time).await
     }
 
     #[cmod::function]

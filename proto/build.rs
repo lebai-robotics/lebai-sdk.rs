@@ -18,7 +18,6 @@ fn main() -> io::Result<()> {
         root.join("kinematic.proto"),
         root.join("motion.proto"),
         root.join("safety.proto"),
-        root.join("block.proto"),
         root.join("task.proto"),
         root.join("trigger.proto"),
         root.join("signal.proto"),
