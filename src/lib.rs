@@ -92,14 +92,68 @@ pub mod lebai_sdk {
         }
 
         #[classmethod]
+        pub async fn stop_move(&self) -> Result<()> {
+            self.0.stop_move().await
+        }
+        #[classmethod]
+        pub async fn wait_move(&self, id: u32) -> Result<()> {
+            self.0.wait_move(id).await
+        }
+        #[classmethod]
+        pub async fn get_running_motion(&self) -> Result<u32> {
+            self.0.get_running_motion().await
+        }
+        #[classmethod]
+        pub async fn get_motion_state(&self, id: u32) -> Result<String> {
+            self.0.get_motion_state(id).await
+        }
+        #[classmethod]
+        #[cmod::tags(args(p))]
+        pub async fn towardj(&self, p: Pose, a: f64, v: f64, t: f64, r: Option<f64>) -> Result<u32> {
+            self.0.towardj(p, a, v, t, r).await
+        }
+        #[classmethod]
         #[cmod::tags(args(p))]
         pub async fn movej(&self, p: Pose, a: f64, v: f64, t: f64, r: Option<f64>) -> Result<u32> {
-            self.0.movej(p, v, a, t, r).await
+            self.0.movej(p, a, v, t, r).await
         }
         #[classmethod]
         #[cmod::tags(args(p))]
         pub async fn movel(&self, p: Pose, a: f64, v: f64, t: f64, r: Option<f64>) -> Result<u32> {
-            self.0.movel(p, v, a, t, r).await
+            self.0.movel(p, a, v, t, r).await
+        }
+        #[classmethod]
+        #[cmod::tags(args(via, p))]
+        pub async fn movec(&self, via: Pose, p: Pose, rad: f64, a: f64, v: f64, t: f64, r: Option<f64>) -> Result<u32> {
+            self.0.movec(via, p, rad, a, v, t, r).await
+        }
+        #[classmethod]
+        #[cmod::tags(args(p))]
+        pub async fn move_pvt(&self, p: JointPose, v: f64, t: f64) -> Result<()> {
+            self.0.move_pvt(p, v, t).await
+        }
+        #[classmethod]
+        #[cmod::tags(args(p))]
+        pub async fn move_pvat(&self, p: JointPose, v: f64, a: f64, t: f64) -> Result<()> {
+            self.0.move_pvat(p, v, a, t).await
+        }
+        #[classmethod]
+        #[cmod::tags(args(v))]
+        pub async fn speedj(&self, v: JointPose) -> Result<()> {
+            self.0.speedj(v).await
+        }
+        #[classmethod]
+        #[cmod::tags(args(v, frame))]
+        pub async fn speedl(&self, v: CartesianPose, frame: Option<CartesianPose>) -> Result<()> {
+            self.0.speedl(v, frame).await
+        }
+        #[classmethod]
+        pub async fn start_teach_mode(&self) -> Result<()> {
+            self.0.start_teach_mode().await
+        }
+        #[classmethod]
+        pub async fn end_teach_mode(&self) -> Result<()> {
+            self.0.end_teach_mode().await
         }
     }
     #[cmod::class]

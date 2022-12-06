@@ -19,11 +19,11 @@ impl Robot {
         Ok(pose.into())
     }
     pub async fn pose_trans(&self, from: Pose, to: Pose) -> Result<CartesianPose> {
-        let req = GetPoseMultiplyRequest {
-            base: Some(from.into()),
-            target: Some(to.into()),
+        let req = GetPoseTransRequest {
+            from: Some(from.into()),
+            from_to: Some(to.into()),
         };
-        let pose = self.c.get_pose_multiply(Some(req)).await.map_err(|e| e.to_string())?;
+        let pose = self.c.get_pose_trans(Some(req)).await.map_err(|e| e.to_string())?;
         Ok(pose.into())
     }
     pub async fn pose_inverse(&self, p: Pose) -> Result<CartesianPose> {

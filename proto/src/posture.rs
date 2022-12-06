@@ -23,6 +23,30 @@ pub struct CartesianPose {
     pub ry: Option<f64>,
     pub rz: Option<f64>,
 }
+impl From<CartesianPose> for posture::CartesianFrame {
+    fn from(cart: CartesianPose) -> Self {
+        let position = posture::Position {
+            x: cart.x,
+            y: cart.y,
+            z: cart.z,
+        };
+        let euler = posture::EulerZyx {
+            x: cart.rx.unwrap_or_default(),
+            y: cart.ry.unwrap_or_default(),
+            z: cart.rz.unwrap_or_default(),
+        };
+        let rotation = posture::Rotation {
+            euler_zyx: Some(euler),
+            ..Default::default()
+        };
+        Self {
+            position_kind: posture::cartesian_frame::Kind::Custom as i32,
+            position: Some(position),
+            rotation_kind: posture::cartesian_frame::Kind::Custom as i32,
+            rotation: Some(rotation),
+        }
+    }
+}
 impl From<CartesianPose> for posture::CartesianPose {
     fn from(cart: CartesianPose) -> Self {
         let position = posture::Position {
