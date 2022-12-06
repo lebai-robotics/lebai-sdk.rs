@@ -1,31 +1,25 @@
-local json = require("json")
-local Lebai = require('lebai_sdk')
-local lebai = Lebai.connect("127.0.0.1", true)
+local lebai_sdk = require('lebai_sdk')
 
--- get_speed_factor
-kin_factor = lebai:call("get_kin_factor")
-print(kin_factor)
-kin_factor = json.decode(kin_factor)
-print(kin_factor)
-print(kin_factor.speed_factor)
+-- 设备发现
+print(lebai_sdk.discover_devices(2))
 
--- load_pose
-pose = '{"joint":{"base":{"kind":"CURRENT"},"delta":{"joint":[0.1,0.1,0.1,0.1,0.1,0.1]}}}'
-lebai:call("save_pose", '{"name":"home","data":'..pose..'}')
-pose = lebai:call("load_pose", '{"name": "home"}')
-print(pose)
+local lebai = lebai_sdk.connect("127.0.0.1", true)
 
--- move_joint
-motion_id = lebai:call("move_joint", '{"pose":'..pose..',"param":{"time":3}}')
-print(motion_id)
-lebai:call("wait_move", motion_id)
-lebai:call("move_joint", '{"pose":{"joint":{"base":{"kind":"CURRENT"},"delta":{"joint":[-0.1,-0.1,-0.1,-0.1,-0.1,-0.1]}}},"param":{"time":3}}')
+-- start_sys
+lebai:call("start_sys", "{}")
 
--- sub_robot_state
-sub_robot_state = lebai:subscribe("robot_state", '{"interval_min":100,"interval_max":10000}')
-data = sub_robot_state:next()
-while(data~=nil)
-do
-    print(data)
-    data = sub_robot_state:next()
-end
+jPose_1 = {0,-0.7854,1.57,-0.7854,1.57,0}
+cPose_1 = {x=-0.565,y=-0.12,z=0.13,rz=-1.57,ry=0,rx=1.57}
+jPose_2 = {0,-0.566,1.12,-0.55,1.57,0}
+cPose_2 = {x=-0.64,y=-0.12,z=0.13,rz=-1.57,ry=0,rx=1.5}
+
+lebai:movej(jPose_1, 0, 0, 3)
+lebai:movel(cPose_2, 0, 0, 3)
+
+lebai:movej(cPose_1, 0, 0, 3)
+lebai:movel(jPose_2, 0, 0, 3)
+
+print(lebai:kinematics_forward(jPose_1))
+print(lebai:kinematics_inverse(cPose_1))
+print(lebai:kinematics_inverse(jPose_2))
+print(lebai:kinematics_forward(cPose_2))
