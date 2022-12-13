@@ -31,7 +31,8 @@ jobs:
      - os: windows-latest
        archit: aarch64
 
-  runs-on: ${{ matrix.os }}
+  runs-on: ubuntu-latest
+  container: registry.cn-shanghai.aliyuncs.com/lebai/util:sdk_py
   steps:
    - name: checkout
      uses: actions/checkout@v3
@@ -49,11 +50,6 @@ jobs:
 
   #  - name: unzip protoc
   #    run: unzip protoc.zip
-  
-   - name: set protoc
-     uses: arduino/setup-protoc@v1
-     with:
-      version: 3.x
 
    - name: build
      uses: PyO3/maturin-action@v1
