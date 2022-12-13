@@ -49,6 +49,11 @@ jobs:
 
   #  - name: unzip protoc
   #    run: unzip protoc.zip
+  
+   - name: set protoc
+     uses: arduino/setup-protoc@v1
+     with:
+      version: 3.x
 
    - name: build
      uses: PyO3/maturin-action@v1
