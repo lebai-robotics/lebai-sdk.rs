@@ -15,17 +15,21 @@ jobs:
   strategy:
    matrix:
     python: [3.7]
-    os: [ubuntu-latest, windows-latest, macos-latest]
+    os: [ubuntu-latest, windows-latest]
+    archit: [aarch64, x86_64]
+    compiler: [gnu, msvc]
     include:
      - os: ubuntu-latest
        protoc: linux-x86_64
-       target: [aarch64-unknown-linux-gnu, x86_64-unknown-linux-gnu]
+       target: unknown-linux
      - os: windows-latest
        protoc: win64
-       target: [x86_64-pc-windows-gnu, x86_64-pc-windows-msvc]
-     - os: macos-latest
-       protoc: osx-x86_64
-       target: [aarch64-apple-darwin, x86_64-apple-darwin]
+       target: pc-windows
+    exclude:
+     - os: ubuntu-latest
+       compiler: msvc
+     - os: windows-latest
+       archit: aarch64
 
   runs-on: ${{ matrix.os }}
   steps:
@@ -51,4 +55,4 @@ jobs:
      with: 
       command: build
       args: --release
-      target: ${{matrix.target}}
+      target: ${{matrix.archit}}-${{matrix.target}}-${{matrix.compiler}}
