@@ -50,6 +50,8 @@ jobs:
 
   #  - name: unzip protoc
   #    run: unzip protoc.zip
+  
+   - run: rustup default stable
 
    - name: build
      uses: PyO3/maturin-action@v1
