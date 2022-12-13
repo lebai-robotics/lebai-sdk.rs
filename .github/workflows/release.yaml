@@ -3,8 +3,6 @@ run-name: Pypi releasing
 on: 
   workflow_dispatch: 
   push: 
-   branches:
-    - master
    tags: 
     - v0.1.**
   
