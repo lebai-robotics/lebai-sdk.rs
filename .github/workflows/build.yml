@@ -36,14 +36,15 @@ jobs:
      uses: actions/setup-python@v4
      with:
       python-version: ${{ matrix.python }}
-   - name: install maturin
-     run: pip install maturin
 
-   - name: get protoc
-     run: curl -o protoc.zip https://github.com/protocolbuffers/protobuf/releases/download/v21.11/protoc-21.11-${{matrix.protoc}}.zip
+  #  - name: install maturin
+  #    run: pip install maturin
 
-   - name: unzip protoc
-     run: unzip protoc.zip
+  #  - name: get protoc
+  #    run: curl -o protoc.zip https://github.com/protocolbuffers/protobuf/releases/download/v21.11/protoc-21.11-${{matrix.protoc}}.zip
+
+  #  - name: unzip protoc
+  #    run: unzip protoc.zip
 
    - name: build
      uses: PyO3/maturin-action@v1
