@@ -18,6 +18,14 @@ jobs:
    matrix:
     python: [3.7]
     os: [ubuntu-latest, windows-latest, macos-latest]
+    include:
+     - os: ubuntu-latest
+       protoc: linux-x86_64
+     - os: windows-latest
+       protoc: win64
+     - os: macos-latest
+       protoc: osx-x86_64
+
   runs-on: ${{ matrix.os }}
   steps:
    - name: checkout
@@ -29,6 +37,12 @@ jobs:
       python-version: ${{ matrix.python }}
    - name: install maturin
      run: pip install maturin
+
+   - name: get protoc
+     run: curl -o protoc.zip https://github.com/protocolbuffers/protobuf/releases/download/v21.11/protoc-21.11-${{matrix.protoc}}.zip
+
+   - name: unzip protoc
+     run: unzip protoc.zip
 
    - name: build
      run: maturin build --release --features ffi_py
