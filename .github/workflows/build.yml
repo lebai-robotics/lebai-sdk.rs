@@ -52,6 +52,7 @@ jobs:
   #    run: unzip protoc.zip
   
    - run: rustup default stable
+   - run: rustup target add ${{matrix.archit}}-${{matrix.target}}-${{matrix.compiler}}
 
    - name: build
      run: maturin build --release --features ffi_py --target ${{matrix.archit}}-${{matrix.target}}-${{matrix.compiler}}
