@@ -26,6 +26,9 @@ jobs:
        protoc: win64
        target: pc-windows
     exclude:
+     - os: windows-latest
+     - compiler: msvc
+     - archit: aarch64
      - os: ubuntu-latest
        compiler: msvc
      - os: windows-latest
@@ -37,7 +40,7 @@ jobs:
    - name: checkout
      uses: actions/checkout@v3
      with: 
-      submodule: true
+      submodules: true
    
    - name: check python version
      uses: actions/setup-python@v4
