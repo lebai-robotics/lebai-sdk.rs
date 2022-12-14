@@ -16,7 +16,7 @@ jobs:
    matrix:
     python: [3.7]
     os: [ubuntu-latest, windows-latest]
-    archit: [aarch64, x86_64]
+    archit: [x86_64]
     compiler: [gnu, msvc]
     include:
      - os: ubuntu-latest
@@ -26,13 +26,8 @@ jobs:
        protoc: win64
        target: pc-windows
     exclude:
-     - os: windows-latest
-     - compiler: msvc
-     - archit: aarch64
      - os: ubuntu-latest
        compiler: msvc
-     - os: windows-latest
-       archit: aarch64
 
   runs-on: ubuntu-latest
   container: registry.cn-shanghai.aliyuncs.com/lebai/util:sdk_py
