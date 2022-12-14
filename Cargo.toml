@@ -16,6 +16,7 @@ name = "lebai_sdk"
 default = []
 ffi_lua = ["cmod/ffi_lua", "mlua"]
 ffi_py = ["cmod/ffi_py", "pyo3"]
+ffi_wasm = ["cmod/ffi_wasm", "wasm-bindgen", "wasm-bindgen-futures"]
 mdns = ["mdns-sd"]
 
 [dependencies]
@@ -31,6 +32,8 @@ pyo3 = {version = "0.17", features = ["abi3-py37"], optional = true}
 serde = {version = "1", features = ["derive"]}
 serde_json = "1"
 tokio = {version = "1.12", features = ["full"]}
+wasm-bindgen = {version = "0.2", optional = true}
+wasm-bindgen-futures = {version = "0.4", optional = true}
 
 [patch.crates-io]
 cmod = {git = "https://github.com/rise0chen/cmod.git"}
