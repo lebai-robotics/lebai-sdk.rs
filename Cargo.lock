@@ -88,9 +88,9 @@ checksum = "dfb24e866b15a1af2a1b663f10c6b6b8f397a84aadb828f12e5b289ec23a3a3c"
 
 [[package]]
 name = "cc"
-version = "1.0.77"
+version = "1.0.78"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e9f73505338f7d905b19d18738976aae232eb46b8efc15554ffc56deb5d9ebe4"
+checksum = "a20104e2335ce8a659d6dd92a51a767a0c062599c73b343fd152cb401e828c3d"
 
 [[package]]
 name = "cfg-if"
@@ -111,7 +111,8 @@ dependencies = [
 [[package]]
 name = "cmod"
 version = "0.1.0"
-source = "git+https://github.com/rise0chen/cmod.git#620e60f5f339f352dd819455250fd57ff624e049"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "9e8b83e81f3b3ba8806d79a9652cd14002a1270eadb7e38ead656478d1a3a947"
 dependencies = [
  "cmod-core",
  "cmod-macros",
@@ -120,7 +121,8 @@ dependencies = [
 [[package]]
 name = "cmod-core"
 version = "0.1.0"
-source = "git+https://github.com/rise0chen/cmod.git#620e60f5f339f352dd819455250fd57ff624e049"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "142d7eb6cf7e9b0b0102b595d0e2da951ee93898e2895a63cc695a845325fe67"
 dependencies = [
  "mlua",
  "pyo3",
@@ -134,7 +136,8 @@ dependencies = [
 [[package]]
 name = "cmod-macros"
 version = "0.1.0"
-source = "git+https://github.com/rise0chen/cmod.git#620e60f5f339f352dd819455250fd57ff624e049"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "eed8e645bb354a3f591c9fe8ec7e219bcbb93daca9ab997e30b0ed2faff8bc31"
 dependencies = [
  "cfg-if",
  "proc-macro2",
@@ -1465,9 +1468,9 @@ dependencies = [
 
 [[package]]
 name = "toml"
-version = "0.5.9"
+version = "0.5.10"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8d82e1a7758622a465f8cee077614c73484dac5b836c02ff6a40d5d1010324d7"
+checksum = "1333c76748e868a4d9d1017b5ab53171dfd095f70c712fdb4653a406547f598f"
 dependencies = [
  "serde",
 ]

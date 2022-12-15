@@ -36,4 +36,3 @@ wasm-bindgen = {version = "0.2", optional = true}
 wasm-bindgen-futures = {version = "0.4", optional = true}
 
 [patch.crates-io]
-cmod = {git = "https://github.com/rise0chen/cmod.git"}

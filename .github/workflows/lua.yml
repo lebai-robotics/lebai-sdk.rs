@@ -1,0 +1,71 @@
+name: Build Lua
+run-name: Lua building
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  builds:
+    strategy:
+      fail-fast: false
+      matrix:
+        target:
+          - x86_64-unknown-linux-gnu
+          - x86_64-apple-darwin
+          - x86_64-pc-windows-gnu
+          - aarch64-unknown-linux-gnu
+          - aarch64-apple-darwin
+        include:
+          - target: x86_64-unknown-linux-gnu
+            os: ubuntu-latest
+          - target: x86_64-apple-darwin
+            os: macos-latest
+          - target: x86_64-pc-windows-gnu
+            os: windows-latest
+          - target: aarch64-unknown-linux-gnu
+            os: ubuntu-latest
+          - target: aarch64-apple-darwin
+            os: macos-latest
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Install Protoc
+        uses: arduino/setup-protoc@v1
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Install Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          target: ${{ matrix.target }}
+      - uses: Swatinem/rust-cache@v1
+      - name: Insatll Cross Compiler
+        if: ${{ matrix.target == 'aarch64-unknown-linux-gnu' }}
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends gcc-aarch64-linux-gnu libc6-dev-arm64-cross
+      - name: Install MSYS2
+        if: ${{ matrix.target == 'x86_64-pc-windows-gnu' }}
+        uses: msys2/setup-msys2@v2
+        with:
+          install: >-
+            mingw-w64-x86_64-rust
+            mingw-w64-x86_64-protobuf
+            mingw-w64-x86_64-lua
+            mingw-w64-x86_64-pkg-config
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          submodules: true
+      - name: Build
+        if: ${{ matrix.target != 'x86_64-pc-windows-gnu' }}
+        run: cargo build --release --features ffi_lua,mdns --target ${{matrix.target}}
+      - name: Build
+        if: ${{ matrix.target == 'x86_64-pc-windows-gnu' }}
+        run: cargo build --release --features ffi_lua,mdns --target ${{matrix.target}}
+        shell: msys2 {0}
