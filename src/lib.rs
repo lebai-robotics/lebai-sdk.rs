@@ -2,19 +2,8 @@ mod common;
 #[cfg(feature = "mdns")]
 mod mdns;
 mod rpc;
-
-use once_cell::sync::Lazy;
-use tokio::runtime::{Builder, Runtime};
-
-static RT: Lazy<Runtime> = Lazy::new(|| {
-    Builder::new_multi_thread()
-        .worker_threads(1)
-        .thread_name("lua-sdk")
-        .thread_stack_size(3 * 1024 * 1024)
-        .enable_all()
-        .build()
-        .unwrap()
-});
+#[cfg(not(target_family = "wasm"))]
+mod runtime;
 
 #[cmod::cmod]
 pub mod lebai_sdk {

@@ -39,4 +39,4 @@ jobs:
         with:
           submodules: true
       - name: Build
-        run: wasm-pack build --target ${{ matrix.target }} --release --features ffi_wasm
+        run: wasm-pack build --release --target ${{ matrix.target }} -- --features ffi_wasm

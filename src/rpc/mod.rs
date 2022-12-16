@@ -1,16 +1,19 @@
 pub mod motion;
 pub mod posture;
 
-use crate::RT;
+use async_lock::Mutex;
 use cmod::Result;
-use jsonrpsee_core::client::{ClientT, Subscription, SubscriptionClientT};
-use jsonrpsee_ws_client::{WsClient, WsClientBuilder};
+use jsonrpsee_core::client::{Client, ClientT, Subscription, SubscriptionClientT};
+#[cfg(target_family = "wasm")]
+use jsonrpsee_wasm_client::WasmClientBuilder as WsClientBuilder;
+#[cfg(not(target_family = "wasm"))]
+use jsonrpsee_ws_client::WsClientBuilder;
 use serde_json::Value;
 use std::sync::Arc;
-use tokio::sync::Mutex;
 
 pub async fn connect(ip: String, simu: bool) -> Result<Robot> {
-    let _rt = RT.enter();
+    #[cfg(not(target_family = "wasm"))]
+    let _rt = crate::runtime::RT.enter();
     let port: u16 = if simu { 3030 } else { 3031 };
     let client = WsClientBuilder::default()
         .build(format!("ws://{}:{}", ip, port))
@@ -21,7 +24,7 @@ pub async fn connect(ip: String, simu: bool) -> Result<Robot> {
 
 #[derive(Clone)]
 pub struct Robot {
-    c: Arc<WsClient>,
+    c: Arc<Client>,
 }
 impl Robot {
     pub async fn call(&self, method: String, param: Option<String>) -> Result<String> {

@@ -1,4 +1,3 @@
-use crate::RT;
 use cmod::Result;
 use core::time::Duration;
 use futures_util::future::{select, Either};
@@ -8,11 +7,10 @@ use proto::lebai::multi_devices::DeviceInfo;
 const SERVICE_NAME: &'static str = "_lebai._tcp.local.";
 
 pub async fn discover_devices(time: u32) -> Result<Vec<DeviceInfo>> {
-    let _rt = RT.enter();
     let mdns = ServiceDaemon::new().map_err(|e| e.to_string())?;
     let receiver = mdns.browse(&SERVICE_NAME).map_err(|e| e.to_string())?;
     let mut devices: Vec<DeviceInfo> = Vec::new();
-    let mut task_wait = Box::pin(tokio::time::sleep(Duration::from_secs(time as u64)));
+    let mut task_wait = futures_timer::Delay::new(Duration::from_secs(time as u64));
     let mut task_recv = receiver.recv_async();
     loop {
         match select(task_recv, task_wait).await {
