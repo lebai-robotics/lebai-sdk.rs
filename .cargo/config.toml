@@ -2,4 +2,10 @@
 ar = "aarch64-linux-gnu-gcc"
 linker = "aarch64-linux-gnu-gcc"
 
+[target.'cfg(target_os = "macos")']
+rustflags = [
+  "-C", "link-arg=-undefined",
+  "-C", "link-arg=dynamic_lookup",
+]
+
 [env]
