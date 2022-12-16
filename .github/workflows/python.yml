@@ -55,5 +55,6 @@ jobs:
       - name: Build
         uses: PyO3/maturin-action@v1
         with:
+          container: off
           command: build
           args: --release --features ffi_py,mdns --target ${{matrix.platform.target}}
