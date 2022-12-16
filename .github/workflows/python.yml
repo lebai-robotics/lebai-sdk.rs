@@ -1,5 +1,5 @@
-name: Build Rust
-run-name: Rust building
+name: Build Python
+run-name: Python building
 on:
   workflow_dispatch:
   push:
@@ -15,9 +15,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
-        archit: [x86_64, aarch64]
-        include:
+        platform:
           - os: ubuntu-latest
             archit: x86_64
             target: x86_64-unknown-linux-gnu
@@ -33,7 +31,7 @@ jobs:
           - os: windows-latest
             archit: x86_64
             target: x86_64-pc-windows-msvc
-    runs-on: ${{ matrix.os }}
+    runs-on: ${{ matrix.platform.os }}
     steps:
       - name: Install Protoc
         uses: arduino/setup-protoc@v1
@@ -43,10 +41,10 @@ jobs:
         uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
-          target: ${{ matrix.target }}
+          target: ${{ matrix.platform.target }}
       - uses: Swatinem/rust-cache@v1
       - name: Insatll Cross Compiler
-        if: ${{ matrix.archit == 'aarch64' && matrix.os == 'ubuntu-latest' }}
+        if: ${{ matrix.platform.archit == 'aarch64' && matrix.platform.os == 'ubuntu-latest' }}
         run: |
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends gcc-aarch64-linux-gnu libc6-dev-arm64-cross
@@ -58,4 +56,4 @@ jobs:
         uses: PyO3/maturin-action@v1
         with:
           command: build
-          args: --release --features ffi_py,mdns --target ${{matrix.target}}
+          args: --release --features ffi_py,mdns --target ${{matrix.platform.target}}
