@@ -30,6 +30,7 @@ jobs:
         uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
+          target: wasm32-unknown-unknown
       - uses: Swatinem/rust-cache@v1
       - name: Install wasm-pack
         uses: jetli/wasm-pack-action@v0.4.0
@@ -38,4 +39,4 @@ jobs:
         with:
           submodules: true
       - name: Build
-        run: wasm-pack build --release --features ffi_wasm,mdns --target nodejs
+        run: wasm-pack build --target ${{ matrix.target }} --release --features ffi_wasm
