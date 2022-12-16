@@ -1,5 +1,5 @@
-name: Build Lua
-run-name: Lua building
+name: Build Rust
+run-name: Rust building
 on:
   workflow_dispatch:
   push:
@@ -36,12 +36,10 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - name: Install Protoc
-        if: ${{ matrix.os != 'windows-latest' }}
         uses: arduino/setup-protoc@v1
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Install Rust
-        if: ${{ matrix.os != 'windows-latest' }}
         uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
@@ -52,23 +50,12 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends gcc-aarch64-linux-gnu libc6-dev-arm64-cross
-      - name: Install MSYS2
-        if: ${{ matrix.os == 'windows-latest' }}
-        uses: msys2/setup-msys2@v2
-        with:
-          install: >-
-            mingw-w64-x86_64-rust
-            mingw-w64-x86_64-protobuf
-            mingw-w64-x86_64-lua
-            mingw-w64-x86_64-pkg-config
       - name: Checkout
         uses: actions/checkout@v3
         with:
           submodules: true
       - name: Build
-        if: ${{ matrix.os != 'windows-latest' }}
-        run: cargo build --release --features ffi_lua,mdns --target ${{matrix.target}}
-      - name: Build
-        if: ${{ matrix.os == 'windows-latest' }}
-        run: cargo build --release --features ffi_lua,mdns --target ${{matrix.target}}
-        shell: msys2 {0}
+        uses: PyO3/maturin-action@v1
+        with:
+          command: build
+          args: --release --features ffi_py,mdns --target ${{matrix.target}}
