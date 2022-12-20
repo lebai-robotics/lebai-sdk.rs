@@ -40,3 +40,8 @@ jobs:
           submodules: true
       - name: Build
         run: wasm-pack build --release --target ${{ matrix.target }} -- --features ffi_wasm
+      - name: Upload
+        uses: actions/upload-artifact@v3
+        with:
+          name: WASM_SDK
+          path: ./pkg

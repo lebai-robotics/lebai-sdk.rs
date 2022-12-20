@@ -58,3 +58,8 @@ jobs:
           container: off
           command: build
           args: --release --features ffi_py,mdns --target ${{matrix.platform.target}}
+      - name: Upload
+        uses: actions/upload-artifact@v3
+        with:
+          name: Python_SDK
+          path: ./target/wheels/*.whl

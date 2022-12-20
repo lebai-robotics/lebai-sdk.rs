@@ -70,3 +70,8 @@ jobs:
         if: ${{ matrix.platform.os == 'windows-latest' }}
         run: cargo build --release --features ffi_lua,mdns --target ${{matrix.platform.target}}
         shell: msys2 {0}
+      - name: Upload
+        uses: actions/upload-artifact@v3
+        with:
+          name: Lua_SDK
+          path: ./target/${{matrix.platform.target}}/release/liblebai_sdk.*
