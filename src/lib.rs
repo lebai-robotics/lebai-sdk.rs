@@ -9,6 +9,7 @@ mod runtime;
 pub mod lebai_sdk {
     use super::*;
     use cmod::Result;
+    use proto::io::IoDevice;
     use proto::posture::{CartesianPose, JointPose, Pose};
 
     #[cmod::function]
@@ -143,6 +144,58 @@ pub mod lebai_sdk {
         #[classmethod]
         pub async fn end_teach_mode(&self) -> Result<()> {
             self.0.end_teach_mode().await
+        }
+
+        //IO
+        #[classmethod]
+        #[cmod::tags(args(device))]
+        pub async fn set_do(&self, device: IoDevice, pin: u32, value: u32) -> Result<()> {
+            self.0.set_do(device, pin, value).await
+        }
+        #[classmethod]
+        #[cmod::tags(args(device))]
+        pub async fn get_do(&self, device: IoDevice, pin: u32) -> Result<u32> {
+            self.0.get_do(device, pin).await
+        }
+        #[classmethod]
+        #[cmod::tags(args(device))]
+        pub async fn get_dos(&self, device: IoDevice, pin: u32, num: u32) -> Result<Vec<u32>> {
+            self.0.get_dos(device, pin, num).await
+        }
+        #[classmethod]
+        #[cmod::tags(args(device))]
+        pub async fn get_di(&self, device: IoDevice, pin: u32) -> Result<u32> {
+            self.0.get_di(device, pin).await
+        }
+        #[classmethod]
+        #[cmod::tags(args(device))]
+        pub async fn get_dis(&self, device: IoDevice, pin: u32, num: u32) -> Result<Vec<u32>> {
+            self.0.get_dis(device, pin, num).await
+        }
+        #[classmethod]
+        #[cmod::tags(args(device))]
+        pub async fn set_ao(&self, device: IoDevice, pin: u32, value: u32) -> Result<()> {
+            self.0.set_ao(device, pin, value).await
+        }
+        #[classmethod]
+        #[cmod::tags(args(device))]
+        pub async fn get_ao(&self, device: IoDevice, pin: u32) -> Result<f64> {
+            self.0.get_ao(device, pin).await
+        }
+        #[classmethod]
+        #[cmod::tags(args(device))]
+        pub async fn get_aos(&self, device: IoDevice, pin: u32, num: u32) -> Result<Vec<f64>> {
+            self.0.get_aos(device, pin, num).await
+        }
+        #[classmethod]
+        #[cmod::tags(args(device))]
+        pub async fn get_ai(&self, device: IoDevice, pin: u32) -> Result<f64> {
+            self.0.get_ai(device, pin).await
+        }
+        #[classmethod]
+        #[cmod::tags(args(device))]
+        pub async fn get_ais(&self, device: IoDevice, pin: u32, num: u32) -> Result<Vec<f64>> {
+            self.0.get_ais(device, pin, num).await
         }
     }
     #[cmod::class]
