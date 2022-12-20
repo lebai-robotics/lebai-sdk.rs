@@ -16,10 +16,10 @@ jobs:
       fail-fast: false
       matrix:
         platform:
-          - os: ubuntu-latest
+          - os: self-hosted
             archit: x86_64
             target: x86_64-unknown-linux-gnu
-          - os: ubuntu-latest
+          - os: self-hosted
             archit: aarch64
             target: aarch64-unknown-linux-gnu
           - os: macos-latest
@@ -44,7 +44,7 @@ jobs:
           target: ${{ matrix.platform.target }}
       - uses: Swatinem/rust-cache@v1
       - name: Install Cross Compiler
-        if: ${{ matrix.platform.archit == 'aarch64' && matrix.platform.os == 'ubuntu-latest' }}
+        if: ${{ matrix.platform.archit == 'aarch64' && matrix.platform.os == 'self-hosted' }}
         run: |
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends gcc-aarch64-linux-gnu libc6-dev-arm64-cross
@@ -56,6 +56,7 @@ jobs:
         uses: PyO3/maturin-action@v1
         with:
           container: off
+          manylinux: 2014
           command: build
           args: --release --features ffi_py,mdns --target ${{matrix.platform.target}}
       - name: Upload
