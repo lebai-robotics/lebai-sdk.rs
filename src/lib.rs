@@ -158,7 +158,7 @@ pub mod lebai_sdk {
             self.0.get_do(device, pin).await
         }
         #[classmethod]
-        #[cmod::tags(args(device))]
+        #[cmod::tags(args(device), ret)]
         pub async fn get_dos(&self, device: IoDevice, pin: u32, num: u32) -> Result<Vec<u32>> {
             self.0.get_dos(device, pin, num).await
         }
@@ -168,7 +168,7 @@ pub mod lebai_sdk {
             self.0.get_di(device, pin).await
         }
         #[classmethod]
-        #[cmod::tags(args(device))]
+        #[cmod::tags(args(device), ret)]
         pub async fn get_dis(&self, device: IoDevice, pin: u32, num: u32) -> Result<Vec<u32>> {
             self.0.get_dis(device, pin, num).await
         }
@@ -183,7 +183,7 @@ pub mod lebai_sdk {
             self.0.get_ao(device, pin).await
         }
         #[classmethod]
-        #[cmod::tags(args(device))]
+        #[cmod::tags(args(device), ret)]
         pub async fn get_aos(&self, device: IoDevice, pin: u32, num: u32) -> Result<Vec<f64>> {
             self.0.get_aos(device, pin, num).await
         }
@@ -193,7 +193,7 @@ pub mod lebai_sdk {
             self.0.get_ai(device, pin).await
         }
         #[classmethod]
-        #[cmod::tags(args(device))]
+        #[cmod::tags(args(device), ret)]
         pub async fn get_ais(&self, device: IoDevice, pin: u32, num: u32) -> Result<Vec<f64>> {
             self.0.get_ais(device, pin, num).await
         }
