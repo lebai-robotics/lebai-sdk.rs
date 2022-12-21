@@ -2,6 +2,7 @@ pub mod io;
 pub mod motion;
 pub mod posture;
 pub mod signal;
+pub mod task;
 
 use async_lock::Mutex;
 use cmod::Result;

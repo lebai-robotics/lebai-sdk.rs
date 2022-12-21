@@ -211,6 +211,27 @@ pub mod lebai_sdk {
         pub async fn add_signal(&self, index: u32, value: i32) -> Result<()> {
             self.0.add_signal(index, value).await
         }
+
+        //TASK
+        #[classmethod]
+        #[cmod::tags(args(scene, dir, params))]
+        pub async fn start_task(&self, scene: String, is_parallel: bool, loop_to: u32, dir: String, params: Vec<String>) -> Result<u32> {
+            self.0.start_task(scene, is_parallel, loop_to, dir, params).await
+        }
+        #[classmethod]
+        #[cmod::tags(ret)]
+        pub async fn get_task_state(&self, id: u32) -> Result<String> {
+            self.0.get_task_state(id).await
+        }
+        pub async fn cancel_task(&self, id: u32) -> Result<()> {
+            self.0.cancel_task(id).await
+        }
+        pub async fn pause_task(&self, id: u32, time: u64, wait: bool) -> Result<()> {
+            self.0.pause_task(id, time, wait).await
+        }
+        pub async fn resume_task(&self, id: u32) -> Result<()> {
+            self.0.resume_task(id).await
+        }
     }
     #[cmod::class]
     #[derive(Clone)]

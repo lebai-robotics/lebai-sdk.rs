@@ -1,5 +1,6 @@
 pub mod io;
 pub mod posture;
+pub mod task;
 
 pub mod google {
     pub mod protobuf {
