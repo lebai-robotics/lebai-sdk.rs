@@ -11,23 +11,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        platform:
-          - os: ubuntu-latest
-            archit: x86_64
-            target: x86_64-unknown-linux-gnu
-          - os: ubuntu-latest
-            archit: aarch64
-            target: aarch64-unknown-linux-gnu
-          - os: macos-latest
-            archit: x86_64
-            target: x86_64-apple-darwin
-          - os: macos-latest
-            archit: aarch64
-            target: aarch64-apple-darwin
-          - os: windows-latest
-            archit: x86_64
-            target: x86_64-pc-windows-msvc
-    runs-on: ${{ matrix.platform.os }}
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
     steps:
       - name: Install Protoc
         uses: arduino/setup-protoc@v1
@@ -37,16 +22,10 @@ jobs:
         uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
-          target: ${{ matrix.platform.target }}
       - uses: Swatinem/rust-cache@v1
-      - name: Install Cross Compiler
-        if: ${{ matrix.platform.archit == 'aarch64' && matrix.platform.os == 'ubuntu-latest' }}
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y --no-install-recommends gcc-aarch64-linux-gnu libc6-dev-arm64-cross
       - name: Checkout
         uses: actions/checkout@v3
         with:
           submodules: true
       - name: Build
-        run: cargo build --release --features mdns --target ${{matrix.platform.target}}
+        run: cargo build --release --features mdns
