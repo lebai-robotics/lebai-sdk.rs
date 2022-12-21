@@ -1,10 +1,6 @@
 name: Build Rust
 run-name: Rust building
-on:
-  workflow_dispatch:
-  push:
-    branches:
-      - master
+on: [push, pull_request]
 
 permissions:
   contents: read
