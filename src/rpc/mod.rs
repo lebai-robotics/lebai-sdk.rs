@@ -1,4 +1,5 @@
 pub mod io;
+pub mod modbus;
 pub mod motion;
 pub mod posture;
 pub mod signal;
