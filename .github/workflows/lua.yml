@@ -29,7 +29,7 @@ jobs:
         with:
           toolchain: stable
           target: ${{ matrix.target }}
-      - uses: Swatinem/rust-cache@v1
+      - uses: Swatinem/rust-cache@v2
       - name: Install Cross Compiler
         if: ${{ matrix.archit == 'aarch64' }}
         run: |
@@ -44,8 +44,10 @@ jobs:
       - name: Upload
         uses: actions/upload-artifact@v3
         with:
-          name: Lua_SDK_Linux_${{matrix.archit}}
-          path: ./target/${{matrix.target}}/release/liblebai_sdk.*
+          name: Lebai_Lua_SDK_Linux_${{matrix.archit}}
+          path: |
+            ./target/${{matrix.target}}/release/liblebai_sdk.*
+            !./target/${{matrix.target}}/release/liblebai_sdk.d
   builds_macos:
     strategy:
       fail-fast: false
@@ -67,7 +69,7 @@ jobs:
         with:
           toolchain: stable
           target: ${{ matrix.target }}
-      - uses: Swatinem/rust-cache@v1
+      - uses: Swatinem/rust-cache@v2
       - name: Checkout
         uses: actions/checkout@v3
         with:
@@ -77,8 +79,10 @@ jobs:
       - name: Upload
         uses: actions/upload-artifact@v3
         with:
-          name: Lua_SDK_MacOS_${{matrix.archit}}
-          path: ./target/${{matrix.target}}/release/liblebai_sdk.*
+          name: Lebai_Lua_SDK_MacOS_${{matrix.archit}}
+          path: |
+            ./target/${{matrix.target}}/release/liblebai_sdk.*
+            !./target/${{matrix.target}}/release/liblebai_sdk.d
   builds_windows:
     strategy:
       fail-fast: false
@@ -97,7 +101,7 @@ jobs:
             mingw-w64-x86_64-protobuf
             mingw-w64-x86_64-lua
             mingw-w64-x86_64-pkg-config
-      - uses: Swatinem/rust-cache@v1
+      - uses: Swatinem/rust-cache@v2
       - name: Checkout
         uses: actions/checkout@v3
         with:
@@ -108,5 +112,7 @@ jobs:
       - name: Upload
         uses: actions/upload-artifact@v3
         with:
-          name: Lua_SDK_Windows_${{matrix.archit}}
-          path: ./target/${{matrix.target}}/release/liblebai_sdk.*
+          name: Lebai_Lua_SDK_Windows_${{matrix.archit}}
+          path: |
+            ./target/${{matrix.target}}/release/liblebai_sdk.*
+            !./target/${{matrix.target}}/release/liblebai_sdk.d

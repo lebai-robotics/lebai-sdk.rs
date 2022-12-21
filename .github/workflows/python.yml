@@ -29,7 +29,7 @@ jobs:
         with:
           toolchain: stable
           target: ${{ matrix.target }}
-      - uses: Swatinem/rust-cache@v1
+      - uses: Swatinem/rust-cache@v2
       - name: Install Cross Compiler
         if: ${{ matrix.archit == 'aarch64'}}
         run: |
@@ -49,7 +49,7 @@ jobs:
       - name: Upload
         uses: actions/upload-artifact@v3
         with:
-          name: Python_SDK
+          name: Lebai_Python_SDK
           path: ./target/wheels/*.whl
   builds_macos:
     strategy:
@@ -72,7 +72,7 @@ jobs:
         with:
           toolchain: stable
           target: ${{ matrix.target }}
-      - uses: Swatinem/rust-cache@v1
+      - uses: Swatinem/rust-cache@v2
       - name: Checkout
         uses: actions/checkout@v3
         with:
@@ -86,7 +86,7 @@ jobs:
       - name: Upload
         uses: actions/upload-artifact@v3
         with:
-          name: Python_SDK
+          name: Lebai_Python_SDK
           path: ./target/wheels/*.whl
   builds_windows:
     strategy:
@@ -107,7 +107,7 @@ jobs:
         with:
           toolchain: stable
           target: ${{ matrix.target }}
-      - uses: Swatinem/rust-cache@v1
+      - uses: Swatinem/rust-cache@v2
       - name: Checkout
         uses: actions/checkout@v3
         with:
@@ -121,5 +121,5 @@ jobs:
       - name: Upload
         uses: actions/upload-artifact@v3
         with:
-          name: Python_SDK
+          name: Lebai_Python_SDK
           path: ./target/wheels/*.whl
