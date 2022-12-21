@@ -18,7 +18,7 @@ jobs:
           - archit: aarch64
             target: aarch64-unknown-linux-gnu
     runs-on: ubuntu-latest
-    container: registry.cn-shanghai.aliyuncs.com/lebai/util:lebai
+    container: registry.cn-shanghai.aliyuncs.com/lebai/util:14.04
     steps:
       - name: Install Protoc
         uses: arduino/setup-protoc@v1
@@ -45,7 +45,7 @@ jobs:
           container: off
           manylinux: 2_17
           command: build
-          args: --release --features ffi_py,mdns --target ${{matrix.target}}
+          args: --release --features ffi_py,mdns --target ${{matrix.target}} --skip-auditwheel
       - name: Upload
         uses: actions/upload-artifact@v3
         with:

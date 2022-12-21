@@ -18,7 +18,7 @@ jobs:
           - archit: aarch64
             target: aarch64-unknown-linux-gnu
     runs-on: ubuntu-latest
-    container: registry.cn-shanghai.aliyuncs.com/lebai/util:lebai
+    container: registry.cn-shanghai.aliyuncs.com/lebai/util:14.04
     steps:
       - name: Install Protoc
         uses: arduino/setup-protoc@v1
