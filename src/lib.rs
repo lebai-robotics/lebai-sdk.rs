@@ -197,6 +197,20 @@ pub mod lebai_sdk {
         pub async fn get_ais(&self, device: IoDevice, pin: u32, num: u32) -> Result<Vec<f64>> {
             self.0.get_ais(device, pin, num).await
         }
+
+        //SIGNAL
+        #[classmethod]
+        pub async fn set_signal(&self, index: u32, value: i32) -> Result<()> {
+            self.0.set_signal(index, value).await
+        }
+        #[classmethod]
+        pub async fn get_signal(&self, index: u32) -> Result<i32> {
+            self.0.get_signal(index).await
+        }
+        #[classmethod]
+        pub async fn add_signal(&self, index: u32, value: i32) -> Result<()> {
+            self.0.add_signal(index, value).await
+        }
     }
     #[cmod::class]
     #[derive(Clone)]
