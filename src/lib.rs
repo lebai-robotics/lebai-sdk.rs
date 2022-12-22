@@ -9,7 +9,8 @@ mod runtime;
 pub mod lebai_sdk {
     use super::*;
     use cmod::Result;
-    use proto::lebai::posture::CartesianPose as Cartesian;
+    use proto::lebai::claw::Claw;
+    use proto::lebai::dynamic::Payload;
     use proto::lebai::posture::Position;
     use proto::posture::{CartesianPose, JointPose, Pose};
 
@@ -51,6 +52,7 @@ pub mod lebai_sdk {
             Ok(RobotSubscription(subscription))
         }
 
+        // Posture
         #[classmethod]
         #[cmod::tags(args(p), ret)]
         pub async fn kinematics_forward(&self, p: Pose) -> Result<CartesianPose> {
@@ -82,6 +84,7 @@ pub mod lebai_sdk {
             self.0.load_frame(name, dir).await
         }
 
+        // Motion
         #[classmethod]
         pub async fn stop_move(&self) -> Result<()> {
             self.0.stop_move().await
@@ -215,20 +218,25 @@ pub mod lebai_sdk {
 
         //TASK
         #[classmethod]
-        #[cmod::tags(args(scene, dir, params))]
-        pub async fn start_task(&self, scene: String, is_parallel: bool, loop_to: u32, dir: String, params: Vec<String>) -> Result<u32> {
-            self.0.start_task(scene, is_parallel, loop_to, dir, params).await
+        pub async fn start_task(
+            &self,
+            scene: String,
+            params: Option<Vec<String>>,
+            dir: Option<String>,
+            is_parallel: Option<bool>,
+            loop_to: Option<u32>,
+        ) -> Result<u32> {
+            self.0.start_task(scene, params, dir, is_parallel, loop_to).await
         }
         #[classmethod]
-        #[cmod::tags(ret)]
         pub async fn get_task_state(&self, id: u32) -> Result<String> {
             self.0.get_task_state(id).await
         }
         pub async fn cancel_task(&self, id: u32) -> Result<()> {
             self.0.cancel_task(id).await
         }
-        pub async fn pause_task(&self, id: u32, time: u64, wait: bool) -> Result<()> {
-            self.0.pause_task(id, time, wait).await
+        pub async fn pause_task(&self, id: u32) -> Result<()> {
+            self.0.pause_task(id).await
         }
         pub async fn resume_task(&self, id: u32) -> Result<()> {
             self.0.resume_task(id).await
@@ -236,54 +244,52 @@ pub mod lebai_sdk {
 
         //MODBUS
         #[classmethod]
-        #[cmod::tags(args(device, pin))]
         pub async fn write_single_coil(&self, device: String, pin: String, value: bool) -> Result<()> {
             self.0.write_single_coil(device, pin, value).await
         }
         #[classmethod]
-        #[cmod::tags(args(device, pin, values))]
+        #[cmod::tags(args(values))]
         pub async fn write_multiple_coils(&self, device: String, pin: String, values: Vec<bool>) -> Result<()> {
             self.0.write_multiple_coils(device, pin, values).await
         }
         #[classmethod]
-        #[cmod::tags(args(device, pin), ret)]
+        #[cmod::tags(ret)]
         pub async fn read_coils(&self, device: String, pin: String, count: u32) -> Result<Vec<bool>> {
             self.0.read_coils(device, pin, count).await
         }
         #[classmethod]
-        #[cmod::tags(args(device, pin), ret)]
+        #[cmod::tags(ret)]
         pub async fn read_discrete_inputs(&self, device: String, pin: String, count: u32) -> Result<Vec<bool>> {
             self.0.read_discrete_inputs(device, pin, count).await
         }
         #[classmethod]
-        #[cmod::tags(args(device, pin))]
         pub async fn write_single_register(&self, device: String, pin: String, value: u32) -> Result<()> {
             self.0.write_single_register(device, pin, value).await
         }
         #[classmethod]
-        #[cmod::tags(args(device, pin, values))]
+        #[cmod::tags(args(values))]
         pub async fn write_multiple_registers(&self, device: String, pin: String, values: Vec<u32>) -> Result<()> {
             self.0.write_multiple_registers(device, pin, values).await
         }
         #[classmethod]
-        #[cmod::tags(args(device, pin), ret)]
+        #[cmod::tags(ret)]
         pub async fn read_holding_registers(&self, device: String, pin: String, count: u32) -> Result<Vec<u32>> {
             self.0.read_holding_registers(device, pin, count).await
         }
         #[classmethod]
-        #[cmod::tags(args(device, pin), ret)]
+        #[cmod::tags(ret)]
         pub async fn read_input_registers(&self, device: String, pin: String, count: u32) -> Result<Vec<u32>> {
             self.0.read_input_registers(device, pin, count).await
         }
 
         //CLAW
         #[classmethod]
-        pub async fn set_claw(&self, force: f64, amplitude: f64) -> Result<()> {
+        pub async fn set_claw(&self, force: Option<f64>, amplitude: Option<f64>) -> Result<()> {
             self.0.set_claw(force, amplitude).await
         }
         #[classmethod]
         #[cmod::tags(ret)]
-        pub async fn get_claw(&self) -> Result<(f64, f64, f64, bool)> {
+        pub async fn get_claw(&self) -> Result<Claw> {
             self.0.get_claw().await
         }
 
@@ -315,18 +321,18 @@ pub mod lebai_sdk {
 
         //DYNAMIC AND KINEMATIC
         #[classmethod]
-        #[cmod::tags(args(name, dir), ret)]
-        pub async fn load_tcp(&self, name: String, dir: String) -> Result<Cartesian> {
+        #[cmod::tags(ret)]
+        pub async fn load_tcp(&self, name: String, dir: Option<String>) -> Result<CartesianPose> {
             self.0.load_tcp(name, dir).await
         }
         #[classmethod]
         #[cmod::tags(args(pose))]
-        pub async fn set_tcp(&self, pose: Cartesian) -> Result<()> {
+        pub async fn set_tcp(&self, pose: CartesianPose) -> Result<()> {
             self.0.set_tcp(pose).await
         }
         #[classmethod]
         #[cmod::tags(ret)]
-        pub async fn get_tcp(&self) -> Result<Cartesian> {
+        pub async fn get_tcp(&self) -> Result<CartesianPose> {
             self.0.get_tcp().await
         }
         #[classmethod]
@@ -338,18 +344,18 @@ pub mod lebai_sdk {
             self.0.get_velocity_factor().await
         }
         #[classmethod]
-        #[cmod::tags(args(name, dir), ret)]
-        pub async fn load_payload(&self, name: String, dir: String) -> Result<(f64, Option<Position>)> {
+        #[cmod::tags(ret)]
+        pub async fn load_payload(&self, name: String, dir: Option<String>) -> Result<Payload> {
             self.0.load_payload(name, dir).await
         }
         #[classmethod]
-        #[cmod::tags(args(mass, cog))]
-        pub async fn set_payload(&self, mass: f64, cog: Position) -> Result<()> {
+        #[cmod::tags(args(cog))]
+        pub async fn set_payload(&self, mass: Option<f64>, cog: Option<Position>) -> Result<()> {
             self.0.set_payload(mass, cog).await
         }
         #[classmethod]
         #[cmod::tags(ret)]
-        pub async fn get_payload(&self) -> Result<(f64, Option<Position>)> {
+        pub async fn get_payload(&self) -> Result<Payload> {
             self.0.get_payload().await
         }
         #[classmethod]
