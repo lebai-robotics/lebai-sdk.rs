@@ -218,6 +218,7 @@ pub mod lebai_sdk {
 
         //TASK
         #[classmethod]
+        #[cmod::tags(args(params))]
         pub async fn start_task(
             &self,
             scene: String,
