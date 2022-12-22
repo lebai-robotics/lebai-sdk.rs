@@ -1,11 +1,3 @@
-## Python
+# Lebai SDK
 
-```bash
-docker run -it ghcr.io/pyo3/maturin --name maturin bash
-
-maturin publish --features ffi_py
-```
-
-## Lua
-
-cargo build --release --features ffi_lua
+[SDK 在线文档](http://help.lebai.ltd/sdk/)

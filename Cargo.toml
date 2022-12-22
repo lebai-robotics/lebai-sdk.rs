@@ -1,7 +1,7 @@
 [package]
 edition = "2021"
-name = "lebai-sdk"
-version = "0.1.1"
+name = "lebai_sdk"
+version = "0.1.2"
 
 [workspace]
 members = [
