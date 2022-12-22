@@ -1,9 +1,9 @@
 import lebai_sdk
 
 # 设备发现
-print(lebai_sdk.discover_devices(10))
+print(lebai_sdk.discover_devices(2))
 
-lebai = lebai_sdk.connect("192.168.2.1", True)
+lebai = lebai_sdk.connect("127.0.0.1", True)
 
 # start_sys
 lebai.call("start_sys", "{}")

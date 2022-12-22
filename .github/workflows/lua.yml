@@ -1,57 +1,99 @@
 name: Build Lua
 run-name: Lua building
-on:
-  workflow_dispatch:
-  push:
-    branches:
-      - master
+on: [push, pull_request]
 
 permissions:
   contents: read
   pull-requests: read
 
 jobs:
-  builds:
+  builds_linux:
     strategy:
       fail-fast: false
       matrix:
-        platform:
-          - os: self-hosted
-            archit: x86_64
+        archit: [x86_64, aarch64]
+        include:
+          - archit: x86_64
             target: x86_64-unknown-linux-gnu
-          - os: self-hosted
-            archit: aarch64
+          - archit: aarch64
             target: aarch64-unknown-linux-gnu
-          - os: macos-latest
-            archit: x86_64
-            target: x86_64-apple-darwin
-          - os: macos-latest
-            archit: aarch64
-            target: aarch64-apple-darwin
-          - os: windows-latest
-            archit: x86_64
-            target: x86_64-pc-windows-gnu
-    runs-on: ${{ matrix.platform.os }}
+    runs-on: ubuntu-latest
+    container: registry.cn-shanghai.aliyuncs.com/lebai/util:14.04
     steps:
       - name: Install Protoc
-        if: ${{ matrix.platform.os != 'windows-latest' }}
         uses: arduino/setup-protoc@v1
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Install Rust
-        if: ${{ matrix.platform.os != 'windows-latest' }}
         uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
-          target: ${{ matrix.platform.target }}
-      - uses: Swatinem/rust-cache@v1
+          target: ${{ matrix.target }}
+      - uses: Swatinem/rust-cache@v2
       - name: Install Cross Compiler
-        if: ${{ matrix.platform.archit == 'aarch64' && matrix.platform.os == 'self-hosted' }}
+        if: ${{ matrix.archit == 'aarch64' }}
         run: |
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends gcc-aarch64-linux-gnu libc6-dev-arm64-cross
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          submodules: true
+      - name: Build
+        run: cargo build --release --features ffi_lua,mdns --target ${{matrix.target}}
+      - name: Upload
+        uses: actions/upload-artifact@v3
+        with:
+          name: Lebai_Lua_SDK_Linux_${{matrix.archit}}
+          path: |
+            ./target/${{matrix.target}}/release/liblebai_sdk.*
+            !./target/${{matrix.target}}/release/liblebai_sdk.d
+  builds_macos:
+    strategy:
+      fail-fast: false
+      matrix:
+        archit: [x86_64, aarch64]
+        include:
+          - archit: x86_64
+            target: x86_64-apple-darwin
+          - archit: aarch64
+            target: aarch64-apple-darwin
+    runs-on: macos-latest
+    steps:
+      - name: Install Protoc
+        uses: arduino/setup-protoc@v1
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Install Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          target: ${{ matrix.target }}
+      - uses: Swatinem/rust-cache@v2
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          submodules: true
+      - name: Build
+        run: cargo build --release --features ffi_lua,mdns --target ${{matrix.target}}
+      - name: Upload
+        uses: actions/upload-artifact@v3
+        with:
+          name: Lebai_Lua_SDK_MacOS_${{matrix.archit}}
+          path: |
+            ./target/${{matrix.target}}/release/liblebai_sdk.*
+            !./target/${{matrix.target}}/release/liblebai_sdk.d
+  builds_windows:
+    strategy:
+      fail-fast: false
+      matrix:
+        archit: [x86_64]
+        include:
+          - archit: x86_64
+            target: x86_64-pc-windows-gnu
+    runs-on: windows-latest
+    steps:
       - name: Install MSYS2
-        if: ${{ matrix.platform.os == 'windows-latest' }}
         uses: msys2/setup-msys2@v2
         with:
           install: >-
@@ -59,19 +101,18 @@ jobs:
             mingw-w64-x86_64-protobuf
             mingw-w64-x86_64-lua
             mingw-w64-x86_64-pkg-config
+      - uses: Swatinem/rust-cache@v2
       - name: Checkout
         uses: actions/checkout@v3
         with:
           submodules: true
       - name: Build
-        if: ${{ matrix.platform.os != 'windows-latest' }}
-        run: cargo build --release --features ffi_lua,mdns --target ${{matrix.platform.target}}
-      - name: Build
-        if: ${{ matrix.platform.os == 'windows-latest' }}
-        run: cargo build --release --features ffi_lua,mdns --target ${{matrix.platform.target}}
+        run: cargo build --release --features ffi_lua,mdns --target ${{matrix.target}}
         shell: msys2 {0}
       - name: Upload
         uses: actions/upload-artifact@v3
         with:
-          name: Lua_SDK
-          path: ./target/${{matrix.platform.target}}/release/liblebai_sdk.*
+          name: Lebai_Lua_SDK_Windows_${{matrix.archit}}
+          path: |
+            ./target/${{matrix.target}}/release/liblebai_sdk.*
+            !./target/${{matrix.target}}/release/liblebai_sdk.d
