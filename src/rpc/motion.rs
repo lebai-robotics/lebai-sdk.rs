@@ -10,8 +10,8 @@ impl Robot {
         self.c.stop_move(Some(req)).await.map_err(|e| e.to_string())?;
         Ok(())
     }
-    pub async fn wait_move(&self, id: u32) -> Result<()> {
-        let req = MotionIndex { id };
+    pub async fn wait_move(&self, id: Option<u32>) -> Result<()> {
+        let req = MotionIndex { id: id.unwrap_or_default() };
         self.c.wait_move(Some(req)).await.map_err(|e| e.to_string())?;
         Ok(())
     }

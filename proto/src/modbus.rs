@@ -6,22 +6,10 @@ impl From<&str> for ModbusKind {
             "ROBOT" => ModbusKind::Robot,
             "FLANGE" => ModbusKind::Flange,
             "EXTRA" => ModbusKind::Extra,
-            "MODBUSFLANGE" => ModbusKind::ModbusFlange,
-            "MODBUSRTU" => ModbusKind::ModbusRtu,
-            _ => ModbusKind::ModbusTcp,
-        }
-    }
-}
-
-impl From<String> for ModbusKind {
-    fn from(s: String) -> Self {
-        match s.as_str() {
-            "ROBOT" => ModbusKind::Robot,
-            "FLANGE" => ModbusKind::Flange,
-            "EXTRA" => ModbusKind::Extra,
-            "MODBUSFLANGE" => ModbusKind::ModbusFlange,
-            "MODBUSRTU" => ModbusKind::ModbusRtu,
-            _ => ModbusKind::ModbusTcp,
+            "MODBUS_FLANGE" => ModbusKind::ModbusFlange,
+            "MODBUS_RTU" => ModbusKind::ModbusRtu,
+            "MODBUS_TCP" => ModbusKind::ModbusTcp,
+            _ => ModbusKind::ModbusFlange,
         }
     }
 }

@@ -22,23 +22,27 @@ impl Robot {
         let resp = self.c.start_task(Some(req)).await.map_err(|e| e.to_string())?;
         Ok(resp.id)
     }
-    pub(crate) async fn get_task_state(&self, id: u32) -> Result<String> {
-        let req = TaskIndex { id };
+    pub(crate) async fn get_task_state(&self, id: Option<u32>) -> Result<String> {
+        let req = TaskIndex { id: id.unwrap_or_default() };
         let resp = self.c.load_task(Some(req)).await.map_err(|e| e.to_string())?;
         Ok(resp.state().as_str_name().to_string())
     }
-    pub(crate) async fn cancel_task(&self, id: u32) -> Result<()> {
-        let req = TaskIndex { id };
+    pub(crate) async fn cancel_task(&self, id: Option<u32>) -> Result<()> {
+        let req = TaskIndex { id: id.unwrap_or_default() };
         let _ = self.c.cancel_task(Some(req)).await.map_err(|e| e.to_string())?;
         Ok(())
     }
-    pub(crate) async fn pause_task(&self, id: u32) -> Result<()> {
-        let req = PauseRequest { id, time: 0, wait: false };
+    pub(crate) async fn pause_task(&self, id: Option<u32>) -> Result<()> {
+        let req = PauseRequest {
+            id: id.unwrap_or_default(),
+            time: 0,
+            wait: false,
+        };
         let _ = self.c.pause_task(Some(req)).await.map_err(|e| e.to_string())?;
         Ok(())
     }
-    pub(crate) async fn resume_task(&self, id: u32) -> Result<()> {
-        let req = TaskIndex { id };
+    pub(crate) async fn resume_task(&self, id: Option<u32>) -> Result<()> {
+        let req = TaskIndex { id: id.unwrap_or_default() };
         let _ = self.c.resume_task(Some(req)).await.map_err(|e| e.to_string())?;
         Ok(())
     }

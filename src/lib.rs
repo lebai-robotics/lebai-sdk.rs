@@ -90,7 +90,7 @@ pub mod lebai_sdk {
             self.0.stop_move().await
         }
         #[classmethod]
-        pub async fn wait_move(&self, id: u32) -> Result<()> {
+        pub async fn wait_move(&self, id: Option<u32>) -> Result<()> {
             self.0.wait_move(id).await
         }
         #[classmethod]
@@ -229,16 +229,16 @@ pub mod lebai_sdk {
             self.0.start_task(scene, params, dir, is_parallel, loop_to).await
         }
         #[classmethod]
-        pub async fn get_task_state(&self, id: u32) -> Result<String> {
+        pub async fn get_task_state(&self, id: Option<u32>) -> Result<String> {
             self.0.get_task_state(id).await
         }
-        pub async fn cancel_task(&self, id: u32) -> Result<()> {
+        pub async fn cancel_task(&self, id: Option<u32>) -> Result<()> {
             self.0.cancel_task(id).await
         }
-        pub async fn pause_task(&self, id: u32) -> Result<()> {
+        pub async fn pause_task(&self, id: Option<u32>) -> Result<()> {
             self.0.pause_task(id).await
         }
-        pub async fn resume_task(&self, id: u32) -> Result<()> {
+        pub async fn resume_task(&self, id: Option<u32>) -> Result<()> {
             self.0.resume_task(id).await
         }
 
