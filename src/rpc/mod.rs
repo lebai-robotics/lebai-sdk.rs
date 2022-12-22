@@ -1,3 +1,4 @@
+pub mod claw;
 pub mod io;
 pub mod modbus;
 pub mod motion;

@@ -238,33 +238,51 @@ pub mod lebai_sdk {
         pub async fn write_single_coil(&self, device: String, pin: String, value: bool) -> Result<()> {
             self.0.write_single_coil(device, pin, value).await
         }
+        #[classmethod]
         #[cmod::tags(args(device, pin, values))]
         pub async fn write_multiple_coils(&self, device: String, pin: String, values: Vec<bool>) -> Result<()> {
             self.0.write_multiple_coils(device, pin, values).await
         }
+        #[classmethod]
         #[cmod::tags(args(device, pin), ret)]
         pub async fn read_coils(&self, device: String, pin: String, count: u32) -> Result<Vec<bool>> {
             self.0.read_coils(device, pin, count).await
         }
+        #[classmethod]
         #[cmod::tags(args(device, pin), ret)]
         pub async fn read_discrete_inputs(&self, device: String, pin: String, count: u32) -> Result<Vec<bool>> {
             self.0.read_discrete_inputs(device, pin, count).await
         }
+        #[classmethod]
         #[cmod::tags(args(device, pin))]
         pub async fn write_single_register(&self, device: String, pin: String, value: u32) -> Result<()> {
             self.0.write_single_register(device, pin, value).await
         }
+        #[classmethod]
         #[cmod::tags(args(device, pin, values))]
         pub async fn write_multiple_registers(&self, device: String, pin: String, values: Vec<u32>) -> Result<()> {
             self.0.write_multiple_registers(device, pin, values).await
         }
+        #[classmethod]
         #[cmod::tags(args(device, pin), ret)]
         pub async fn read_holding_registers(&self, device: String, pin: String, count: u32) -> Result<Vec<u32>> {
             self.0.read_holding_registers(device, pin, count).await
         }
+        #[classmethod]
         #[cmod::tags(args(device, pin), ret)]
         pub async fn read_input_registers(&self, device: String, pin: String, count: u32) -> Result<Vec<u32>> {
             self.0.read_input_registers(device, pin, count).await
+        }
+
+        //CLAW
+        #[classmethod]
+        pub async fn set_claw(&self, force: f64, amplitude: f64) -> Result<()> {
+            self.0.set_claw(force, amplitude).await
+        }
+        #[classmethod]
+        #[cmod::tags(ret)]
+        pub async fn get_claw(&self) -> Result<(f64, f64, f64, bool)> {
+            self.0.get_claw().await
         }
     }
     #[cmod::class]
