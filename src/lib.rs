@@ -284,6 +284,32 @@ pub mod lebai_sdk {
         pub async fn get_claw(&self) -> Result<(f64, f64, f64, bool)> {
             self.0.get_claw().await
         }
+
+        //SYSTEM
+        #[classmethod]
+        pub async fn start_sys(&self) -> Result<()> {
+            self.0.start_sys().await
+        }
+        #[classmethod]
+        pub async fn stop_sys(&self) -> Result<()> {
+            self.0.stop_sys().await
+        }
+        #[classmethod]
+        pub async fn powerdown(&self) -> Result<()> {
+            self.0.powerdown().await
+        }
+        #[classmethod]
+        pub async fn reboot(&self) -> Result<()> {
+            self.0.reboot().await
+        }
+        #[classmethod]
+        pub async fn stop(&self) -> Result<()> {
+            self.0.stop().await
+        }
+        #[classmethod]
+        pub async fn estop(&self) -> Result<()> {
+            self.0.estop().await
+        }
     }
     #[cmod::class]
     #[derive(Clone)]

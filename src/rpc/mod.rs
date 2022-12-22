@@ -4,6 +4,7 @@ pub mod modbus;
 pub mod motion;
 pub mod posture;
 pub mod signal;
+pub mod system;
 pub mod task;
 
 use async_lock::Mutex;
