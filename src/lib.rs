@@ -9,6 +9,8 @@ mod runtime;
 pub mod lebai_sdk {
     use super::*;
     use cmod::Result;
+    use proto::lebai::posture::CartesianPose as Cartesian;
+    use proto::lebai::posture::Position;
     use proto::posture::{CartesianPose, JointPose, Pose};
 
     #[cmod::function]
@@ -309,6 +311,56 @@ pub mod lebai_sdk {
         #[classmethod]
         pub async fn estop(&self) -> Result<()> {
             self.0.estop().await
+        }
+
+        //DYNAMIC AND KINEMATIC
+        #[classmethod]
+        #[cmod::tags(args(name, dir), ret)]
+        pub async fn load_tcp(&self, name: String, dir: String) -> Result<Cartesian> {
+            self.0.load_tcp(name, dir).await
+        }
+        #[classmethod]
+        #[cmod::tags(args(pose))]
+        pub async fn set_tcp(&self, pose: Cartesian) -> Result<()> {
+            self.0.set_tcp(pose).await
+        }
+        #[classmethod]
+        #[cmod::tags(ret)]
+        pub async fn get_tcp(&self) -> Result<Cartesian> {
+            self.0.get_tcp().await
+        }
+        #[classmethod]
+        pub async fn set_velocity_factor(&self, speed_factor: i32) -> Result<()> {
+            self.0.set_velocity_factor(speed_factor).await
+        }
+        #[classmethod]
+        pub async fn get_velocity_factor(&self) -> Result<i32> {
+            self.0.get_velocity_factor().await
+        }
+        #[classmethod]
+        #[cmod::tags(args(name, dir), ret)]
+        pub async fn load_payload(&self, name: String, dir: String) -> Result<(f64, Option<Position>)> {
+            self.0.load_payload(name, dir).await
+        }
+        #[classmethod]
+        #[cmod::tags(args(mass, cog))]
+        pub async fn set_payload(&self, mass: f64, cog: Position) -> Result<()> {
+            self.0.set_payload(mass, cog).await
+        }
+        #[classmethod]
+        #[cmod::tags(ret)]
+        pub async fn get_payload(&self) -> Result<(f64, Option<Position>)> {
+            self.0.get_payload().await
+        }
+        #[classmethod]
+        #[cmod::tags(args(pose))]
+        pub async fn set_gravity(&self, pose: Position) -> Result<()> {
+            self.0.set_gravity(pose).await
+        }
+        #[classmethod]
+        #[cmod::tags(ret)]
+        pub async fn get_gravity(&self) -> Result<Position> {
+            self.0.get_gravity().await
         }
     }
     #[cmod::class]
