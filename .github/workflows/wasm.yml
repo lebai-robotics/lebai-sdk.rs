@@ -41,3 +41,6 @@ jobs:
         with:
           name: Lebai_WASM_SDK_${{ matrix.target }}
           path: ./pkg
+      - name: Release
+        if: ${{ contains(github.ref, 'tags/v') && matrix.target == 'bundler' }}
+        run: wasm-pack publish --otp ${{ secrets.NPM_TOKEN }}

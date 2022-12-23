@@ -49,8 +49,13 @@ jobs:
       - name: Upload
         uses: actions/upload-artifact@v3
         with:
-          name: Lebai_Python_SDK
+          name: Lebai_Python_SDK_Linux_${{matrix.archit}}
           path: ./target/wheels/*.whl
+      - name: Release
+        if: ${{ contains(github.ref, 'tags/v') }}
+        env:
+          MATURIN_PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
+        run: maturin upload --skip-existing *
   builds_macos:
     strategy:
       fail-fast: false
@@ -86,8 +91,13 @@ jobs:
       - name: Upload
         uses: actions/upload-artifact@v3
         with:
-          name: Lebai_Python_SDK
+          name: Lebai_Python_SDK_MacOS_${{matrix.archit}}
           path: ./target/wheels/*.whl
+      - name: Release
+        if: ${{ contains(github.ref, 'tags/v') }}
+        env:
+          MATURIN_PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
+        run: maturin upload --skip-existing *
   builds_windows:
     strategy:
       fail-fast: false
@@ -121,5 +131,10 @@ jobs:
       - name: Upload
         uses: actions/upload-artifact@v3
         with:
-          name: Lebai_Python_SDK
+          name: Lebai_Python_SDK_Windows_${{matrix.archit}}
           path: ./target/wheels/*.whl
+      - name: Release
+        if: ${{ contains(github.ref, 'tags/v') }}
+        env:
+          MATURIN_PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
+        run: maturin upload --skip-existing *

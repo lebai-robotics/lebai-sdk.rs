@@ -1,6 +1,9 @@
 [package]
+description = "lebai_sdk"
 edition = "2021"
+license-file = "LICENSE"
 name = "lebai_sdk"
+repository = "https://github.com/lebai-robotics/lebai-sdk.rs"
 version = "0.1.2"
 
 [workspace]
