@@ -55,7 +55,7 @@ jobs:
         if: ${{ contains(github.ref, 'tags/v') }}
         env:
           MATURIN_PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
-        run: maturin upload --skip-existing *
+        run: maturin upload --skip-existing target/wheels/*.whl
   builds_macos:
     strategy:
       fail-fast: false
@@ -97,7 +97,7 @@ jobs:
         if: ${{ contains(github.ref, 'tags/v') }}
         env:
           MATURIN_PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
-        run: maturin upload --skip-existing *
+        run: maturin upload --skip-existing target/wheels/*.whl
   builds_windows:
     strategy:
       fail-fast: false
@@ -137,4 +137,4 @@ jobs:
         if: ${{ contains(github.ref, 'tags/v') }}
         env:
           MATURIN_PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
-        run: maturin upload --skip-existing *
+        run: maturin upload --skip-existing target/wheels/*.whl
