@@ -26,11 +26,14 @@ pub async fn discover_devices(time: u32) -> Result<Vec<DeviceInfo>> {
                         } else {
                             continue;
                         };
-                        let ip = if let Some(x) = record.get_addresses().iter().nth(0) {
-                            x.to_string()
-                        } else {
-                            continue;
-                        };
+                        let mut ip = None;
+                        for addr in record.get_addresses().iter() {
+                            if addr.is_private() {
+                                ip = Some(addr.to_string());
+                                break;
+                            }
+                        }
+                        let ip = if let Some(ip) = ip { ip } else { continue };
 
                         if let Some(device) = devices.iter_mut().find(|x| x.name == name) {
                             device.ip = ip;

@@ -43,6 +43,6 @@ jobs:
           path: ./pkg
       - name: Release
         if: ${{ contains(github.ref, 'tags/v') && matrix.target == 'bundler' }}
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: wasm-pack publish
+        run: |
+          npm config set //registry.npmjs.org/:_authToken ${{ secrets.NPM_TOKEN }}
+          wasm-pack publish
