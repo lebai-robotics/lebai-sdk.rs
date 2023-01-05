@@ -1,6 +1,7 @@
 pub mod claw;
 pub mod dynamic;
 pub mod io;
+pub mod led;
 pub mod modbus;
 pub mod motion;
 pub mod posture;

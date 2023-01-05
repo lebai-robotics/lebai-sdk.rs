@@ -12,6 +12,7 @@ pub mod lebai_sdk {
     use proto::lebai::claw::Claw;
     use proto::lebai::dynamic::Payload;
     use proto::lebai::posture::Position;
+    use proto::led::LedStyle;
     use proto::posture::{CartesianPose, JointPose, Pose};
 
     #[cmod::function]
@@ -292,6 +293,30 @@ pub mod lebai_sdk {
         #[cmod::tags(ret)]
         pub async fn get_claw(&self) -> Result<Claw> {
             self.0.get_claw().await
+        }
+
+        //LED
+        #[classmethod]
+        #[cmod::tags(ret)]
+        pub async fn load_led_style(&self, name: String, dir: Option<String>) -> Result<LedStyle> {
+            self.0.load_led_style(name, dir).await
+        }
+        #[classmethod]
+        #[cmod::tags(args(style))]
+        pub async fn set_led_style(&self, style: LedStyle) -> Result<()> {
+            self.0.set_led_style(style).await
+        }
+        #[classmethod]
+        pub async fn set_led(&self, mode: i32, speed: i32, colors: Vec<i32>) -> Result<()> {
+            self.0.set_led(mode, speed, colors).await
+        }
+        #[classmethod]
+        pub async fn set_voice(&self, voice: i32, volume: i32) -> Result<()> {
+            self.0.set_voice(voice, volume).await
+        }
+        #[classmethod]
+        pub async fn set_fan(&self, mode: i32) -> Result<()> {
+            self.0.set_fan(mode).await
         }
 
         //SYSTEM
