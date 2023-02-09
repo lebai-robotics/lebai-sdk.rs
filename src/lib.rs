@@ -19,6 +19,17 @@ pub mod lebai_sdk {
     pub fn version() -> Result<String> {
         Ok(common::VERSION.into())
     }
+    #[cmod::function]
+    pub fn timestamp() -> Result<u64> {
+        common::timestamp()
+    }
+    #[cmod::function]
+    pub async fn sleep_ms(ms: u64) -> Result<()> {
+        #[cfg(not(target_family = "wasm"))]
+        return common::sleep_ms(ms).await;
+        #[cfg(target_family = "wasm")]
+        Err("please use `setTimeout`".into())
+    }
 
     #[cmod::function]
     #[cmod::tags(ret)]
