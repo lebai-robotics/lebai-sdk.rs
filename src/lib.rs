@@ -123,13 +123,13 @@ pub mod lebai_sdk {
             self.0.movec(via, p, rad, a, v, t, r).await
         }
         #[classmethod]
-        #[cmod::tags(args(p))]
-        pub async fn move_pvt(&self, p: JointPose, v: f64, t: f64) -> Result<()> {
+        #[cmod::tags(args(p, v))]
+        pub async fn move_pvt(&self, p: JointPose, v: Vec<f64>, t: f64) -> Result<()> {
             self.0.move_pvt(p, v, t).await
         }
         #[classmethod]
-        #[cmod::tags(args(p))]
-        pub async fn move_pvat(&self, p: JointPose, v: f64, a: f64, t: f64) -> Result<()> {
+        #[cmod::tags(args(p, v, a))]
+        pub async fn move_pvat(&self, p: JointPose, v: Vec<f64>, a: Vec<f64>, t: f64) -> Result<()> {
             self.0.move_pvat(p, v, a, t).await
         }
         #[classmethod]
