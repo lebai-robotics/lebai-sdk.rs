@@ -20,6 +20,13 @@ pub mod lebai_sdk {
         Ok(common::VERSION.into())
     }
     #[cmod::function]
+    pub fn init() -> Result<()> {
+        #[cfg(feature = "ffi_py")]
+        cmod::ffi::py::init_runtime(&*runtime::RT).map_err(|_| "init runtime failed".to_string())?;
+
+        Ok(())
+    }
+    #[cmod::function]
     pub fn timestamp() -> Result<u64> {
         common::timestamp()
     }

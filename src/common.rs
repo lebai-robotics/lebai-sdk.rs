@@ -16,6 +16,7 @@ pub fn timestamp() -> Result<u64> {
 
 #[cfg(not(target_family = "wasm"))]
 pub async fn sleep_ms(ms: u64) -> Result<()> {
+    let _rt = crate::runtime::RT.enter();
     tokio::time::sleep(Duration::from_millis(ms)).await;
     Ok(())
 }

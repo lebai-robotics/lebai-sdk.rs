@@ -7,6 +7,7 @@ use proto::lebai::multi_devices::DeviceInfo;
 const SERVICE_NAME: &'static str = "_lebai._tcp.local.";
 
 pub async fn discover_devices(time: u32) -> Result<Vec<DeviceInfo>> {
+    let _rt = crate::runtime::RT.enter();
     let mdns = ServiceDaemon::new().map_err(|e| e.to_string())?;
     let receiver = mdns.browse(&SERVICE_NAME).map_err(|e| e.to_string())?;
     let mut devices: Vec<DeviceInfo> = Vec::new();
