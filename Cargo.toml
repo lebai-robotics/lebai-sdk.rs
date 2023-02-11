@@ -19,6 +19,7 @@ name = "lebai_sdk"
 default = []
 ffi_lua = ["cmod/ffi_lua", "mlua"]
 ffi_py = ["cmod/ffi_py", "pyo3"]
+ffi_py_asyncio = ["ffi_py", "cmod/ffi_py_asyncio", "pyo3"]
 ffi_wasm = ["cmod/ffi_wasm", "wasm-bindgen", "wasm-bindgen-futures"]
 mdns = ["mdns-sd"]
 
