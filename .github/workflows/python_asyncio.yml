@@ -49,7 +49,7 @@ jobs:
       - name: Upload
         uses: actions/upload-artifact@v3
         with:
-          name: Lebai_Python_SDK_Linux_${{matrix.archit}}
+          name: Lebai_Python_AsyncIO_SDK_Linux_${{matrix.archit}}
           path: ./target/wheels/*.whl
   builds_macos:
     strategy:
@@ -86,7 +86,7 @@ jobs:
       - name: Upload
         uses: actions/upload-artifact@v3
         with:
-          name: Lebai_Python_SDK_MacOS_${{matrix.archit}}
+          name: Lebai_Python_AsyncIO_SDK_MacOS_${{matrix.archit}}
           path: ./target/wheels/*.whl
   builds_windows:
     strategy:
@@ -121,26 +121,5 @@ jobs:
       - name: Upload
         uses: actions/upload-artifact@v3
         with:
-          name: Lebai_Python_SDK_Windows_${{matrix.archit}}
+          name: Lebai_Python_AsyncIO_SDK_Windows_${{matrix.archit}}
           path: ./target/wheels/*.whl
-
-  release:
-    if: ${{ contains(github.ref, 'tags/v') }}
-    needs: [builds_linux, builds_macos, builds_windows]
-    strategy:
-      fail-fast: false
-    runs-on: ubuntu-latest
-    steps:
-      - name: Install Rust
-        uses: actions-rs/toolchain@v1
-        with:
-          toolchain: stable
-      - uses: actions/download-artifact@v3
-      - name: Release
-        env:
-          MATURIN_PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
-        uses: PyO3/maturin-action@v1
-        with:
-          container: off
-          command: upload
-          args: --skip-existing */*.whl
