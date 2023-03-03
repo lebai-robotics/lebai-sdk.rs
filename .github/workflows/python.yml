@@ -3,7 +3,7 @@ run-name: Python building
 on: [push, pull_request]
 
 permissions:
-  contents: read
+  contents: write
   pull-requests: read
 
 jobs:
@@ -144,3 +144,13 @@ jobs:
           container: off
           command: upload
           args: --skip-existing */*.whl
+      - name: Zip Artifact
+        run: for dir in `ls`; do zip -r ${dir}.zip ${dir}; done
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          draft: false
+          prerelease: false
+          files: |
+            *
+

@@ -3,7 +3,7 @@ run-name: Python AsyncIO building
 on: [push, pull_request]
 
 permissions:
-  contents: read
+  contents: write
   pull-requests: read
 
 jobs:
@@ -123,3 +123,21 @@ jobs:
         with:
           name: Lebai_Python_AsyncIO_SDK_Windows_${{matrix.archit}}
           path: ./target/wheels/*.whl
+
+  release:
+    if: ${{ contains(github.ref, 'tags/v') }}
+    needs: [builds_linux, builds_macos, builds_windows]
+    strategy:
+      fail-fast: false
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v3
+      - name: Zip Artifact
+        run: for dir in `ls`; do zip -r ${dir}.zip ${dir}; done
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          draft: false
+          prerelease: false
+          files: |
+            *

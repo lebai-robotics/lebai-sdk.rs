@@ -3,7 +3,7 @@ run-name: Rust building
 on: [push, pull_request]
 
 permissions:
-  contents: read
+  contents: write
   pull-requests: read
 
 jobs:
