@@ -4,7 +4,7 @@ edition = "2021"
 license-file = "LICENSE"
 name = "lebai_sdk"
 repository = "https://github.com/lebai-robotics/lebai-sdk.rs"
-version = "0.1.6"
+version = "0.1.7"
 
 [workspace]
 members = [
