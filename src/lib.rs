@@ -88,6 +88,11 @@ pub mod lebai_sdk {
             self.0.pose_trans(from, to).await
         }
         #[classmethod]
+        #[cmod::tags(args(pose, frame, delta), ret)]
+        pub async fn pose_add(&self, pose: Pose, frame: CartesianPose, delta: CartesianPose) -> Result<CartesianPose> {
+            self.0.pose_add(pose, frame, delta).await
+        }
+        #[classmethod]
         #[cmod::tags(args(p), ret)]
         pub async fn pose_inverse(&self, p: Pose) -> Result<CartesianPose> {
             self.0.pose_inverse(p).await

@@ -83,6 +83,24 @@ impl From<posture::CartesianPose> for CartesianPose {
         }
     }
 }
+impl From<posture::CartesianFrame> for posture::CartesianPose {
+    fn from(item: posture::CartesianFrame) -> Self {
+        Self {
+            position: item.position,
+            rotation: item.rotation,
+        }
+    }
+}
+impl From<posture::CartesianPose> for posture::CartesianFrame {
+    fn from(item: posture::CartesianPose) -> Self {
+        Self {
+            position_kind: posture::cartesian_frame::Kind::Custom as i32,
+            position: item.position,
+            rotation_kind: posture::cartesian_frame::Kind::Custom as i32,
+            rotation: item.rotation,
+        }
+    }
+}
 
 #[derive(Serialize, Deserialize)]
 #[serde(untagged)]
