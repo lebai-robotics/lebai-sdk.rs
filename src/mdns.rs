@@ -27,6 +27,11 @@ pub async fn discover_devices(time: u32) -> Result<Vec<DeviceInfo>> {
                         } else {
                             continue;
                         };
+                        let mac = if let Some(x) = record.get_property_val("mac") {
+                            x.to_owned()
+                        } else {
+                            String::new()
+                        };
                         let mut ip = None;
                         for addr in record.get_addresses().iter() {
                             if addr.is_private() {
@@ -39,12 +44,7 @@ pub async fn discover_devices(time: u32) -> Result<Vec<DeviceInfo>> {
                         if let Some(device) = devices.iter_mut().find(|x| x.name == name) {
                             device.ip = ip;
                         } else {
-                            devices.push(DeviceInfo {
-                                name,
-                                mac: String::new(),
-                                ip,
-                                online: true,
-                            })
+                            devices.push(DeviceInfo { name, mac, ip, online: true })
                         }
                     }
                     _ => {}
