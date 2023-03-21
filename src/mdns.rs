@@ -27,7 +27,7 @@ pub async fn discover_devices(time: u32) -> Result<Vec<DeviceInfo>> {
                         } else {
                             continue;
                         };
-                        let mac = if let Some(x) = record.get_property_val("mac") {
+                        let mac = if let Some(x) = record.get_property_val_str("mac") {
                             x.to_owned()
                         } else {
                             String::new()
