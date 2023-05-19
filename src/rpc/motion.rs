@@ -90,8 +90,8 @@ impl Robot {
         for i in 0..p.0.len() {
             joints.push(JointMove {
                 pose: p.0[i],
-                velocity: v.get(i).copied().unwrap_or_default(),
-                acc: 0.0,
+                velocity: Some(v.get(i).copied().unwrap_or_default().into()),
+                acc: None,
             })
         }
         let req = MovePvatRequest { duration: t, joints };
@@ -103,8 +103,8 @@ impl Robot {
         for i in 0..p.0.len() {
             joints.push(JointMove {
                 pose: p.0[i],
-                velocity: v.get(i).copied().unwrap_or_default(),
-                acc: a.get(i).copied().unwrap_or_default(),
+                velocity: Some(v.get(i).copied().unwrap_or_default().into()),
+                acc: Some(a.get(i).copied().unwrap_or_default().into()),
             })
         }
         let req = MovePvatRequest { duration: t, joints };

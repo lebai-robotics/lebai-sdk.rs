@@ -48,6 +48,7 @@ jobs:
           path: |
             ./target/${{matrix.target}}/release/liblebai_sdk.*
             !./target/${{matrix.target}}/release/liblebai_sdk.d
+            !./target/${{matrix.target}}/release/liblebai_sdk.rlib
   builds_macos:
     strategy:
       fail-fast: false
@@ -83,6 +84,7 @@ jobs:
           path: |
             ./target/${{matrix.target}}/release/liblebai_sdk.*
             !./target/${{matrix.target}}/release/liblebai_sdk.d
+            !./target/${{matrix.target}}/release/liblebai_sdk.rlib
   builds_windows:
     strategy:
       fail-fast: false
@@ -116,6 +118,7 @@ jobs:
           path: |
             ./target/${{matrix.target}}/release/liblebai_sdk.*
             !./target/${{matrix.target}}/release/liblebai_sdk.d
+            !./target/${{matrix.target}}/release/liblebai_sdk.rlib
 
   release:
     if: ${{ contains(github.ref, 'tags/v') }}

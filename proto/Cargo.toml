@@ -8,7 +8,7 @@ name = "lebai-proto"
 version = "3.0.0"
 
 [dependencies]
-jsonrpsee = {version = "0.16", features = ["client-core", "macros"]}
+jsonrpsee = {version = "0.18", features = ["client-core", "macros"]}
 pbjson = "0.5"
 pbjson-types = "0.5"
 prost = "0.11"
@@ -17,5 +17,5 @@ serde_json = "1"
 
 [build-dependencies]
 pbjson-build = "0.5"
-pbjsonrpc-build = "0.2"
-tonic-build = "0.8"
+pbjsonrpc-build = "0.17"
+tonic-build = "0.9"
