@@ -159,13 +159,13 @@ pub mod lebai_sdk {
         }
         #[classmethod]
         #[cmod::tags(args(v))]
-        pub async fn speedj(&self, v: JointPose) -> Result<()> {
-            self.0.speedj(v).await
+        pub async fn speedj(&self, a: f64, v: JointPose, t: f64) -> Result<u32> {
+            self.0.speedj(a, v, t).await
         }
         #[classmethod]
         #[cmod::tags(args(v, frame))]
-        pub async fn speedl(&self, v: CartesianPose, frame: Option<CartesianPose>) -> Result<()> {
-            self.0.speedl(v, frame).await
+        pub async fn speedl(&self, a: f64, v: CartesianPose, t: f64, frame: Option<CartesianPose>) -> Result<u32> {
+            self.0.speedl(a, v, t, frame).await
         }
         #[classmethod]
         pub async fn start_teach_mode(&self) -> Result<()> {

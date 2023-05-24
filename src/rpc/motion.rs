@@ -112,23 +112,23 @@ impl Robot {
         Ok(())
     }
 
-    pub async fn speedj(&self, v: JointPose) -> Result<()> {
+    pub async fn speedj(&self, a: f64, v: JointPose, t: f64) -> Result<u32> {
         let param = SpeedParam {
-            acc: 0.1,
-            time: 0.0,
+            acc: a,
+            time: t,
             constrained: true,
         };
         let req = SpeedJRequest {
             speed: Some(v.into()),
             param: Some(param),
         };
-        self.c.speed_joint(Some(req)).await.map_err(|e| e.to_string())?;
-        Ok(())
+        let id = self.c.speed_joint(Some(req)).await.map_err(|e| e.to_string())?;
+        Ok(id.id)
     }
-    pub async fn speedl(&self, v: CartesianPose, frame: Option<CartesianPose>) -> Result<()> {
+    pub async fn speedl(&self, a: f64, v: CartesianPose, t: f64, frame: Option<CartesianPose>) -> Result<u32> {
         let param = SpeedParam {
-            acc: 0.1,
-            time: 0.0,
+            acc: a,
+            time: t,
             constrained: true,
         };
         let req = SpeedLRequest {
@@ -136,8 +136,8 @@ impl Robot {
             param: Some(param),
             frame: frame.map(|x| x.into()),
         };
-        self.c.speed_linear(Some(req)).await.map_err(|e| e.to_string())?;
-        Ok(())
+        let id = self.c.speed_linear(Some(req)).await.map_err(|e| e.to_string())?;
+        Ok(id.id)
     }
     pub async fn start_teach_mode(&self) -> Result<()> {
         let req = Empty {};
