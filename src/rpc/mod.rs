@@ -5,6 +5,7 @@ pub mod led;
 pub mod modbus;
 pub mod motion;
 pub mod posture;
+pub mod serial;
 pub mod signal;
 pub mod system;
 pub mod task;

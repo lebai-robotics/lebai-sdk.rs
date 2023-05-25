@@ -269,6 +269,27 @@ pub mod lebai_sdk {
             self.0.resume_task(id).await
         }
 
+        // Serial
+        #[classmethod]
+        pub async fn set_serial_baud_rate(&self, device: String, baud_rate: u32) -> Result<()> {
+            self.0.set_serial_baud_rate(device, baud_rate).await
+        }
+        #[classmethod]
+        #[cmod::tags(args(parity))]
+        pub async fn set_serial_parity(&self, device: String, parity: proto::lebai::serial::Parity) -> Result<()> {
+            self.0.set_serial_parity(device, parity).await
+        }
+        #[classmethod]
+        #[cmod::tags(args(data))]
+        pub async fn write_serial(&self, device: String, data: Vec<u8>) -> Result<()> {
+            self.0.write_serial(device, data).await
+        }
+        #[classmethod]
+        #[cmod::tags(ret)]
+        pub async fn read_serial(&self, device: String, len: u32) -> Result<Vec<u8>> {
+            self.0.read_serial(device, len).await
+        }
+
         //MODBUS
         #[classmethod]
         pub async fn write_single_coil(&self, device: String, pin: String, value: bool) -> Result<()> {

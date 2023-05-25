@@ -93,6 +93,11 @@ pub mod lebai {
         include!(concat!(env!("OUT_DIR"), "/lebai.io.serde.rs"));
         include!(concat!(env!("OUT_DIR"), "/lebai.io.jsonrpc.rs"));
     }
+    pub mod serial {
+        include!(concat!(env!("OUT_DIR"), "/lebai.serial.rs"));
+        include!(concat!(env!("OUT_DIR"), "/lebai.serial.serde.rs"));
+        include!(concat!(env!("OUT_DIR"), "/lebai.serial.jsonrpc.rs"));
+    }
     pub mod modbus {
         include!(concat!(env!("OUT_DIR"), "/lebai.modbus.rs"));
         include!(concat!(env!("OUT_DIR"), "/lebai.modbus.serde.rs"));

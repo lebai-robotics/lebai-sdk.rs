@@ -22,6 +22,7 @@ fn main() -> io::Result<()> {
         root.join("trigger.proto"),
         root.join("signal.proto"),
         root.join("io.proto"),
+        root.join("serial.proto"),
         root.join("modbus.proto"),
         root.join("led.proto"),
         root.join("claw.proto"),
