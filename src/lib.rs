@@ -129,22 +129,22 @@ pub mod lebai_sdk {
         }
         #[classmethod]
         #[cmod::tags(args(p))]
-        pub async fn towardj(&self, p: Pose, a: f64, v: f64, t: f64, r: Option<f64>) -> Result<u32> {
+        pub async fn towardj(&self, p: Pose, a: f64, v: f64, t: Option<f64>, r: Option<f64>) -> Result<u32> {
             self.0.towardj(p, a, v, t, r).await
         }
         #[classmethod]
         #[cmod::tags(args(p))]
-        pub async fn movej(&self, p: Pose, a: f64, v: f64, t: f64, r: Option<f64>) -> Result<u32> {
+        pub async fn movej(&self, p: Pose, a: f64, v: f64, t: Option<f64>, r: Option<f64>) -> Result<u32> {
             self.0.movej(p, a, v, t, r).await
         }
         #[classmethod]
         #[cmod::tags(args(p))]
-        pub async fn movel(&self, p: Pose, a: f64, v: f64, t: f64, r: Option<f64>) -> Result<u32> {
+        pub async fn movel(&self, p: Pose, a: f64, v: f64, t: Option<f64>, r: Option<f64>) -> Result<u32> {
             self.0.movel(p, a, v, t, r).await
         }
         #[classmethod]
         #[cmod::tags(args(via, p))]
-        pub async fn movec(&self, via: Pose, p: Pose, rad: f64, a: f64, v: f64, t: f64, r: Option<f64>) -> Result<u32> {
+        pub async fn movec(&self, via: Pose, p: Pose, rad: f64, a: f64, v: f64, t: Option<f64>, r: Option<f64>) -> Result<u32> {
             self.0.movec(via, p, rad, a, v, t, r).await
         }
         #[classmethod]
@@ -159,12 +159,12 @@ pub mod lebai_sdk {
         }
         #[classmethod]
         #[cmod::tags(args(v))]
-        pub async fn speedj(&self, a: f64, v: JointPose, t: f64) -> Result<u32> {
+        pub async fn speedj(&self, a: f64, v: JointPose, t: Option<f64>) -> Result<u32> {
             self.0.speedj(a, v, t).await
         }
         #[classmethod]
         #[cmod::tags(args(v, frame))]
-        pub async fn speedl(&self, a: f64, v: CartesianPose, t: f64, frame: Option<CartesianPose>) -> Result<u32> {
+        pub async fn speedl(&self, a: f64, v: CartesianPose, t: Option<f64>, frame: Option<CartesianPose>) -> Result<u32> {
             self.0.speedl(a, v, t, frame).await
         }
         #[classmethod]

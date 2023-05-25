@@ -26,11 +26,11 @@ impl Robot {
         Ok(format!("{:?}", res.state()))
     }
 
-    pub async fn towardj(&self, p: Pose, a: f64, v: f64, t: f64, r: Option<f64>) -> Result<u32> {
+    pub async fn towardj(&self, p: Pose, a: f64, v: f64, t: Option<f64>, r: Option<f64>) -> Result<u32> {
         let param = MoveParam {
             acc: a,
             velocity: v,
-            time: t,
+            time: t.unwrap_or_default(),
             radius: r.unwrap_or_default(),
         };
         let req = MoveRequest {
@@ -40,11 +40,11 @@ impl Robot {
         let id = self.c.toward_joint(Some(req)).await.map_err(|e| e.to_string())?;
         Ok(id.id)
     }
-    pub async fn movej(&self, p: Pose, a: f64, v: f64, t: f64, r: Option<f64>) -> Result<u32> {
+    pub async fn movej(&self, p: Pose, a: f64, v: f64, t: Option<f64>, r: Option<f64>) -> Result<u32> {
         let param = MoveParam {
             acc: a,
             velocity: v,
-            time: t,
+            time: t.unwrap_or_default(),
             radius: r.unwrap_or_default(),
         };
         let req = MoveRequest {
@@ -54,11 +54,11 @@ impl Robot {
         let id = self.c.move_joint(Some(req)).await.map_err(|e| e.to_string())?;
         Ok(id.id)
     }
-    pub async fn movel(&self, p: Pose, a: f64, v: f64, t: f64, r: Option<f64>) -> Result<u32> {
+    pub async fn movel(&self, p: Pose, a: f64, v: f64, t: Option<f64>, r: Option<f64>) -> Result<u32> {
         let param = MoveParam {
             acc: a,
             velocity: v,
-            time: t,
+            time: t.unwrap_or_default(),
             radius: r.unwrap_or_default(),
         };
         let req = MoveRequest {
@@ -68,11 +68,11 @@ impl Robot {
         let id = self.c.move_linear(Some(req)).await.map_err(|e| e.to_string())?;
         Ok(id.id)
     }
-    pub async fn movec(&self, via: Pose, p: Pose, rad: f64, a: f64, v: f64, t: f64, r: Option<f64>) -> Result<u32> {
+    pub async fn movec(&self, via: Pose, p: Pose, rad: f64, a: f64, v: f64, t: Option<f64>, r: Option<f64>) -> Result<u32> {
         let param = MoveParam {
             acc: a,
             velocity: v,
-            time: t,
+            time: t.unwrap_or_default(),
             radius: r.unwrap_or_default(),
         };
         let req = MovecRequest {
@@ -112,10 +112,10 @@ impl Robot {
         Ok(())
     }
 
-    pub async fn speedj(&self, a: f64, v: JointPose, t: f64) -> Result<u32> {
+    pub async fn speedj(&self, a: f64, v: JointPose, t: Option<f64>) -> Result<u32> {
         let param = SpeedParam {
             acc: a,
-            time: t,
+            time: t.unwrap_or_default(),
             constrained: true,
         };
         let req = SpeedJRequest {
@@ -125,10 +125,10 @@ impl Robot {
         let id = self.c.speed_joint(Some(req)).await.map_err(|e| e.to_string())?;
         Ok(id.id)
     }
-    pub async fn speedl(&self, a: f64, v: CartesianPose, t: f64, frame: Option<CartesianPose>) -> Result<u32> {
+    pub async fn speedl(&self, a: f64, v: CartesianPose, t: Option<f64>, frame: Option<CartesianPose>) -> Result<u32> {
         let param = SpeedParam {
             acc: a,
-            time: t,
+            time: t.unwrap_or_default(),
             constrained: true,
         };
         let req = SpeedLRequest {
