@@ -258,7 +258,7 @@ pub mod lebai_sdk {
             self.0.start_task(scene, params, dir, is_parallel, loop_to).await
         }
         #[classmethod]
-        pub async fn wait_task(&self, id: Option<u32>) -> Result<String>{
+        pub async fn wait_task(&self, id: Option<u32>) -> Result<String> {
             self.0.wait_task(id).await
         }
         #[classmethod]
@@ -345,6 +345,10 @@ pub mod lebai_sdk {
         }
 
         //CLAW
+        #[classmethod]
+        pub async fn init_claw(&self, force: Option<bool>) -> Result<()> {
+            self.0.init_claw(force).await
+        }
         #[classmethod]
         pub async fn set_claw(&self, force: Option<f64>, amplitude: Option<f64>) -> Result<()> {
             self.0.set_claw(force, amplitude).await
