@@ -258,6 +258,10 @@ pub mod lebai_sdk {
             self.0.start_task(scene, params, dir, is_parallel, loop_to).await
         }
         #[classmethod]
+        pub async fn wait_task(&self, id: Option<u32>) -> Result<String>{
+            self.0.wait_task(id).await
+        }
+        #[classmethod]
         pub async fn get_task_state(&self, id: Option<u32>) -> Result<String> {
             self.0.get_task_state(id).await
         }

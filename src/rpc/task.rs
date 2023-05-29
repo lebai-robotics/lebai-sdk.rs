@@ -22,6 +22,11 @@ impl Robot {
         let resp = self.c.start_task(Some(req)).await.map_err(|e| e.to_string())?;
         Ok(resp.id)
     }
+    pub(crate) async fn wait_task(&self, id: Option<u32>) -> Result<String> {
+        let req = TaskIndex { id: id.unwrap_or_default() };
+        let resp = self.c.wait_task(Some(req)).await.map_err(|e| e.to_string())?;
+        Ok(resp.stdout)
+    }
     pub(crate) async fn get_task_state(&self, id: Option<u32>) -> Result<String> {
         let req = TaskIndex { id: id.unwrap_or_default() };
         let resp = self.c.load_task(Some(req)).await.map_err(|e| e.to_string())?;
