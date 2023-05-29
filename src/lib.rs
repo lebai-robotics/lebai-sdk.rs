@@ -11,7 +11,9 @@ pub mod lebai_sdk {
     use cmod::Result;
     use proto::lebai::claw::Claw;
     use proto::lebai::dynamic::Payload;
+    use proto::lebai::kinematic::KinData;
     use proto::lebai::posture::Position;
+    use proto::lebai::system::RobotState;
     use proto::led::LedStyle;
     use proto::posture::{CartesianPose, JointPose, Pose};
 
@@ -422,6 +424,16 @@ pub mod lebai_sdk {
         #[classmethod]
         pub async fn get_velocity_factor(&self) -> Result<i32> {
             self.0.get_velocity_factor().await
+        }
+        #[classmethod]
+        #[cmod::tags(ret)]
+        pub async fn get_kin_data(&self) -> Result<KinData> {
+            self.0.get_kin_data().await
+        }
+        #[classmethod]
+        #[cmod::tags(ret)]
+        pub async fn get_robot_state(&self) -> Result<RobotState> {
+            self.0.get_robot_state().await
         }
         #[classmethod]
         #[cmod::tags(ret)]

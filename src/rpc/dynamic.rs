@@ -33,6 +33,10 @@ impl Robot {
         let resp = self.c.get_kin_factor(Some(Empty {})).await.map_err(|e| e.to_string())?;
         Ok(resp.speed_factor)
     }
+    pub(crate) async fn get_kin_data(&self) -> Result<KinData> {
+        let resp = self.c.get_kin_data(Some(Empty {})).await.map_err(|e| e.to_string())?;
+        Ok(resp)
+    }
     pub(crate) async fn load_payload(&self, name: String, dir: Option<String>) -> Result<Payload> {
         let req = LoadRequest {
             name,
