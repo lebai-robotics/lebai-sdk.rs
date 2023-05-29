@@ -271,6 +271,10 @@ pub mod lebai_sdk {
 
         // Serial
         #[classmethod]
+        pub async fn set_serial_timeout(&self, device: String, timeout: u32) -> Result<()> {
+            self.0.set_serial_timeout(device, timeout).await
+        }
+        #[classmethod]
         pub async fn set_serial_baud_rate(&self, device: String, baud_rate: u32) -> Result<()> {
             self.0.set_serial_baud_rate(device, baud_rate).await
         }
@@ -291,6 +295,10 @@ pub mod lebai_sdk {
         }
 
         //MODBUS
+        #[classmethod]
+        pub async fn set_modbus_timeout(&self, device: String, timeout: u32) -> Result<()> {
+            self.0.set_modbus_timeout(device, timeout).await
+        }
         #[classmethod]
         pub async fn write_single_coil(&self, device: String, pin: String, value: bool) -> Result<()> {
             self.0.write_single_coil(device, pin, value).await

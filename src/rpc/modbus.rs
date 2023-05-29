@@ -3,6 +3,11 @@ use cmod::Result;
 use proto::lebai::modbus::*;
 
 impl Robot {
+    pub(crate) async fn set_modbus_timeout(&self, device: String, timeout: u32) -> Result<()> {
+        let req = SetModbusTimeoutRequest { device, timeout };
+        let _ = self.c.set_modbus_timeout(Some(req)).await.map_err(|e| e.to_string())?;
+        Ok(())
+    }
     pub(crate) async fn write_single_coil(&self, device: String, pin: String, value: bool) -> Result<()> {
         let req = SetCoilRequest { device, pin, value };
         let _ = self.c.write_single_coil(Some(req)).await.map_err(|e| e.to_string())?;

@@ -3,6 +3,11 @@ use cmod::Result;
 use proto::lebai::serial::*;
 
 impl Robot {
+    pub(crate) async fn set_serial_timeout(&self, device: String, timeout: u32) -> Result<()> {
+        let req = SetSerialTimeoutRequest { device, timeout };
+        let _ = self.c.set_serial_timeout(Some(req)).await.map_err(|e| e.to_string())?;
+        Ok(())
+    }
     pub(crate) async fn set_serial_baud_rate(&self, device: String, baud_rate: u32) -> Result<()> {
         let req = SetSerialBaudRateRequest { device, baud_rate };
         let _ = self.c.set_serial_baud_rate(Some(req)).await.map_err(|e| e.to_string())?;
