@@ -236,8 +236,18 @@ pub mod lebai_sdk {
             self.0.set_signal(index, value).await
         }
         #[classmethod]
+        #[cmod::tags(args(values))]
+        pub async fn set_signals(&self, index: u32, values: Vec<i32>) -> Result<()> {
+            self.0.set_signals(index, values).await
+        }
+        #[classmethod]
         pub async fn get_signal(&self, index: u32) -> Result<i32> {
             self.0.get_signal(index).await
+        }
+        #[classmethod]
+        #[cmod::tags(ret)]
+        pub async fn get_signals(&self, index: u32, len: u32) -> Result<Vec<i32>> {
+            self.0.get_signals(index, len).await
         }
         #[classmethod]
         pub async fn add_signal(&self, index: u32, value: i32) -> Result<()> {
