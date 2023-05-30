@@ -689,7 +689,7 @@ dependencies = [
 
 [[package]]
 name = "lebai_sdk"
-version = "0.1.9"
+version = "0.1.10"
 dependencies = [
  "async-lock",
  "cmod",
