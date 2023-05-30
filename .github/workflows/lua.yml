@@ -46,9 +46,7 @@ jobs:
         with:
           name: Lebai_Lua_SDK_Linux_${{matrix.archit}}
           path: |
-            ./target/${{matrix.target}}/release/liblebai_sdk.*
-            !./target/${{matrix.target}}/release/liblebai_sdk.d
-            !./target/${{matrix.target}}/release/liblebai_sdk.rlib
+            ./target/${{matrix.target}}/release/liblebai_sdk.so
   builds_macos:
     strategy:
       fail-fast: false
@@ -82,9 +80,7 @@ jobs:
         with:
           name: Lebai_Lua_SDK_MacOS_${{matrix.archit}}
           path: |
-            ./target/${{matrix.target}}/release/liblebai_sdk.*
-            !./target/${{matrix.target}}/release/liblebai_sdk.d
-            !./target/${{matrix.target}}/release/liblebai_sdk.rlib
+            ./target/${{matrix.target}}/release/liblebai_sdk.dylib
   builds_windows:
     strategy:
       fail-fast: false
@@ -116,9 +112,7 @@ jobs:
         with:
           name: Lebai_Lua_SDK_Windows_${{matrix.archit}}
           path: |
-            ./target/${{matrix.target}}/release/liblebai_sdk.*
-            !./target/${{matrix.target}}/release/liblebai_sdk.d
-            !./target/${{matrix.target}}/release/liblebai_sdk.rlib
+            ./target/${{matrix.target}}/release/lebai_sdk.dll
 
   release:
     if: ${{ contains(github.ref, 'tags/v') }}
