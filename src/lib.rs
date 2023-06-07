@@ -9,9 +9,9 @@ mod runtime;
 pub mod lebai_sdk {
     use super::*;
     use cmod::Result;
+    use proto::kinematic::KinData;
     use proto::lebai::claw::Claw;
     use proto::lebai::dynamic::Payload;
-    use proto::lebai::kinematic::KinData;
     use proto::lebai::posture::Position;
     use proto::lebai::system::RobotState;
     use proto::led::LedStyle;
@@ -39,7 +39,7 @@ pub mod lebai_sdk {
     #[cmod::function]
     #[cmod::tags(args(ms))]
     pub async fn sleep_ms(ms: u64) -> Result<()> {
-        return common::sleep_ms(ms).await;
+        common::sleep_ms(ms).await
     }
 
     #[cmod::function]
@@ -47,8 +47,8 @@ pub mod lebai_sdk {
     pub async fn discover_devices(time: u32) -> Result<Vec<proto::lebai::multi_devices::DeviceInfo>> {
         #[cfg(not(feature = "mdns"))]
         {
-            drop(time);
-            return Err("not support".into());
+            let _time = time;
+            Err("not support".into())
         }
         #[cfg(feature = "mdns")]
         mdns::discover_devices(time).await
@@ -206,7 +206,7 @@ pub mod lebai_sdk {
         }
         #[classmethod]
         #[cmod::tags(args(device))]
-        pub async fn set_ao(&self, device: String, pin: u32, value: u32) -> Result<()> {
+        pub async fn set_ao(&self, device: String, pin: u32, value: f64) -> Result<()> {
             self.0.set_ao(device, pin, value).await
         }
         #[classmethod]

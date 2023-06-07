@@ -8,7 +8,7 @@ static TIMESTAMP: Lazy<Box<dyn Fn() -> Duration + Send + Sync>> = Lazy::new(|| {
     Box::new(move || time.elapsed() + diff)
 });
 
-pub static VERSION: &'static str = env!("CARGO_PKG_VERSION");
+pub static VERSION: &str = env!("CARGO_PKG_VERSION");
 
 pub fn timestamp() -> Result<u64> {
     Ok(TIMESTAMP().as_millis() as u64)
