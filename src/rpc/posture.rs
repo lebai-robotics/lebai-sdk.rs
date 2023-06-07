@@ -1,7 +1,7 @@
 use super::Robot;
 use cmod::Result;
 use proto::lebai::db::*;
-use proto::lebai::posture::*;
+use proto::lebai::posture::{self, *};
 use proto::posture::{CartesianPose, JointPose, Pose};
 
 impl Robot {
@@ -26,15 +26,15 @@ impl Robot {
         let pose = self.c.get_pose_trans(Some(req)).await.map_err(|e| e.to_string())?;
         Ok(pose.into())
     }
-    pub async fn pose_add(&self, pose: Pose, frame: CartesianPose, delta: CartesianPose) -> Result<CartesianPose> {
-        let delta = Pose::Cart(delta).into();
-        let mut req = GetPoseAddRequest {
+    pub async fn pose_add(&self, pose: Pose, delta: CartesianPose, frame: Option<CartesianPose>) -> Result<CartesianPose> {
+        let mut delta: posture::Pose = Pose::Cart(delta).into();
+        if let Some(frame) = frame {
+            delta.cart_frame = Some(frame.into());
+        }
+        let req = GetPoseAddRequest {
             pose: Some(pose.into()),
             delta: Some(delta),
         };
-        if let Some(delta) = &mut req.delta {
-            delta.cart_frame = Some(frame.into());
-        }
         let pose = self.c.get_pose_add(Some(req)).await.map_err(|e| e.to_string())?;
         Ok(pose.into())
     }

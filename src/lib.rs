@@ -93,8 +93,8 @@ pub mod lebai_sdk {
         }
         #[classmethod]
         #[cmod::tags(args(pose, frame, delta), ret)]
-        pub async fn pose_add(&self, pose: Pose, frame: CartesianPose, delta: CartesianPose) -> Result<CartesianPose> {
-            self.0.pose_add(pose, frame, delta).await
+        pub async fn pose_add(&self, pose: Pose, delta: CartesianPose, frame: Option<CartesianPose>) -> Result<CartesianPose> {
+            self.0.pose_add(pose, delta, frame).await
         }
         #[classmethod]
         #[cmod::tags(args(p), ret)]
