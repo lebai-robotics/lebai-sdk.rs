@@ -419,7 +419,7 @@ pub mod lebai_sdk {
             self.0.estop().await
         }
 
-        //DYNAMIC AND KINEMATIC
+        // KINEMATIC
         #[classmethod]
         #[cmod::tags(ret)]
         pub async fn load_tcp(&self, name: String, dir: Option<String>) -> Result<CartesianPose> {
@@ -453,6 +453,8 @@ pub mod lebai_sdk {
         pub async fn get_robot_state(&self) -> Result<RobotState> {
             self.0.get_robot_state().await
         }
+
+        // DYNAMIC
         #[classmethod]
         #[cmod::tags(ret)]
         pub async fn load_payload(&self, name: String, dir: Option<String>) -> Result<Payload> {
