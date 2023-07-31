@@ -22,8 +22,6 @@ use serde_json::Value;
 use std::sync::Arc;
 
 pub async fn connect(ip: String, simu: bool) -> Result<Robot> {
-    #[cfg(not(target_family = "wasm"))]
-    let _rt = crate::runtime::RT.enter();
     let port: u16 = if simu { 3030 } else { 3031 };
     let client = WsClientBuilder::default()
         .build(format!("ws://{}:{}", ip, port))

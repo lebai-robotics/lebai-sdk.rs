@@ -2,7 +2,6 @@ mod common;
 #[cfg(feature = "mdns")]
 mod mdns;
 mod rpc;
-#[cfg(not(target_family = "wasm"))]
 mod runtime;
 
 #[cmod::cmod]
@@ -16,6 +15,7 @@ pub mod lebai_sdk {
     use proto::lebai::system::RobotState;
     use proto::led::LedStyle;
     use proto::posture::{CartesianPose, JointPose, Pose};
+    use runtime::CompatExt as _;
 
     #[cmod::function]
     pub fn version() -> Result<String> {
@@ -39,7 +39,7 @@ pub mod lebai_sdk {
     #[cmod::function]
     #[cmod::tags(args(ms))]
     pub async fn sleep_ms(ms: u64) -> Result<()> {
-        common::sleep_ms(ms).await
+        common::sleep_ms(ms).compat().await
     }
 
     #[cmod::function]
@@ -51,12 +51,12 @@ pub mod lebai_sdk {
             Err("not support".into())
         }
         #[cfg(feature = "mdns")]
-        mdns::discover_devices(time).await
+        mdns::discover_devices(time).compat().await
     }
 
     #[cmod::function]
     pub async fn connect(ip: String, simu: bool) -> Result<Robot> {
-        let robot = rpc::connect(ip, simu).await?;
+        let robot = rpc::connect(ip, simu).compat().await?;
         Ok(Robot(robot))
     }
 
