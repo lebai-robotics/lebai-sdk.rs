@@ -44,7 +44,7 @@ pub mod lebai_sdk {
 
     #[cmod::function]
     #[cmod::tags(ret)]
-    pub async fn discover_devices(time: u32) -> Result<Vec<proto::lebai::multi_devices::DeviceInfo>> {
+    pub async fn discover_devices(time: f64) -> Result<Vec<proto::lebai::multi_devices::DeviceInfo>> {
         #[cfg(not(feature = "mdns"))]
         {
             let _time = time;

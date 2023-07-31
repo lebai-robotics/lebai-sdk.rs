@@ -1,13 +1,11 @@
 use core::future::Future;
 use core::pin::Pin;
 use core::task::{Context, Poll};
-use once_cell::sync::Lazy;
 use pin_project_lite::pin_project;
-use tokio::runtime::{Builder, Runtime};
 
 #[cfg(not(target_family = "wasm"))]
-pub static RT: Lazy<Runtime> = Lazy::new(|| {
-    Builder::new_multi_thread()
+pub static RT: once_cell::sync::Lazy<tokio::runtime::Runtime> = once_cell::sync::Lazy::new(|| {
+    tokio::runtime::Builder::new_multi_thread()
         .worker_threads(1)
         .thread_name("lebai-sdk")
         .thread_stack_size(3 * 1024 * 1024)

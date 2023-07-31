@@ -6,11 +6,11 @@ use proto::lebai::multi_devices::DeviceInfo;
 
 const SERVICE_NAME: &'static str = "_lebai._tcp.local.";
 
-pub async fn discover_devices(time: u32) -> Result<Vec<DeviceInfo>> {
+pub async fn discover_devices(time: f64) -> Result<Vec<DeviceInfo>> {
     let mdns = ServiceDaemon::new().map_err(|e| e.to_string())?;
     let receiver = mdns.browse(&SERVICE_NAME).map_err(|e| e.to_string())?;
     let mut devices: Vec<DeviceInfo> = Vec::new();
-    let mut task_wait = futures_timer::Delay::new(Duration::from_secs(time as u64));
+    let mut task_wait = futures_timer::Delay::new(Duration::from_millis((time * 1000.0) as u64));
     let mut task_recv = receiver.recv_async();
     loop {
         match select(task_recv, task_wait).await {
