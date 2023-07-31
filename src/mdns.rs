@@ -4,11 +4,11 @@ use futures_util::future::{select, Either};
 use mdns_sd::{ServiceDaemon, ServiceEvent};
 use proto::lebai::multi_devices::DeviceInfo;
 
-const SERVICE_NAME: &'static str = "_lebai._tcp.local.";
+const SERVICE_NAME: &str = "_lebai._tcp.local.";
 
 pub async fn discover_devices(time: f64) -> Result<Vec<DeviceInfo>> {
     let mdns = ServiceDaemon::new().map_err(|e| e.to_string())?;
-    let receiver = mdns.browse(&SERVICE_NAME).map_err(|e| e.to_string())?;
+    let receiver = mdns.browse(SERVICE_NAME).map_err(|e| e.to_string())?;
     let mut devices: Vec<DeviceInfo> = Vec::new();
     let mut task_wait = futures_timer::Delay::new(Duration::from_millis((time * 1000.0) as u64));
     let mut task_recv = receiver.recv_async();
@@ -52,5 +52,6 @@ pub async fn discover_devices(time: f64) -> Result<Vec<DeviceInfo>> {
             Either::Right(_) => break,
         }
     }
+    devices.sort_by(|a, b| a.name.cmp(&b.name));
     Ok(devices)
 }
