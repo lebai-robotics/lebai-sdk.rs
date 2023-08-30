@@ -4,7 +4,7 @@ edition = "2021"
 license-file = "LICENSE"
 name = "lebai_sdk"
 repository = "https://github.com/lebai-robotics/lebai-sdk.rs"
-version = "0.1.13"
+version = "0.1.14"
 
 [workspace]
 members = [
@@ -25,15 +25,15 @@ mdns = ["mdns-sd"]
 
 [dependencies]
 async-lock = "2"
-cmod = {version = "0.1"}
+cmod = {version = "0.2"}
 futures-timer = "3"
 futures-util = "0.3"
-jsonrpsee-core = {version = "0.19"}
+jsonrpsee-core = {version = "0.20"}
 mdns-sd = {version = "0.7", default-features = false, features = ["async"], optional = true}
-mlua = {version = "0.8", features = ["lua54"], optional = true}
+mlua = {version = "0.9", features = ["lua54"], optional = true}
 once_cell = "1"
 pin-project-lite = "0.2"
-proto = {package = "lebai-proto", path = "proto"}
+proto = {package = "lebai-proto", path = "proto", version = "3"}
 pyo3 = {version = "0.19", features = ["abi3-py37"], optional = true}
 serde = {version = "1", features = ["derive"]}
 serde_json = "1"
@@ -41,9 +41,9 @@ wasm-bindgen = {version = "0.2", optional = true}
 wasm-bindgen-futures = {version = "0.4", optional = true}
 
 [target.'cfg(target_family = "wasm")'.dependencies]
-jsonrpsee-wasm-client = {version = "0.19"}
+jsonrpsee-wasm-client = {version = "0.20"}
 [target.'cfg(not(target_family = "wasm"))'.dependencies]
-jsonrpsee-ws-client = {version = "0.19", default-features = false, features = ["webpki-tls"]}
+jsonrpsee-ws-client = {version = "0.20", default-features = false, features = ["webpki-tls"]}
 tokio = {version = "1", features = ["full"]}
 
 [patch.crates-io]
