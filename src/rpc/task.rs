@@ -23,8 +23,9 @@ impl Robot {
         Ok(resp.id)
     }
     pub(crate) async fn get_task_list(&self) -> Result<Vec<u32>> {
-        let resp = self.c.load_task_list(None).await.map_err(|e| e.to_string())?;
-        Ok(resp.ids)
+        let resp = self.c.load_running_tasks(None).await.map_err(|e| e.to_string())?;
+        let tasks = resp.tasks.into_iter().map(|x| x.id).collect();
+        Ok(tasks)
     }
     pub(crate) async fn get_main_task_id(&self) -> Result<Option<u32>> {
         let resp = self.c.load_task(None).await.map_err(|e| e.to_string())?;

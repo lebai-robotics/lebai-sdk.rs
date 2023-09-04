@@ -23,7 +23,7 @@ impl Robot {
     pub async fn get_motion_state(&self, id: u32) -> Result<String> {
         let req = MotionIndex { id };
         let res = self.c.get_motion_state(Some(req)).await.map_err(|e| e.to_string())?;
-        Ok(format!("{:?}", res.state()))
+        Ok(res.state().as_str_name().to_string())
     }
 
     pub async fn towardj(&self, p: Pose, a: f64, v: f64, t: Option<f64>, r: Option<f64>) -> Result<u32> {
