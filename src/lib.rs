@@ -268,6 +268,15 @@ pub mod lebai_sdk {
             self.0.start_task(scene, params, dir, is_parallel, loop_to).await
         }
         #[classmethod]
+        #[cmod::tags(ret)]
+        pub async fn get_task_list(&self) -> Result<Vec<u32>> {
+            self.0.get_task_list().await
+        }
+        #[classmethod]
+        pub async fn get_main_task_id(&self) -> Result<Option<u32>> {
+            self.0.get_main_task_id().await
+        }
+        #[classmethod]
         pub async fn wait_task(&self, id: Option<u32>) -> Result<String> {
             self.0.wait_task(id).await
         }
@@ -275,12 +284,15 @@ pub mod lebai_sdk {
         pub async fn get_task_state(&self, id: Option<u32>) -> Result<String> {
             self.0.get_task_state(id).await
         }
+        #[classmethod]
         pub async fn cancel_task(&self, id: Option<u32>) -> Result<()> {
             self.0.cancel_task(id).await
         }
+        #[classmethod]
         pub async fn pause_task(&self, id: Option<u32>) -> Result<()> {
             self.0.pause_task(id).await
         }
+        #[classmethod]
         pub async fn resume_task(&self, id: Option<u32>) -> Result<()> {
             self.0.resume_task(id).await
         }
