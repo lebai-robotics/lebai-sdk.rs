@@ -29,3 +29,18 @@ jobs:
           submodules: true
       - name: Build
         run: cargo build --release --features mdns
+
+  release:
+    if: ${{ contains(github.ref, 'tags/v') }}
+    needs: [builds]
+    strategy:
+      fail-fast: false
+    runs-on: ubuntu-latest
+    steps:
+      - name: login
+        run: cargo login ${{ secrets.CARGO_TOKEN }}
+      - name: publish proto
+        continue-on-error: true
+        run: cargo publish -p lebai-proto
+      - name: publish lebai_sdk
+        run: cargo publish -p lebai_sdk
