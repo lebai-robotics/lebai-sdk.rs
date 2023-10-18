@@ -19,8 +19,11 @@ pub struct CartesianPose {
     pub x: f64,
     pub y: f64,
     pub z: f64,
+    #[serde(default)]
     pub rx: Option<f64>,
+    #[serde(default)]
     pub ry: Option<f64>,
+    #[serde(default)]
     pub rz: Option<f64>,
 }
 impl From<CartesianPose> for posture::CartesianFrame {
