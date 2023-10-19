@@ -75,9 +75,9 @@ impl Robot {
             cartesian_frame::Kind::LastTcp => todo!(),
             cartesian_frame::Kind::Custom => {
                 let rot = pose.rotation.unwrap_or_default().euler_zyx.unwrap_or_default();
-                ret.rx = Some(rot.x);
-                ret.ry = Some(rot.y);
-                ret.rz = Some(rot.z);
+                ret.rx = rot.x;
+                ret.ry = rot.y;
+                ret.rz = rot.z;
             }
         };
         Ok(ret)

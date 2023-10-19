@@ -20,11 +20,11 @@ pub struct CartesianPose {
     pub y: f64,
     pub z: f64,
     #[serde(default)]
-    pub rx: Option<f64>,
+    pub rx: f64,
     #[serde(default)]
-    pub ry: Option<f64>,
+    pub ry: f64,
     #[serde(default)]
-    pub rz: Option<f64>,
+    pub rz: f64,
 }
 impl From<CartesianPose> for posture::CartesianFrame {
     fn from(cart: CartesianPose) -> Self {
@@ -34,9 +34,9 @@ impl From<CartesianPose> for posture::CartesianFrame {
             z: cart.z,
         };
         let euler = posture::EulerZyx {
-            x: cart.rx.unwrap_or_default(),
-            y: cart.ry.unwrap_or_default(),
-            z: cart.rz.unwrap_or_default(),
+            x: cart.rx,
+            y: cart.ry,
+            z: cart.rz,
         };
         let rotation = posture::Rotation {
             euler_zyx: Some(euler),
@@ -58,9 +58,9 @@ impl From<CartesianPose> for posture::CartesianPose {
             z: cart.z,
         };
         let euler = posture::EulerZyx {
-            x: cart.rx.unwrap_or_default(),
-            y: cart.ry.unwrap_or_default(),
-            z: cart.rz.unwrap_or_default(),
+            x: cart.rx,
+            y: cart.ry,
+            z: cart.rz,
         };
         let rotation = posture::Rotation {
             euler_zyx: Some(euler),
@@ -80,9 +80,9 @@ impl From<posture::CartesianPose> for CartesianPose {
             x: pos.x,
             y: pos.y,
             z: pos.z,
-            rx: Some(rot.x),
-            ry: Some(rot.y),
-            rz: Some(rot.z),
+            rx: rot.x,
+            ry: rot.y,
+            rz: rot.z,
         }
     }
 }
