@@ -6,7 +6,7 @@ keywords = ["protobuf"]
 license = "MIT"
 name = "lebai-proto"
 repository = "https://github.com/lebai-robotics/lebai-sdk.rs"
-version = "3.0.2"
+version = "3.0.3"
 
 [dependencies]
 jsonrpsee = {version = "0.20", features = ["client-core", "macros"]}
