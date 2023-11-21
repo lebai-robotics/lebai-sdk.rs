@@ -254,6 +254,22 @@ pub mod lebai_sdk {
             self.0.add_signal(index, value).await
         }
 
+        // Storage
+        #[classmethod]
+        pub async fn set_item(&self, key: String, value: String) -> Result<()> {
+            self.0.set_item(key, value).await
+        }
+        #[classmethod]
+        #[cmod::tags(ret)]
+        pub async fn get_item(&self, key: String) -> Result<proto::lebai::storage::Item> {
+            self.0.get_item(key).await
+        }
+        #[classmethod]
+        #[cmod::tags(ret)]
+        pub async fn get_items(&self, prefix: String) -> Result<Vec<proto::lebai::storage::Item>> {
+            self.0.get_items(prefix).await
+        }
+
         //TASK
         #[classmethod]
         #[cmod::tags(args(params))]

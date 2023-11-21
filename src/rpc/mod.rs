@@ -8,6 +8,7 @@ pub mod motion;
 pub mod posture;
 pub mod serial;
 pub mod signal;
+pub mod storage;
 pub mod system;
 pub mod task;
 
