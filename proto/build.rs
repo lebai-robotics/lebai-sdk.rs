@@ -19,6 +19,7 @@ fn main() -> io::Result<()> {
         root.join("motion.proto"),
         root.join("safety.proto"),
         root.join("task.proto"),
+        root.join("plugin.proto"),
         root.join("trigger.proto"),
         root.join("signal.proto"),
         root.join("io.proto"),

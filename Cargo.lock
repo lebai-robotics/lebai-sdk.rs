@@ -693,7 +693,7 @@ checksum = "e2abad23fbc42b3700f2f279844dc832adb2b2eb069b2df918f455c4e18cc646"
 
 [[package]]
 name = "lebai-proto"
-version = "3.0.3"
+version = "3.0.4"
 dependencies = [
  "jsonrpsee",
  "pbjson",

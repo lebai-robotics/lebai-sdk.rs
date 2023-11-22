@@ -79,6 +79,11 @@ pub mod lebai {
         include!(concat!(env!("OUT_DIR"), "/lebai.task.serde.rs"));
         include!(concat!(env!("OUT_DIR"), "/lebai.task.jsonrpc.rs"));
     }
+    pub mod plugin {
+        include!(concat!(env!("OUT_DIR"), "/lebai.plugin.rs"));
+        include!(concat!(env!("OUT_DIR"), "/lebai.plugin.serde.rs"));
+        include!(concat!(env!("OUT_DIR"), "/lebai.plugin.jsonrpc.rs"));
+    }
     pub mod trigger {
         include!(concat!(env!("OUT_DIR"), "/lebai.trigger.rs"));
         include!(concat!(env!("OUT_DIR"), "/lebai.trigger.serde.rs"));

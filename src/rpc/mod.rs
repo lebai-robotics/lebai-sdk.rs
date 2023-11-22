@@ -4,6 +4,7 @@ pub mod io;
 pub mod kinematic;
 pub mod led;
 pub mod modbus;
+pub mod plugin;
 pub mod motion;
 pub mod posture;
 pub mod serial;

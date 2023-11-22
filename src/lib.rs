@@ -270,6 +270,12 @@ pub mod lebai_sdk {
             self.0.get_items(prefix).await
         }
 
+        //Plugin
+        #[classmethod]
+        #[cmod::tags(args(params), ret)]
+        pub async fn run_plugin_cmd(&self, name: String, params: Option<Vec<String>>) -> Result<proto::lebai::CommandStdout> {
+            self.0.run_plugin_cmd(name, params).await
+        }
         //TASK
         #[classmethod]
         #[cmod::tags(args(params))]
