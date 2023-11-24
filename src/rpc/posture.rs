@@ -61,25 +61,24 @@ impl Robot {
         Ok(pose)
     }
     pub async fn load_frame(&self, name: String, dir: Option<String>) -> Result<CartesianPose> {
-        let req = LoadRequest {
+        let frame_index = LoadRequest {
             name,
             dir: dir.unwrap_or_default(),
         };
-        let pose = self.c.load_frame(Some(req)).await.map_err(|e| e.to_string())?;
-        let mut ret = CartesianPose::default();
-        match pose.rotation_kind() {
-            cartesian_frame::Kind::Base => {}
-            cartesian_frame::Kind::Flange => todo!(),
-            cartesian_frame::Kind::LastFlange => todo!(),
-            cartesian_frame::Kind::Tcp => todo!(),
-            cartesian_frame::Kind::LastTcp => todo!(),
-            cartesian_frame::Kind::Custom => {
-                let rot = pose.rotation.unwrap_or_default().euler_zyx.unwrap_or_default();
-                ret.rx = rot.x;
-                ret.ry = rot.y;
-                ret.rz = rot.z;
-            }
+        let req = PoseRequest {
+            pose: Some(posture::Pose {
+                kind: posture::pose::Kind::Cartesian as i32,
+                cart_frame_index: Some(frame_index),
+                ..Default::default()
+            }),
         };
-        Ok(ret)
+        let pose = self.c.get_forward_kin(Some(req)).await.map_err(|e| e.to_string())?;
+        let rot = pose.rotation.unwrap_or_default().euler_zyx.unwrap_or_default();
+        Ok(CartesianPose {
+            rx: rot.x,
+            ry: rot.y,
+            rz: rot.z,
+            ..Default::default()
+        })
     }
 }
