@@ -163,8 +163,8 @@ dependencies = [
 
 [[package]]
 name = "cmod"
-version = "0.3.1"
-source = "git+https://github.com/rise0chen/cmod.git#b3bfc8181172caf84dcdb5f45dcc971e691f8dda"
+version = "0.3.2"
+source = "git+https://github.com/rise0chen/cmod.git#b9823a82fdfbb05d042e58ff03988e5f5472a9a7"
 dependencies = [
  "cmod-core",
  "cmod-macros",
@@ -172,8 +172,8 @@ dependencies = [
 
 [[package]]
 name = "cmod-core"
-version = "0.3.1"
-source = "git+https://github.com/rise0chen/cmod.git#b3bfc8181172caf84dcdb5f45dcc971e691f8dda"
+version = "0.3.2"
+source = "git+https://github.com/rise0chen/cmod.git#b9823a82fdfbb05d042e58ff03988e5f5472a9a7"
 dependencies = [
  "mlua",
  "pyo3",
@@ -187,8 +187,8 @@ dependencies = [
 
 [[package]]
 name = "cmod-macros"
-version = "0.3.1"
-source = "git+https://github.com/rise0chen/cmod.git#b3bfc8181172caf84dcdb5f45dcc971e691f8dda"
+version = "0.3.2"
+source = "git+https://github.com/rise0chen/cmod.git#b9823a82fdfbb05d042e58ff03988e5f5472a9a7"
 dependencies = [
  "cfg-if",
  "proc-macro2",
@@ -708,7 +708,7 @@ dependencies = [
 
 [[package]]
 name = "lebai_sdk"
-version = "0.1.22"
+version = "0.1.23"
 dependencies = [
  "async-lock",
  "cmod",
