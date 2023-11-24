@@ -1,22 +1,22 @@
 [package]
 authors = ["rise0chen<rise0chen@163.com>"]
 description = "lebai proto"
-edition = "2018"
+edition = "2021"
 keywords = ["protobuf"]
 license = "MIT"
 name = "lebai-proto"
 repository = "https://github.com/lebai-robotics/lebai-sdk.rs"
-version = "3.0.4"
+version = "3.1.0"
 
 [dependencies]
 jsonrpsee = {version = "0.20", features = ["client-core", "macros"]}
-pbjson = "0.5"
-pbjson-types = "0.5"
-prost = "0.11"
+pbjson = "0.6"
+pbjson-types = "0.6"
+prost = "0.12"
 serde = {version = "1", default-features = false, features = ["derive"]}
 serde_json = "1"
 
 [build-dependencies]
-pbjson-build = "0.5"
-pbjsonrpc-build = "0.17"
-tonic-build = "0.9"
+pbjson-build = "0.6"
+pbjsonrpc-build = "0.18"
+tonic-build = "0.10"
