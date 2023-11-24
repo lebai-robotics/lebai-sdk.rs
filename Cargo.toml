@@ -26,7 +26,7 @@ mdns = ["mdns-sd"]
 
 [dependencies]
 async-lock = "2"
-cmod = {version = "0.2"}
+cmod = {version = "0.3"}
 futures-timer = "3"
 futures-util = "0.3"
 jsonrpsee-core = {version = "0.20"}
