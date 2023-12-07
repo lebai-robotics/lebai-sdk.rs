@@ -131,7 +131,19 @@ jobs:
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
+      - name: Install Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
       - uses: actions/download-artifact@v3
+      - name: Release
+        env:
+          MATURIN_PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
+        uses: PyO3/maturin-action@v1
+        with:
+          container: off
+          command: upload
+          args: --skip-existing */*.whl
       - name: Zip Artifact
         run: for dir in `ls`; do zip -r ${dir}.zip ${dir}; done
       - name: Release
