@@ -32,4 +32,8 @@ impl Robot {
         let resp = self.c.get_robot_state(Some(Empty {})).await.map_err(|e| e.to_string())?;
         Ok(resp.state())
     }
+    pub(crate) async fn get_phy_data(&self) -> Result<PhyData> {
+        let resp = self.c.get_phy_data(Some(Empty {})).await.map_err(|e| e.to_string())?;
+        Ok(resp)
+    }
 }
