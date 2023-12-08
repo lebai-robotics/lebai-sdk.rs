@@ -29,7 +29,6 @@ pub mod lebai_sdk {
 
         Ok(())
     }
-    #[cfg(not(target_family = "wasm"))]
     #[cmod::function]
     #[cmod::tags(ret)]
     pub fn timestamp() -> Result<u64> {
