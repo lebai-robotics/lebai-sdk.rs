@@ -47,11 +47,7 @@ impl Robot {
         Ok(())
     }
     pub(crate) async fn pause_task(&self, id: Option<u32>) -> Result<()> {
-        let req = PauseRequest {
-            id: id.unwrap_or_default(),
-            time: 0,
-            wait: false,
-        };
+        let req = TaskIndex { id: id.unwrap_or_default() };
         let _ = self.c.pause_task(Some(req)).await.map_err(|e| e.to_string())?;
         Ok(())
     }

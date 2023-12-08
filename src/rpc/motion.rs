@@ -5,6 +5,16 @@ use proto::lebai::motion::*;
 use proto::posture::{CartesianPose, JointPose, Pose};
 
 impl Robot {
+    pub(crate) async fn pause_move(&self) -> Result<()> {
+        let req = Empty {};
+        let _ = self.c.pause_move(Some(req)).await.map_err(|e| e.to_string())?;
+        Ok(())
+    }
+    pub(crate) async fn resume_move(&self) -> Result<()> {
+        let req = Empty {};
+        let _ = self.c.resume_move(Some(req)).await.map_err(|e| e.to_string())?;
+        Ok(())
+    }
     pub async fn stop_move(&self) -> Result<()> {
         let req = Empty {};
         self.c.stop_move(Some(req)).await.map_err(|e| e.to_string())?;

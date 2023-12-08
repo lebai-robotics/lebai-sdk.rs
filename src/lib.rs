@@ -114,6 +114,14 @@ pub mod lebai_sdk {
 
         // Motion
         #[classmethod]
+        pub async fn pause_move(&self) -> Result<()> {
+            self.0.pause_move().await
+        }
+        #[classmethod]
+        pub async fn resume_move(&self) -> Result<()> {
+            self.0.resume_move().await
+        }
+        #[classmethod]
         pub async fn stop_move(&self) -> Result<()> {
             self.0.stop_move().await
         }
@@ -170,7 +178,7 @@ pub mod lebai_sdk {
             self.0.speedl(a, v, t, frame).await
         }
         #[classmethod]
-        pub async fn start_teach_mode(&self) -> Result<()> {
+        pub async fn teach_mode(&self) -> Result<()> {
             self.0.start_teach_mode().await
         }
         #[classmethod]
