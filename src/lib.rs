@@ -35,7 +35,6 @@ pub mod lebai_sdk {
     pub fn timestamp() -> Result<u64> {
         common::timestamp()
     }
-    #[cfg(not(target_family = "wasm"))]
     #[cmod::function]
     #[cmod::tags(args(ms))]
     pub async fn sleep_ms(ms: u64) -> Result<()> {

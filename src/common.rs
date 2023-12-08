@@ -14,8 +14,7 @@ pub fn timestamp() -> Result<u64> {
     Ok(TIMESTAMP().as_millis() as u64)
 }
 
-#[cfg(not(target_family = "wasm"))]
 pub async fn sleep_ms(ms: u64) -> Result<()> {
-    tokio::time::sleep(Duration::from_millis(ms)).await;
+    futures_timer::Delay::new(Duration::from_millis(ms)).await;
     Ok(())
 }
