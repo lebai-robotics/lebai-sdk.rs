@@ -9,7 +9,7 @@ repository = "https://github.com/lebai-robotics/lebai-sdk.rs"
 version = "3.1.1"
 
 [dependencies]
-jsonrpsee = {version = "0.20", features = ["client-core", "macros"]}
+jsonrpsee = {version = "0.21", features = ["client-core", "macros"]}
 pbjson = "0.6"
 pbjson-types = "0.6"
 prost = "0.12"

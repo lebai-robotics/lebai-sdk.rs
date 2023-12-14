@@ -22,7 +22,7 @@ pub trait CompatExt {
     fn compat_mut(&mut self) -> Compat<&mut Self>;
 }
 
-impl<T> CompatExt for T {
+impl<T: Future> CompatExt for T {
     fn compat(self) -> Compat<Self>
     where
         Self: Sized,
