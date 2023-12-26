@@ -723,11 +723,10 @@ dependencies = [
 
 [[package]]
 name = "lebai_sdk"
-version = "0.2.2"
+version = "0.2.3"
 dependencies = [
  "async-lock",
  "cmod",
- "errno",
  "futures-timer",
  "futures-util",
  "jsonrpsee-core",
@@ -739,7 +738,6 @@ dependencies = [
  "once_cell",
  "pin-project-lite",
  "pyo3",
- "rustix",
  "serde",
  "serde_json",
  "tokio",
