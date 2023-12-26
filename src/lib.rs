@@ -12,7 +12,7 @@ pub mod lebai_sdk {
     use proto::lebai::claw::Claw;
     use proto::lebai::dynamic::Payload;
     use proto::lebai::posture::Position;
-    use proto::lebai::system::{RobotState, PhyData};
+    use proto::lebai::system::{PhyData, RobotState};
     use proto::led::LedStyle;
     use proto::posture::{CartesianPose, JointPose, Pose};
     use runtime::CompatExt as _;
