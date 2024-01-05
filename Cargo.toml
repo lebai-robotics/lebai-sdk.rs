@@ -5,7 +5,7 @@ edition = "2021"
 license-file = "LICENSE"
 name = "lebai_sdk"
 repository = "https://github.com/lebai-robotics/lebai-sdk.rs"
-version = "0.2.3"
+version = "0.2.4"
 
 [workspace]
 members = [
@@ -48,4 +48,3 @@ jsonrpsee-ws-client = {version = "0.21", default-features = false}
 tokio = {version = "1", default-features = false, features = ["rt-multi-thread"]}
 
 [patch.crates-io]
-cmod = {git = "https://github.com/rise0chen/cmod.git"}
