@@ -175,9 +175,9 @@ dependencies = [
 
 [[package]]
 name = "cmod-core"
-version = "0.3.3"
+version = "0.3.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "74787680dec38a3a405f5082ed46e70fa7e101f837d119aa0a15310f64b3ca37"
+checksum = "1da797b0fcd55fbff1da04b08e186c5ff461a5337a771dd5ee278f306415a41b"
 dependencies = [
  "mlua",
  "pyo3",
@@ -726,7 +726,7 @@ dependencies = [
 
 [[package]]
 name = "lebai_sdk"
-version = "0.2.4"
+version = "0.2.5"
 dependencies = [
  "async-lock",
  "cmod",
