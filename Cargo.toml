@@ -23,7 +23,6 @@ ffi_py = ["cmod/ffi_py", "pyo3"]
 ffi_py_asyncio = ["ffi_py", "cmod/ffi_py_asyncio", "pyo3"]
 ffi_wasm = ["cmod/ffi_wasm", "wasm-bindgen", "wasm-bindgen-futures", "futures-timer/wasm-bindgen"]
 mdns = ["mdns-sd"]
-module = ["mlua?/module"]
 
 [dependencies]
 async-lock = "3"

@@ -40,7 +40,7 @@ jobs:
         with:
           submodules: true
       - name: Build
-        run: cargo build --release --features ffi_lua,module,mdns --target ${{matrix.target}}
+        run: cargo build --release --features ffi_lua,mdns --target ${{matrix.target}}
       - name: Upload
         uses: actions/upload-artifact@v3
         with:
@@ -74,7 +74,7 @@ jobs:
         with:
           submodules: true
       - name: Build
-        run: cargo build --release --features ffi_lua,module,mdns --target ${{matrix.target}}
+        run: cargo build --release --features ffi_lua,mdns --target ${{matrix.target}}
       - name: Upload
         uses: actions/upload-artifact@v3
         with:
@@ -105,7 +105,7 @@ jobs:
         with:
           submodules: true
       - name: Build
-        run: cargo build --release --features ffi_lua,module,mdns --target ${{matrix.target}}
+        run: cargo build --release --features ffi_lua,mdns --target ${{matrix.target}}
         shell: msys2 {0}
       - name: Upload
         uses: actions/upload-artifact@v3

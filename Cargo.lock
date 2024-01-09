@@ -83,9 +83,9 @@ checksum = "9e1b586273c5702936fe7b7d6896644d8be71e6314cfe09d3167c95f712589e8"
 
 [[package]]
 name = "base64"
-version = "0.21.5"
+version = "0.21.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "35636a1494ede3b646cc98f74f8e62c773a38a659ebc777a2cf26b9b74171df9"
+checksum = "c79fed4cdb43e993fcdadc7e58a09fd0e3e649c4436fa11da71c9f1f3ee7feb9"
 
 [[package]]
 name = "beef"
@@ -165,9 +165,9 @@ dependencies = [
 
 [[package]]
 name = "cmod"
-version = "0.3.2"
+version = "0.3.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "4225b5099bcdc18ea5467f08dd7050d33fd52184cec5065d93be7d001c99e1c9"
+checksum = "57a401bdca7f46758ccd0d1d81de385f72791fee27f88184d103807a506b1025"
 dependencies = [
  "cmod-core",
  "cmod-macros",
@@ -175,9 +175,9 @@ dependencies = [
 
 [[package]]
 name = "cmod-core"
-version = "0.3.4"
+version = "0.3.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1da797b0fcd55fbff1da04b08e186c5ff461a5337a771dd5ee278f306415a41b"
+checksum = "f0637132f68f0a4c90d2c58f047657a33fb456b58de79680cb552ed025553ba9"
 dependencies = [
  "mlua",
  "pyo3",
@@ -191,9 +191,9 @@ dependencies = [
 
 [[package]]
 name = "cmod-macros"
-version = "0.3.2"
+version = "0.3.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1b63292517bd76daaee98681d91a412b5eb8efd3b8a3c0bd9004a96681004aa9"
+checksum = "bcb3cf0a6956e460cc5d9e129c7a57ec4f8be5d876fe3982697237da8db70b54"
 dependencies = [
  "cfg-if",
  "proc-macro2",
@@ -221,12 +221,9 @@ dependencies = [
 
 [[package]]
 name = "crossbeam-utils"
-version = "0.8.18"
+version = "0.8.19"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c3a430a770ebd84726f584a90ee7f020d28db52c6d02138900f22341f866d39c"
-dependencies = [
- "cfg-if",
-]
+checksum = "248e3bacc7dc6baa3b21e405ee045c3047101a49145e7e9eca583ab4c2ca5345"
 
 [[package]]
 name = "digest"
@@ -438,9 +435,9 @@ dependencies = [
 
 [[package]]
 name = "getrandom"
-version = "0.2.11"
+version = "0.2.12"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "fe9006bed769170c11f845cf00c7c1e9092aeb3f268e007c3e760ac68008070f"
+checksum = "190092ea657667030ac6a35e305e62fc4dd69fd98ac98631e5d3a2b1575a12b5"
 dependencies = [
  "cfg-if",
  "libc",
@@ -711,7 +708,7 @@ dependencies = [
 
 [[package]]
 name = "lebai-proto"
-version = "3.1.2"
+version = "3.1.3"
 dependencies = [
  "jsonrpsee",
  "pbjson",
@@ -953,7 +950,7 @@ version = "0.6.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "1030c719b0ec2a2d25a5df729d6cff1acf3cc230bf766f4f97833591f7577b90"
 dependencies = [
- "base64 0.21.5",
+ "base64 0.21.6",
  "serde",
 ]
 

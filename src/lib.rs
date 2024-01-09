@@ -166,6 +166,10 @@ pub mod lebai_sdk {
             self.0.move_pvat(p, v, a, t).await
         }
         #[classmethod]
+        pub async fn move_trajectory(&self, name: String, dir: Option<String>) -> Result<u32> {
+            self.0.move_trajectory(name, dir).await
+        }
+        #[classmethod]
         #[cmod::tags(args(v))]
         pub async fn speedj(&self, a: f64, v: JointPose, t: Option<f64>) -> Result<u32> {
             self.0.speedj(a, v, t).await

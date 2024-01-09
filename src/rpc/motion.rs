@@ -1,6 +1,7 @@
 use super::Robot;
 use cmod::Result;
 use proto::google::protobuf::Empty;
+use proto::lebai::db::LoadRequest;
 use proto::lebai::motion::*;
 use proto::posture::{CartesianPose, JointPose, Pose};
 
@@ -120,6 +121,14 @@ impl Robot {
         let req = MovePvatRequest { duration: t, joints };
         self.c.move_pvat(Some(req)).await.map_err(|e| e.to_string())?;
         Ok(())
+    }
+    pub async fn move_trajectory(&self, name: String, dir: Option<String>) -> Result<u32> {
+        let req = LoadRequest {
+            name,
+            dir: dir.unwrap_or_default(),
+        };
+        let id = self.c.move_trajectory(Some(req)).await.map_err(|e| e.to_string())?;
+        Ok(id.id)
     }
 
     pub async fn speedj(&self, a: f64, v: JointPose, t: Option<f64>) -> Result<u32> {
