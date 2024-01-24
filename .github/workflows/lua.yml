@@ -20,6 +20,10 @@ jobs:
     runs-on: ubuntu-latest
     container: registry.cn-shanghai.aliyuncs.com/lebai/util:14.04
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          submodules: true
       - name: Install Protoc
         uses: arduino/setup-protoc@v1
         with:
@@ -30,15 +34,12 @@ jobs:
           toolchain: stable
           target: ${{ matrix.target }}
       - uses: Swatinem/rust-cache@v2
+        continue-on-error: true
       - name: Install Cross Compiler
         if: ${{ matrix.archit == 'aarch64' }}
         run: |
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends gcc-aarch64-linux-gnu libc6-dev-arm64-cross
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          submodules: true
       - name: Build
         run: cargo build --release --features ffi_lua,mdns --target ${{matrix.target}}
       - name: Upload
@@ -59,6 +60,10 @@ jobs:
             target: aarch64-apple-darwin
     runs-on: macos-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          submodules: true
       - name: Install Protoc
         uses: arduino/setup-protoc@v1
         with:
@@ -69,10 +74,7 @@ jobs:
           toolchain: stable
           target: ${{ matrix.target }}
       - uses: Swatinem/rust-cache@v2
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          submodules: true
+        continue-on-error: true
       - name: Build
         run: cargo build --release --features ffi_lua,mdns --target ${{matrix.target}}
       - name: Upload
@@ -91,6 +93,10 @@ jobs:
             target: x86_64-pc-windows-gnu
     runs-on: windows-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          submodules: true
       - name: Install MSYS2
         uses: msys2/setup-msys2@v2
         with:
@@ -100,10 +106,7 @@ jobs:
             mingw-w64-x86_64-lua
             mingw-w64-x86_64-pkg-config
       - uses: Swatinem/rust-cache@v2
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          submodules: true
+        continue-on-error: true
       - name: Build
         run: cargo build --release --features ffi_lua,mdns --target ${{matrix.target}}
         shell: msys2 {0}
