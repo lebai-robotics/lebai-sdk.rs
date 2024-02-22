@@ -12,7 +12,7 @@ pub mod lebai_sdk {
     use proto::lebai::claw::Claw;
     use proto::lebai::dynamic::Payload;
     use proto::lebai::posture::Position;
-    use proto::lebai::system::{PhyData, RobotState};
+    use proto::lebai::system::{EstopReason, PhyData, RobotState};
     use proto::led::LedStyle;
     use proto::posture::{CartesianPose, JointPose, Pose};
     use runtime::CompatExt as _;
@@ -494,6 +494,11 @@ pub mod lebai_sdk {
         }
 
         // Status
+        #[classmethod]
+        #[cmod::tags(ret)]
+        pub async fn get_estop_reason(&self) -> Result<EstopReason> {
+            self.0.get_estop_reason().await
+        }
         #[classmethod]
         #[cmod::tags(ret)]
         pub async fn get_kin_data(&self) -> Result<KinData> {

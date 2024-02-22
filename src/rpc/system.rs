@@ -28,6 +28,10 @@ impl Robot {
         let _ = self.c.estop(Some(Empty {})).await.map_err(|e| e.to_string())?;
         Ok(())
     }
+    pub(crate) async fn get_estop_reason(&self) -> Result<EstopReason> {
+        let resp = self.c.get_estop_reason(Some(Empty {})).await.map_err(|e| e.to_string())?;
+        Ok(resp.reason())
+    }
     pub(crate) async fn get_robot_state(&self) -> Result<RobotState> {
         let resp = self.c.get_robot_state(Some(Empty {})).await.map_err(|e| e.to_string())?;
         Ok(resp.state())
