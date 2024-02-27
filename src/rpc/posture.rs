@@ -53,19 +53,20 @@ impl Robot {
         self.c.save_pose(Some(req)).await.map_err(|e| e.to_string())?;
         Ok(())
     }
-    pub async fn load_pose(&self, name: String, dir: Option<String>) -> Result<Pose> {
+    pub async fn load_pose(&self, name: String, dir: Option<String>) -> Result<Option<Pose>> {
         let req = LoadRequest {
             name,
             dir: dir.unwrap_or_default(),
         };
         let pose = self.c.load_pose(Some(req)).await.map_err(|e| e.to_string())?;
         let pose = match pose.kind() {
+            pose::Kind::Unknown => None,
             pose::Kind::Cartesian => {
                 let req = PoseRequest { pose: Some(pose) };
                 let pose = self.c.get_forward_kin(Some(req)).await.map_err(|e| e.to_string())?;
-                Pose::Cart(pose.into())
+                Some(Pose::Cart(pose.into()))
             }
-            pose::Kind::Joint => Pose::Joint(pose.joint.unwrap_or_default().into()),
+            pose::Kind::Joint => Some(Pose::Joint(pose.joint.unwrap_or_default().into())),
         };
         Ok(pose)
     }
