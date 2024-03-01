@@ -15,10 +15,7 @@ impl Robot {
         Ok(resp)
     }
     pub(crate) async fn set_payload(&self, mass: Option<f64>, cog: Option<Position>) -> Result<()> {
-        let req = SetPayloadRequest {
-            mass,
-            cog,
-        };
+        let req = SetPayloadRequest { mass, cog };
         let _ = self.c.set_payload(Some(req)).await.map_err(|e| e.to_string())?;
         Ok(())
     }

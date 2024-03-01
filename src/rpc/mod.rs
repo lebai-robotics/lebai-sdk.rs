@@ -22,14 +22,36 @@ use jsonrpsee_wasm_client::WasmClientBuilder as WsClientBuilder;
 use jsonrpsee_ws_client::WsClientBuilder;
 use serde_json::Value;
 use std::sync::Arc;
+use std::time::Duration;
 
-pub async fn connect(ip: String, simu: bool) -> Result<Robot> {
+pub async fn connect_ws(ip: &str, simu: bool) -> Result<Client> {
     let port: u16 = if simu { 3030 } else { 3031 };
-    let client = WsClientBuilder::default()
+    WsClientBuilder::default()
         .build(format!("ws://{}:{}", ip, port))
         .await
-        .map_err(|e| e.to_string())?;
-    Ok(Robot { c: Arc::new(client) })
+        .map_err(|e| e.to_string())
+}
+pub async fn connect(ip: String, simu: bool) -> Result<Robot> {
+    let c = Arc::new(connect_ws(&ip, simu).await?);
+    let client = c.clone();
+    tokio::task::spawn(async move {
+        loop {
+            let reason = client.disconnect_reason().await;
+            println!("lebai_sdk ws disconnect: {}", reason);
+            let mut reconnect_times = 0;
+            loop {
+                if let Ok(c) = connect_ws(&ip, simu).await {
+                    #[allow(invalid_reference_casting)]
+                    let _ = unsafe { std::mem::replace(&mut *(&c as *const _ as *mut _), c) };
+                    break;
+                } else {
+                    reconnect_times += 1;
+                    tokio::time::sleep(Duration::from_secs(reconnect_times)).await;
+                }
+            }
+        }
+    });
+    Ok(Robot { c })
 }
 
 #[derive(Clone)]
