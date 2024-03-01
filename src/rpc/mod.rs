@@ -23,13 +23,16 @@ use jsonrpsee_ws_client::WsClientBuilder;
 use serde_json::Value;
 use std::sync::Arc;
 
-pub async fn connect(ip: String, simu: bool) -> Result<Robot> {
+async fn connect_ws(ip: &str, simu: bool) -> Result<Client> {
     let port: u16 = if simu { 3030 } else { 3031 };
-    let client = WsClientBuilder::default()
+    WsClientBuilder::default()
         .build(format!("ws://{}:{}", ip, port))
         .await
-        .map_err(|e| e.to_string())?;
-    Ok(Robot { c: Arc::new(client) })
+        .map_err(|e| e.to_string())
+}
+pub async fn connect(ip: String, simu: bool) -> Result<Robot> {
+    let c = Arc::new(connect_ws(&ip, simu).await?);
+    Ok(Robot { c })
 }
 
 #[derive(Clone)]
@@ -37,6 +40,13 @@ pub struct Robot {
     c: Arc<Client>,
 }
 impl Robot {
+    pub async fn is_connected(&self) -> Result<bool> {
+        Ok(self.c.is_connected())
+    }
+    pub async fn wait_disconnect(&self) -> Result<String> {
+        self.c.on_disconnect().await;
+        Ok(self.c.disconnect_reason().await.to_string())
+    }
     pub async fn call(&self, method: String, param: Option<String>) -> Result<String> {
         let mut params: Vec<Value> = Vec::new();
         if let Some(param) = param {

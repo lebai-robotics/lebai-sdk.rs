@@ -64,6 +64,14 @@ pub mod lebai_sdk {
     #[cmod::methods]
     impl Robot {
         #[classmethod]
+        pub async fn is_connected(&self) -> Result<bool> {
+            self.0.is_connected().await
+        }
+        #[classmethod]
+        pub async fn wait_disconnect(&self) -> Result<String> {
+            self.0.wait_disconnect().await
+        }
+        #[classmethod]
         pub async fn call(&self, method: String, param: Option<String>) -> Result<String> {
             self.0.call(method, param).await
         }

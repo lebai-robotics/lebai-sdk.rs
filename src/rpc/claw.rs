@@ -12,10 +12,7 @@ impl Robot {
         Ok(())
     }
     pub(crate) async fn set_claw(&self, force: Option<f64>, amplitude: Option<f64>) -> Result<()> {
-        let req = SetClawRequest {
-            force,
-            amplitude,
-        };
+        let req = SetClawRequest { force, amplitude };
         let _ = self.c.set_claw(Some(req)).await.map_err(|e| e.to_string())?;
         Ok(())
     }
