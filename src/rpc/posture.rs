@@ -44,11 +44,11 @@ impl Robot {
         Ok(pose.into())
     }
 
-    pub async fn save_pose(&self, name: String, pose: Pose, dir: Option<String>) -> Result<()> {
+    pub async fn save_pose(&self, name: String, pose: Option<Pose>, dir: Option<String>) -> Result<()> {
         let req = SavePoseRequest {
             name,
             dir: dir.unwrap_or_default(),
-            data: Some(pose.into()),
+            data: pose.map(Into::into),
         };
         self.c.save_pose(Some(req)).await.map_err(|e| e.to_string())?;
         Ok(())

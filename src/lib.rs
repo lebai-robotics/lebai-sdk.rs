@@ -109,7 +109,7 @@ pub mod lebai_sdk {
         }
         #[classmethod]
         #[cmod::tags(args(pose))]
-        pub async fn save_pose(&self, name: String, pose: Pose, dir: Option<String>) -> Result<()> {
+        pub async fn save_pose(&self, name: String, pose: Option<Pose>, dir: Option<String>) -> Result<()> {
             self.0.save_pose(name, pose, dir).await
         }
         #[classmethod]
