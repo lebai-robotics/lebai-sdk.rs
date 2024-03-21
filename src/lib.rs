@@ -108,13 +108,13 @@ pub mod lebai_sdk {
             self.0.pose_inverse(p).await
         }
         #[classmethod]
-        #[cmod::tags(args(pose))]
-        pub async fn save_pose(&self, name: String, pose: Option<Pose>, dir: Option<String>) -> Result<()> {
-            self.0.save_pose(name, pose, dir).await
+        #[cmod::tags(args(pose, refer))]
+        pub async fn save_pose(&self, name: String, pose: Option<Pose>, dir: Option<String>, refer: Option<JointPose>) -> Result<()> {
+            self.0.save_pose(name, pose, dir,refer).await
         }
         #[classmethod]
         #[cmod::tags(ret)]
-        pub async fn load_pose(&self, name: String, dir: Option<String>) -> Result<Option<Pose>> {
+        pub async fn load_pose(&self, name: String, dir: Option<String>) -> Result<Option<JointPose>> {
             self.0.load_pose(name, dir).await
         }
         #[classmethod]
