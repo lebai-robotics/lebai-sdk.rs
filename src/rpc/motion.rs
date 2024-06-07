@@ -96,19 +96,6 @@ impl Robot {
         Ok(id.id)
     }
 
-    pub async fn move_pvt(&self, p: JointPose, v: Vec<f64>, t: f64) -> Result<()> {
-        let mut joints = Vec::new();
-        for i in 0..p.0.len() {
-            joints.push(JointMove {
-                pose: p.0[i],
-                velocity: v.get(i).copied(),
-                acc: None,
-            })
-        }
-        let req = MovePvatRequest { duration: t, joints };
-        self.c.move_pvat(Some(req)).await.map_err(|e| e.to_string())?;
-        Ok(())
-    }
     pub async fn move_pvat(&self, p: JointPose, v: Vec<f64>, a: Vec<f64>, t: f64) -> Result<()> {
         let mut joints = Vec::new();
         for i in 0..p.0.len() {
@@ -122,6 +109,33 @@ impl Robot {
         self.c.move_pvat(Some(req)).await.map_err(|e| e.to_string())?;
         Ok(())
     }
+    pub async fn move_pvt(&self, p: JointPose, v: Vec<f64>, t: f64) -> Result<()> {
+        let mut joints = Vec::new();
+        for i in 0..p.0.len() {
+            joints.push(JointMove {
+                pose: p.0[i],
+                velocity: v.get(i).copied(),
+                acc: None,
+            })
+        }
+        let req = MovePvatRequest { duration: t, joints };
+        self.c.move_pvat(Some(req)).await.map_err(|e| e.to_string())?;
+        Ok(())
+    }
+    pub async fn move_pt(&self, p: JointPose, t: f64) -> Result<()> {
+        let mut joints = Vec::new();
+        for i in 0..p.0.len() {
+            joints.push(JointMove {
+                pose: p.0[i],
+                velocity: None,
+                acc: None,
+            })
+        }
+        let req = MovePvatRequest { duration: t, joints };
+        self.c.move_pvat(Some(req)).await.map_err(|e| e.to_string())?;
+        Ok(())
+    }
+
     pub async fn move_trajectory(&self, name: String, dir: Option<String>) -> Result<u32> {
         let req = LoadRequest {
             name,

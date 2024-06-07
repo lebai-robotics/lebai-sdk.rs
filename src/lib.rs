@@ -110,7 +110,7 @@ pub mod lebai_sdk {
         #[classmethod]
         #[cmod::tags(args(pose, refer))]
         pub async fn save_pose(&self, name: String, pose: Option<Pose>, dir: Option<String>, refer: Option<JointPose>) -> Result<()> {
-            self.0.save_pose(name, pose, dir,refer).await
+            self.0.save_pose(name, pose, dir, refer).await
         }
         #[classmethod]
         #[cmod::tags(ret)]
@@ -169,14 +169,19 @@ pub mod lebai_sdk {
             self.0.movec(via, p, rad, a, v, t, r).await
         }
         #[classmethod]
+        #[cmod::tags(args(p, v, a))]
+        pub async fn move_pvat(&self, p: JointPose, v: Vec<f64>, a: Vec<f64>, t: f64) -> Result<()> {
+            self.0.move_pvat(p, v, a, t).await
+        }
+        #[classmethod]
         #[cmod::tags(args(p, v))]
         pub async fn move_pvt(&self, p: JointPose, v: Vec<f64>, t: f64) -> Result<()> {
             self.0.move_pvt(p, v, t).await
         }
         #[classmethod]
-        #[cmod::tags(args(p, v, a))]
-        pub async fn move_pvat(&self, p: JointPose, v: Vec<f64>, a: Vec<f64>, t: f64) -> Result<()> {
-            self.0.move_pvat(p, v, a, t).await
+        #[cmod::tags(args(p))]
+        pub async fn move_pt(&self, p: JointPose, t: f64) -> Result<()> {
+            self.0.move_pt(p, t).await
         }
         #[classmethod]
         pub async fn move_trajectory(&self, name: String, dir: Option<String>) -> Result<u32> {
