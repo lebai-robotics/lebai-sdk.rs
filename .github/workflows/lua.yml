@@ -17,7 +17,7 @@ jobs:
             target: x86_64-unknown-linux-gnu
           - archit: aarch64
             target: aarch64-unknown-linux-gnu
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     container: registry.cn-shanghai.aliyuncs.com/lebai/util:14.04
     steps:
       - name: Checkout
@@ -58,7 +58,7 @@ jobs:
             target: x86_64-apple-darwin
           - archit: aarch64
             target: aarch64-apple-darwin
-    runs-on: macos-latest
+    runs-on: macos-13
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -91,7 +91,7 @@ jobs:
         include:
           - archit: x86_64
             target: x86_64-pc-windows-gnu
-    runs-on: windows-latest
+    runs-on: windows-2022
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -122,7 +122,7 @@ jobs:
     needs: [builds_linux, builds_macos, builds_windows]
     strategy:
       fail-fast: false
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/download-artifact@v3
       - name: Zip Artifact
