@@ -11,10 +11,12 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        archit: [x86_64, aarch64]
+        archit: [x86_64, arm, aarch64]
         include:
           - archit: x86_64
             target: x86_64-unknown-linux-gnu
+          - archit: arm
+            target: armv7-unknown-linux-gnueabihf
           - archit: aarch64
             target: aarch64-unknown-linux-gnu
     runs-on: ubuntu-22.04
@@ -35,6 +37,11 @@ jobs:
           target: ${{ matrix.target }}
       - uses: Swatinem/rust-cache@v2
         continue-on-error: true
+      - name: Install Cross Compiler
+        if: ${{ matrix.archit == 'arm'}}
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends gcc-arm-linux-gnueabihf libc6-dev-armhf-cross
       - name: Install Cross Compiler
         if: ${{ matrix.archit == 'aarch64'}}
         run: |
