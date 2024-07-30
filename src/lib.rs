@@ -25,7 +25,7 @@ pub mod lebai_sdk {
     #[cmod::function]
     pub fn init() -> Result<()> {
         #[cfg(feature = "ffi_py")]
-        cmod::ffi::py::init_runtime(&*runtime::RT).map_err(|_| "init runtime failed".to_string())?;
+        let _ = cmod::ffi::py::init_runtime(&*runtime::RT);
 
         Ok(())
     }
