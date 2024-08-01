@@ -114,8 +114,8 @@ pub mod lebai_sdk {
         }
         #[classmethod]
         #[cmod::tags(ret)]
-        pub async fn load_pose(&self, name: String, dir: Option<String>) -> Result<Option<JointPose>> {
-            self.0.load_pose(name, dir).await
+        pub async fn load_pose(&self, name: String, dir: Option<String>, raw_pose: Option<bool>) -> Result<Option<Pose>> {
+            self.0.load_pose(name, dir, raw_pose).await
         }
         #[classmethod]
         #[cmod::tags(ret)]

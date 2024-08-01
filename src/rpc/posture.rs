@@ -58,7 +58,8 @@ impl Robot {
         self.c.save_pose(Some(req)).await.map_err(|e| e.to_string())?;
         Ok(())
     }
-    pub async fn load_pose(&self, name: String, dir: Option<String>) -> Result<Option<JointPose>> {
+    pub async fn load_pose(&self, name: String, dir: Option<String>, raw_pose: Option<bool>) -> Result<Option<Pose>> {
+        let raw_pose = raw_pose.unwrap_or(false);
         let req = LoadRequest {
             name,
             dir: dir.unwrap_or_default(),
@@ -67,12 +68,18 @@ impl Robot {
         let pose = match pose.kind() {
             pose::Kind::Unknown => None,
             pose::Kind::Cartesian => {
-                let refer = pose.joint.take();
-                let req = GetInverseKinRequest { pose: Some(pose), refer };
-                let pose = self.c.get_inverse_kin(Some(req)).await.map_err(|e| e.to_string())?;
-                Some(pose.into())
+                if raw_pose {
+                    let req = PoseRequest { pose: Some(pose) };
+                    let pose = self.c.get_forward_kin(Some(req)).await.map_err(|e| e.to_string())?;
+                    Some(Pose::Cart(pose.into()))
+                } else {
+                    let refer = pose.joint.take();
+                    let req = GetInverseKinRequest { pose: Some(pose), refer };
+                    let pose = self.c.get_inverse_kin(Some(req)).await.map_err(|e| e.to_string())?;
+                    Some(Pose::Joint(pose.into()))
+                }
             }
-            pose::Kind::Joint => Some(pose.joint.unwrap_or_default().into()),
+            pose::Kind::Joint => Some(Pose::Joint(pose.joint.unwrap_or_default().into())),
         };
         Ok(pose)
     }
