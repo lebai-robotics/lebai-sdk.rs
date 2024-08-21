@@ -481,6 +481,12 @@ pub mod lebai_sdk {
             self.0.estop().await
         }
 
+        //MOTOR
+        #[classmethod]
+        pub async fn find_zero(&self) -> Result<()> {
+            self.0.find_zero().await
+        }
+
         // KINEMATIC
         #[classmethod]
         #[cmod::tags(ret)]
