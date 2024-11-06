@@ -29,7 +29,7 @@ async-lock = "3"
 cmod = {version = "0.3"}
 futures-timer = "3"
 futures-util = {version = "0.3", default-features = false}
-jsonrpsee-core = {version = "0.21", default-features = false}
+jsonrpsee-core = {version = "0.24", default-features = false}
 mdns-sd = {version = "0.11", default-features = false, features = ["async"], optional = true}
 mlua = {version = "0.9", features = ["lua54"], optional = true}
 once_cell = {version = "1", default-features = false}
@@ -42,9 +42,9 @@ wasm-bindgen = {version = "0.2", optional = true}
 wasm-bindgen-futures = {version = "0.4", optional = true}
 
 [target.'cfg(target_family = "wasm")'.dependencies]
-jsonrpsee-wasm-client = {version = "0.21", default-features = false}
+jsonrpsee-wasm-client = {version = "0.24", default-features = false}
 [target.'cfg(not(target_family = "wasm"))'.dependencies]
-jsonrpsee-ws-client = {version = "0.21", default-features = false}
+jsonrpsee-ws-client = {version = "0.24", default-features = false}
 tokio = {version = "1", default-features = false, features = ["rt-multi-thread"]}
 
 [patch.crates-io]
