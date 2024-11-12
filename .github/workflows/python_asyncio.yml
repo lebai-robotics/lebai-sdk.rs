@@ -62,7 +62,7 @@ jobs:
           container: off
           manylinux: 2_17
           command: build
-          args: --release --features ffi_py_asyncio,mdns --target ${{matrix.target}} --skip-auditwheel
+          args: --release --features ffi_py_asyncio,module,mdns --target ${{matrix.target}} --skip-auditwheel
       - name: Upload
         uses: actions/upload-artifact@v3
         with:
@@ -106,7 +106,7 @@ jobs:
         with:
           container: off
           command: build
-          args: --release --features ffi_py_asyncio,mdns --target ${{matrix.target}}
+          args: --release --features ffi_py_asyncio,module,mdns --target ${{matrix.target}}
       - name: Upload
         uses: actions/upload-artifact@v3
         with:
@@ -148,7 +148,7 @@ jobs:
         with:
           container: off
           command: build
-          args: --release --features ffi_py_asyncio,mdns --target ${{matrix.target}}
+          args: --release --features ffi_py_asyncio,module,mdns --target ${{matrix.target}}
       - name: Upload
         uses: actions/upload-artifact@v3
         with:
