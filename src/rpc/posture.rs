@@ -2,7 +2,7 @@ use super::Robot;
 use cmod::Result;
 use proto::lebai::db::*;
 use proto::lebai::posture::{self, *};
-use proto::posture::{CartesianPose, JointPose, Pose};
+use proto::serde::posture::{CartesianPose, JointPose, Pose};
 
 impl Robot {
     pub async fn kinematics_forward(&self, p: Pose) -> Result<CartesianPose> {

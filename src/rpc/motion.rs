@@ -3,7 +3,7 @@ use cmod::Result;
 use proto::google::protobuf::Empty;
 use proto::lebai::db::LoadRequest;
 use proto::lebai::motion::*;
-use proto::posture::{CartesianPose, JointPose, Pose};
+use proto::serde::posture::{CartesianPose, JointPose, Pose};
 
 impl Robot {
     pub(crate) async fn pause_move(&self) -> Result<()> {

@@ -2,7 +2,7 @@ use super::Robot;
 use cmod::Result;
 use proto::lebai::db::LoadRequest;
 use proto::lebai::led::*;
-use proto::led::LedStyle;
+use proto::serde::led::LedStyle;
 
 impl Robot {
     pub(crate) async fn load_led_style(&self, name: String, dir: Option<String>) -> Result<LedStyle> {

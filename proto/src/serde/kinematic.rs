@@ -1,5 +1,5 @@
 use crate::lebai::kinematic;
-use crate::posture::{CartesianPose, JointPose};
+use crate::serde::posture::{CartesianPose, JointPose};
 use serde::{Deserialize, Serialize};
 
 #[derive(Deserialize, Serialize)]

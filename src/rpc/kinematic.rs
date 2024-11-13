@@ -1,10 +1,10 @@
 use super::Robot;
 use cmod::Result;
 use proto::google::protobuf::Empty;
-use proto::kinematic::KinData;
 use proto::lebai::db::LoadRequest;
 use proto::lebai::kinematic::*;
-use proto::posture::CartesianPose;
+use proto::serde::kinematic::KinData;
+use proto::serde::posture::CartesianPose;
 
 impl Robot {
     pub(crate) async fn load_tcp(&self, name: String, dir: Option<String>) -> Result<CartesianPose> {

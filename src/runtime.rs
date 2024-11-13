@@ -3,7 +3,7 @@ use core::pin::Pin;
 use core::task::{Context, Poll};
 use pin_project_lite::pin_project;
 
-#[cfg(all(not(target_family = "wasm"), feature="module"))]
+#[cfg(all(not(target_family = "wasm"), feature = "module"))]
 pub static RT: once_cell::sync::Lazy<tokio::runtime::Runtime> = once_cell::sync::Lazy::new(|| {
     tokio::runtime::Builder::new_multi_thread()
         .thread_name("lebai-sdk")
@@ -54,7 +54,7 @@ impl<T: Future> Future for Compat<T> {
     type Output = T::Output;
 
     fn poll(self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<Self::Output> {
-        #[cfg(all(not(target_family = "wasm"), feature="module"))]
+        #[cfg(all(not(target_family = "wasm"), feature = "module"))]
         let _guard = RT.enter();
         self.project().inner.poll(cx)
     }

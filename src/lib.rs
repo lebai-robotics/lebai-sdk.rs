@@ -8,13 +8,13 @@ mod runtime;
 pub mod lebai_sdk {
     use super::*;
     use cmod::Result;
-    use proto::kinematic::KinData;
     use proto::lebai::claw::Claw;
     use proto::lebai::dynamic::Payload;
     use proto::lebai::posture::Position;
     use proto::lebai::system::{EstopReason, PhyData, RobotState};
-    use proto::led::LedStyle;
-    use proto::posture::{CartesianPose, JointPose, Pose};
+    use proto::serde::kinematic::KinData;
+    use proto::serde::led::LedStyle;
+    use proto::serde::posture::{CartesianPose, JointPose, Pose};
     use runtime::CompatExt as _;
 
     #[cmod::function]
@@ -572,3 +572,5 @@ pub mod lebai_sdk {
         }
     }
 }
+
+pub use lebai_sdk::*;
