@@ -41,6 +41,7 @@ fn main() -> io::Result<()> {
         .file_descriptor_set_path(&descriptor_path)
         .compile_well_known_types(true)
         .extern_path(".google.protobuf", "::pbjson_types")
+        .protoc_arg("--experimental_allow_proto3_optional")
         .compile_protos(&proto_files, &[root])?;
 
     let descriptor_set = fs::read(descriptor_path)?;
