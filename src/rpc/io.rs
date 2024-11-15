@@ -3,6 +3,23 @@ use cmod::Result;
 use proto::lebai::io::*;
 
 impl Robot {
+    pub(crate) async fn set_dio_mode(&self, device: String, pin: u32, mode: DigitalMode) -> Result<()> {
+        let req = SetDioModeRequest {
+            device: IoDevice::from(&*device).into(),
+            pin,
+            mode: mode.into(),
+        };
+        let _ = self.c.set_dio_mode(Some(req)).await.map_err(|e| e.to_string())?;
+        Ok(())
+    }
+    pub(crate) async fn get_dio_mode(&self, device: String, pin: u32) -> Result<DigitalMode> {
+        let req = GetDioModeRequest {
+            device: IoDevice::from(&*device).into(),
+            pin,
+        };
+        let resp = self.c.get_dio_mode(Some(req)).await.map_err(|e| e.to_string())?;
+        Ok(resp.mode())
+    }
     pub(crate) async fn set_do(&self, device: String, pin: u32, value: u32) -> Result<()> {
         let req = SetDoPinRequest {
             device: IoDevice::from(&*device).into(),

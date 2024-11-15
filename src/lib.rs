@@ -5,11 +5,12 @@ mod rpc;
 mod runtime;
 
 #[cmod::cmod]
-pub mod lebai_sdk {
+mod lebai_sdk {
     use super::*;
     use cmod::Result;
     use proto::lebai::claw::Claw;
     use proto::lebai::dynamic::Payload;
+    use proto::lebai::io::DigitalMode;
     use proto::lebai::posture::Position;
     use proto::lebai::system::{EstopReason, PhyData, RobotState};
     use proto::serde::kinematic::KinData;
@@ -207,6 +208,16 @@ pub mod lebai_sdk {
         }
 
         //IO
+        #[classmethod]
+        #[cmod::tags(args(device, mode))]
+        pub async fn set_dio_mode(&self, device: String, pin: u32, mode: DigitalMode) -> Result<()> {
+            self.0.set_dio_mode(device, pin, mode).await
+        }
+        #[classmethod]
+        #[cmod::tags(args(device), ret)]
+        pub async fn get_dio_mode(&self, device: String, pin: u32) -> Result<DigitalMode> {
+            self.0.get_dio_mode(device, pin).await
+        }
         #[classmethod]
         #[cmod::tags(args(device))]
         pub async fn set_do(&self, device: String, pin: u32, value: u32) -> Result<()> {
