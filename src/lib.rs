@@ -84,6 +84,11 @@ mod lebai_sdk {
 
         // Posture
         #[classmethod]
+        #[cmod::tags(args(p))]
+        pub async fn measure_manipulation(&self, p: JointPose) -> Result<f64> {
+            self.0.measure_manipulation(p).await
+        }
+        #[classmethod]
         #[cmod::tags(args(p), ret)]
         pub async fn kinematics_forward(&self, p: Pose) -> Result<CartesianPose> {
             self.0.kinematics_forward(p).await

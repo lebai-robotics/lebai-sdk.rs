@@ -5,6 +5,10 @@ use proto::lebai::posture::{self, *};
 use proto::serde::posture::{CartesianPose, JointPose, Pose};
 
 impl Robot {
+    pub async fn measure_manipulation(&self, p: JointPose) -> Result<f64> {
+        let ret = self.c.measure_manipulation(Some(p.into())).await.map_err(|e| e.to_string())?;
+        Ok(ret.manipulation)
+    }
     pub async fn kinematics_forward(&self, p: Pose) -> Result<CartesianPose> {
         let req = PoseRequest { pose: Some(p.into()) };
         let pose = self.c.get_forward_kin(Some(req)).await.map_err(|e| e.to_string())?;
