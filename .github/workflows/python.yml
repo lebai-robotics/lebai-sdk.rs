@@ -6,9 +6,6 @@ permissions:
   contents: write
   pull-requests: read
 
-env:
-  ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
-
 jobs:
   builds_linux:
     strategy:
@@ -23,7 +20,6 @@ jobs:
           - archit: aarch64
             target: aarch64-unknown-linux-gnu
     runs-on: ubuntu-22.04
-    container: registry.cn-shanghai.aliyuncs.com/lebai/util:14.04
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -53,7 +49,7 @@ jobs:
       - name: Build
         uses: PyO3/maturin-action@v1.40.8
         with:
-          container: off
+          container: registry.cn-shanghai.aliyuncs.com/lebai/util:14.04
           manylinux: 2_17
           command: build
           args: --release --features ffi_py,module,mdns --target ${{matrix.target}} --skip-auditwheel

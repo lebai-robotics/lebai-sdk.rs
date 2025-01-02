@@ -6,9 +6,6 @@ permissions:
   contents: write
   pull-requests: read
 
-env:
-  ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
-
 jobs:
   builds_linux:
     strategy:
@@ -23,35 +20,19 @@ jobs:
           - archit: aarch64
             target: aarch64-unknown-linux-gnu
     runs-on: ubuntu-22.04
-    container: registry.cn-shanghai.aliyuncs.com/lebai/util:14.04
     steps:
       - name: Checkout
         uses: actions/checkout@v3
         with:
           submodules: true
-      - name: Install Protoc
-        uses: arduino/setup-protoc@v1
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Install Rust
-        uses: actions-rs/toolchain@v1
-        with:
-          toolchain: stable
-          target: ${{ matrix.target }}
-      - uses: Swatinem/rust-cache@v2
-        continue-on-error: true
-      - name: Install Cross Compiler
-        if: ${{ matrix.archit == 'arm'}}
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y --no-install-recommends gcc-arm-linux-gnueabihf libc6-dev-armhf-cross
-      - name: Install Cross Compiler
-        if: ${{ matrix.archit == 'aarch64' }}
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y --no-install-recommends gcc-aarch64-linux-gnu libc6-dev-arm64-cross
       - name: Build
-        run: cargo build --release --features ffi_lua,module,mdns --target ${{matrix.target}}
+        uses: mosteo-actions/docker-run@v2
+        with:
+          image: registry.cn-shanghai.aliyuncs.com/lebai/util:14.04
+          host-dir: "."
+          guest-dir: /app
+          command: |
+            cargo build --release --features ffi_lua,module,mdns --target ${{matrix.target}}
       - name: Upload
         uses: actions/upload-artifact@v3
         with:
