@@ -39,7 +39,7 @@ jobs:
           command: build
           args: --release --features ffi_py_asyncio,module,mdns --target ${{matrix.target}} --skip-auditwheel
       - name: Upload
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: Lebai_Python_AsyncIO_SDK_Linux_${{matrix.archit}}
           path: ./target/wheels/*.whl
@@ -83,7 +83,7 @@ jobs:
           command: build
           args: --release --features ffi_py_asyncio,module,mdns --target ${{matrix.target}}
       - name: Upload
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: Lebai_Python_AsyncIO_SDK_MacOS_${{matrix.archit}}
           path: ./target/wheels/*.whl
@@ -125,7 +125,7 @@ jobs:
           command: build
           args: --release --features ffi_py_asyncio,module,mdns --target ${{matrix.target}}
       - name: Upload
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: Lebai_Python_AsyncIO_SDK_Windows_${{matrix.archit}}
           path: ./target/wheels/*.whl
@@ -141,7 +141,7 @@ jobs:
         uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
       - name: Release
         env:
           MATURIN_PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
