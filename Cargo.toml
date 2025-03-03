@@ -36,7 +36,7 @@ mlua = {version = "0.10", features = ["lua54"], optional = true}
 once_cell = {version = "1", default-features = false}
 pin-project-lite = "0.2"
 proto = {package = "lebai-proto", path = "proto", version = "3"}
-pyo3 = {version = "0.20", features = ["abi3-py37"], optional = true}
+pyo3 = {version = "0.20", features = ["abi3-py37", "experimental-inspect"], optional = true}
 serde = {version = "1", features = ["derive"]}
 serde_json = "1"
 wasm-bindgen = {version = "0.2", optional = true}
