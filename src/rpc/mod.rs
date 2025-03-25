@@ -20,13 +20,14 @@ use jsonrpsee_core::client::{Client, ClientT, Subscription, SubscriptionClientT}
 #[cfg(target_family = "wasm")]
 use jsonrpsee_wasm_client::WasmClientBuilder as WsClientBuilder;
 #[cfg(not(target_family = "wasm"))]
-use jsonrpsee_ws_client::WsClientBuilder;
+use jsonrpsee_ws_client::{PingConfig, WsClientBuilder};
 use serde_json::Value;
 use std::sync::Arc;
 
 async fn connect_ws(ip: &str, simu: bool) -> Result<Client> {
     let port: u16 = if simu { 3030 } else { 3031 };
     WsClientBuilder::default()
+        .enable_ws_ping(PingConfig::new())
         .build(format!("ws://{}:{}", ip, port))
         .await
         .map_err(|e| e.to_string())
