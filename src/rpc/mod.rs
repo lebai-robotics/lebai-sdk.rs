@@ -16,6 +16,7 @@ pub mod task;
 
 use async_lock::Mutex;
 use cmod::Result;
+use core::time::Duration;
 use jsonrpsee_core::client::{Client, ClientT, Subscription, SubscriptionClientT};
 #[cfg(target_family = "wasm")]
 use jsonrpsee_wasm_client::WasmClientBuilder as WsClientBuilder;
@@ -26,11 +27,11 @@ use std::sync::Arc;
 
 async fn connect_ws(ip: &str, simu: bool) -> Result<Client> {
     let port: u16 = if simu { 3030 } else { 3031 };
-    WsClientBuilder::default()
-        .enable_ws_ping(PingConfig::new())
-        .build(format!("ws://{}:{}", ip, port))
-        .await
-        .map_err(|e| e.to_string())
+    let mut builder = WsClientBuilder::default();
+    builder = builder.request_timeout(Duration::from_secs(30));
+    #[cfg(not(target_family = "wasm"))]
+    let builder = builder.enable_ws_ping(PingConfig::new());
+    builder.build(format!("ws://{}:{}", ip, port)).await.map_err(|e| e.to_string())
 }
 pub async fn connect(ip: String, simu: bool) -> Result<Robot> {
     let c = Arc::new(connect_ws(&ip, simu).await?);
