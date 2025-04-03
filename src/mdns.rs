@@ -33,7 +33,7 @@ pub async fn discover_devices(time: f64) -> Result<Vec<DeviceInfo>> {
                 let mut ip = None;
                 for addr in record.get_addresses().iter() {
                     if let IpAddr::V4(addr) = addr {
-                        if addr.is_private() {
+                        if addr.is_private() && addr.octets() != [10, 20, 17, 1] {
                             ip = Some(addr.to_string());
                             break;
                         }
