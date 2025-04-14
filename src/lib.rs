@@ -390,6 +390,10 @@ mod lebai_sdk {
 
         //MODBUS
         #[classmethod]
+        pub async fn disconnect_modbus(&self, device: String) -> Result<()> {
+            self.0.disconnect_modbus(device).await
+        }
+        #[classmethod]
         pub async fn set_modbus_timeout(&self, device: String, timeout: u32) -> Result<()> {
             self.0.set_modbus_timeout(device, timeout).await
         }

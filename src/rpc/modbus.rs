@@ -3,6 +3,11 @@ use cmod::Result;
 use proto::lebai::modbus::*;
 
 impl Robot {
+    pub(crate) async fn disconnect_modbus(&self, device: String) -> Result<()> {
+        let req = DisconnectModbusRequest { device };
+        let _ = self.c.disconnect_modbus(Some(req)).await.map_err(|e| e.to_string())?;
+        Ok(())
+    }
     pub(crate) async fn set_modbus_timeout(&self, device: String, timeout: u32) -> Result<()> {
         let req = SetModbusTimeoutRequest { device, timeout };
         let _ = self.c.set_modbus_timeout(Some(req)).await.map_err(|e| e.to_string())?;
