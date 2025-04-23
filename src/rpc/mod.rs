@@ -9,6 +9,7 @@ pub mod motion;
 pub mod motor;
 pub mod plugin;
 pub mod posture;
+pub mod safety;
 pub mod serial;
 pub mod signal;
 pub mod storage;

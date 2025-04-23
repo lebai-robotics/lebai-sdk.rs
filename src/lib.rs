@@ -507,6 +507,24 @@ mod lebai_sdk {
             self.0.estop().await
         }
 
+        //Safety
+        #[classmethod]
+        pub async fn disable_collision_detector(&self) -> Result<()> {
+            self.0.disable_collision_detector().await
+        }
+        #[classmethod]
+        pub async fn enable_collision_detector(&self) -> Result<()> {
+            self.0.enable_collision_detector().await
+        }
+        #[classmethod]
+        pub async fn disable_joint_limits(&self) -> Result<()> {
+            self.0.disable_joint_limits().await
+        }
+        #[classmethod]
+        pub async fn enable_joint_limits(&self) -> Result<()> {
+            self.0.enable_joint_limits().await
+        }
+
         //MOTOR
         #[classmethod]
         pub async fn find_zero(&self) -> Result<()> {
