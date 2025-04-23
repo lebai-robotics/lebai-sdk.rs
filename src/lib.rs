@@ -451,6 +451,12 @@ mod lebai_sdk {
             self.0.get_claw().await
         }
 
+        //Flange
+        #[classmethod]
+        pub async fn set_flange_baud_rate(&self, baud_rate: u32) -> Result<()> {
+            self.0.set_flange_baud_rate(baud_rate).await
+        }
+
         //LED
         #[classmethod]
         #[cmod::tags(ret)]

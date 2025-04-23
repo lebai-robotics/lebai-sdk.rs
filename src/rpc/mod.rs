@@ -1,5 +1,6 @@
 pub mod claw;
 pub mod dynamic;
+pub mod flange;
 pub mod io;
 pub mod kinematic;
 pub mod led;

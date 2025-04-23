@@ -109,6 +109,11 @@ pub mod lebai {
         include!(concat!(env!("OUT_DIR"), "/lebai.led.serde.rs"));
         include!(concat!(env!("OUT_DIR"), "/lebai.led.jsonrpc.rs"));
     }
+    pub mod flange {
+        include!(concat!(env!("OUT_DIR"), "/lebai.flange.rs"));
+        include!(concat!(env!("OUT_DIR"), "/lebai.flange.serde.rs"));
+        include!(concat!(env!("OUT_DIR"), "/lebai.flange.jsonrpc.rs"));
+    }
     pub mod claw {
         include!(concat!(env!("OUT_DIR"), "/lebai.claw.rs"));
         include!(concat!(env!("OUT_DIR"), "/lebai.claw.serde.rs"));
