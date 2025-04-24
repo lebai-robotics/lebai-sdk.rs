@@ -509,6 +509,10 @@ mod lebai_sdk {
 
         //Safety
         #[classmethod]
+        pub async fn set_collision_detector_sensitivity(&self, sensitivity: u32) -> Result<()> {
+            self.0.set_collision_detector_sensitivity(sensitivity).await
+        }
+        #[classmethod]
         pub async fn disable_collision_detector(&self) -> Result<()> {
             self.0.disable_collision_detector().await
         }
