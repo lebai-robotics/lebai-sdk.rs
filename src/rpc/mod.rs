@@ -49,8 +49,8 @@ impl Robot {
         Ok(self.c.is_connected())
     }
     pub async fn wait_disconnect(&self) -> Result<String> {
-        self.c.on_disconnect().await;
-        Ok(self.c.disconnect_reason().await.to_string())
+        let reason = self.c.on_disconnect().await;
+        Ok(reason.to_string())
     }
     pub async fn call(&self, method: String, param: Option<String>) -> Result<String> {
         let mut params: Vec<Value> = Vec::new();

@@ -1,6 +1,6 @@
 use cmod::Result;
 use core::time::Duration;
-use futures_util::future::{select, Either};
+use futures_util::future::{Either, select};
 use mdns_sd::{ServiceDaemon, ServiceEvent};
 use proto::lebai::multi_devices::DeviceInfo;
 use std::net::IpAddr;

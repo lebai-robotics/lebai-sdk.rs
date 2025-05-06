@@ -1,7 +1,7 @@
 use super::Robot;
 use cmod::Result;
-use proto::lebai::plugin::*;
 use proto::lebai::CommandStdout;
+use proto::lebai::plugin::*;
 
 impl Robot {
     pub(crate) async fn run_plugin_cmd(&self, name: String, params: Option<Vec<String>>) -> Result<CommandStdout> {
