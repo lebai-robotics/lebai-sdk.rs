@@ -608,6 +608,38 @@ mod lebai_sdk {
         pub async fn get_gravity(&self) -> Result<Position> {
             self.0.get_gravity().await
         }
+
+        // utils
+        #[classmethod]
+        #[cmod::tags(args(robot_state))]
+        pub async fn can_move(&self, robot_state: RobotState) -> Result<bool> {
+            Ok(matches!(robot_state, RobotState::Idle | RobotState::Paused | RobotState::Moving))
+        }
+        #[classmethod]
+        #[cmod::tags(args(p))]
+        pub async fn in_pose(&self, p: Pose) -> Result<bool> {
+            let ret = match p {
+                Pose::Joint(j) => {
+                    let diff = 0.0017; //0.1°
+                    let pose = self.get_kin_data().await?.target_joint_pose;
+                    pose.0.into_iter().zip(j.0).all(|(cur, tar)| (cur - tar).abs() < diff)
+                }
+                Pose::Cart(c) => {
+                    let mut ret = true;
+                    let diff_tran = 0.005; //5mm
+                    let diff_rot = 0.017; //1°
+                    let pose = self.get_kin_data().await?.target_tcp_pose;
+                    if (pose.x - c.x).abs() > diff_tran || (pose.y - c.y).abs() > diff_tran || (pose.z - c.z).abs() > diff_tran {
+                        ret = false;
+                    }
+                    if (pose.rx - c.rx).abs() > diff_rot || (pose.ry - c.ry).abs() > diff_rot || (pose.rz - c.rz).abs() > diff_rot {
+                        ret = false;
+                    }
+                    ret
+                }
+            };
+            Ok(ret)
+        }
     }
     #[cmod::class]
     #[derive(Clone)]
