@@ -398,6 +398,10 @@ mod lebai_sdk {
             self.0.set_modbus_timeout(device, timeout).await
         }
         #[classmethod]
+        pub async fn set_modbus_retry(&self, device: String, retry: u32) -> Result<()> {
+            self.0.set_modbus_retry(device, retry).await
+        }
+        #[classmethod]
         pub async fn write_single_coil(&self, device: String, pin: String, value: bool) -> Result<()> {
             self.0.write_single_coil(device, pin, value).await
         }

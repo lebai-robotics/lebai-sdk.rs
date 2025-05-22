@@ -13,6 +13,11 @@ impl Robot {
         let _ = self.c.set_modbus_timeout(Some(req)).await.map_err(|e| e.to_string())?;
         Ok(())
     }
+    pub(crate) async fn set_modbus_retry(&self, device: String, retry: u32) -> Result<()> {
+        let req = SetModbusRetryRequest { device, retry };
+        let _ = self.c.set_modbus_retry(Some(req)).await.map_err(|e| e.to_string())?;
+        Ok(())
+    }
     pub(crate) async fn write_single_coil(&self, device: String, pin: String, value: bool) -> Result<()> {
         let req = SetCoilRequest { device, pin, value };
         let _ = self.c.write_single_coil(Some(req)).await.map_err(|e| e.to_string())?;
