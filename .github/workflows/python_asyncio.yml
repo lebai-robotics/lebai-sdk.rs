@@ -11,14 +11,20 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        archit: [x86_64, arm, aarch64]
+        archit: [x86_64, arm, aarch64, riscv64]
         include:
           - archit: x86_64
             target: x86_64-unknown-linux-gnu
+            image: 14.04
           - archit: arm
             target: armv7-unknown-linux-gnueabihf
+            image: 14.04
           - archit: aarch64
             target: aarch64-unknown-linux-gnu
+            image: 14.04
+          - archit: riscv64
+            target: riscv64gc-unknown-linux-gnu
+            image: 18.04
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout
@@ -34,7 +40,7 @@ jobs:
       - name: Build
         uses: PyO3/maturin-action@v1.40.8
         with:
-          container: registry.cn-shanghai.aliyuncs.com/lebai/util:14.04
+          container: registry.cn-shanghai.aliyuncs.com/lebai/util:${{matrix.image}}
           manylinux: 2_17
           command: build
           args: --release --features ffi_py_asyncio,module,mdns --target ${{matrix.target}} --skip-auditwheel
