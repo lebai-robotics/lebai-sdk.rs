@@ -16,15 +16,19 @@ jobs:
           - archit: x86_64
             target: x86_64-unknown-linux-gnu
             image: 14.04
+            manylinux: manylinux_2_17
           - archit: arm
             target: armv7-unknown-linux-gnueabihf
             image: 14.04
+            manylinux: manylinux_2_17
           - archit: aarch64
             target: aarch64-unknown-linux-gnu
             image: 14.04
+            manylinux: manylinux_2_17
           - archit: riscv64
-            target: riscv64gc-unknown-linux-gnu
+            target: riscv64gc-unknown-linux-musl
             image: 18.04
+            manylinux: musllinux_1_2
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout
@@ -35,7 +39,7 @@ jobs:
         uses: PyO3/maturin-action@v1.40.8
         with:
           container: registry.cn-shanghai.aliyuncs.com/lebai/util:${{matrix.image}}
-          manylinux: 2_17
+          manylinux: ${{matrix.manylinux}}
           command: build
           args: --release --features ffi_py,module,mdns --target ${{matrix.target}} --skip-auditwheel
       - name: Upload

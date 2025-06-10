@@ -7,6 +7,9 @@ linker = "aarch64-linux-gnu-gcc"
 [target.riscv64gc-unknown-linux-gnu]
 ar = "riscv64-linux-gnu-gcc"
 linker = "riscv64-linux-gnu-gcc"
+[target.riscv64gc-unknown-linux-musl]
+ar = "riscv64-linux-musl-gcc"
+linker = "riscv64-linux-musl-gcc"
 
 [target.'cfg(target_os = "macos")']
 rustflags = [
