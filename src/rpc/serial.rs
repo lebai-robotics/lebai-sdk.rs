@@ -33,4 +33,9 @@ impl Robot {
         let data = resp.data.into_iter().map(|x| x as u8).collect();
         Ok(data)
     }
+    pub(crate) async fn clear_serial(&self, device: String) -> Result<()> {
+        let req = ClearSerialRequest { device };
+        self.c.clear_serial(Some(req)).await.map_err(|e| e.to_string())?;
+        Ok(())
+    }
 }

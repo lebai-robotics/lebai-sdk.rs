@@ -387,6 +387,10 @@ mod lebai_sdk {
         pub async fn read_serial(&self, device: String, len: u32) -> Result<Vec<u8>> {
             self.0.read_serial(device, len).await
         }
+        #[classmethod]
+        pub async fn clear_serial(&self, device: String) -> Result<()> {
+            self.0.clear_serial(device).await
+        }
 
         //MODBUS
         #[classmethod]
