@@ -134,6 +134,8 @@ jobs:
         with:
           toolchain: stable
       - uses: actions/download-artifact@v4
+      - name: skip riscv64
+        run: mv Lebai_Python_SDK_Linux_riscv64/ ../
       - name: Release
         env:
           MATURIN_PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
@@ -142,6 +144,8 @@ jobs:
           container: off
           command: upload
           args: --skip-existing */*.whl
+      - name: skip riscv64
+        run: mv ../Lebai_Python_SDK_Linux_riscv64/ ./
       - name: Zip Artifact
         run: for dir in `ls`; do zip -r ${dir}.zip ${dir}; done
       - name: Release
