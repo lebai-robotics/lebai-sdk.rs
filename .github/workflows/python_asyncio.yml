@@ -44,6 +44,7 @@ jobs:
       - name: Build
         uses: PyO3/maturin-action@v1.40.8
         with:
+          maturin-version: 1.8.7
           container: registry.cn-shanghai.aliyuncs.com/lebai/util:${{matrix.image}}
           manylinux: ${{matrix.manylinux}}
           command: build
@@ -89,6 +90,7 @@ jobs:
       - name: Build
         uses: PyO3/maturin-action@v1.40.8
         with:
+          maturin-version: 1.8.7
           container: off
           command: build
           args: --release --features ffi_py_asyncio,module,mdns --target ${{matrix.target}}
@@ -131,6 +133,7 @@ jobs:
       - name: Build
         uses: PyO3/maturin-action@v1.40.8
         with:
+          maturin-version: 1.8.7
           container: off
           command: build
           args: --release --features ffi_py_asyncio,module,mdns --target ${{matrix.target}}
@@ -159,6 +162,7 @@ jobs:
           MATURIN_PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
         uses: PyO3/maturin-action@v1.40.8
         with:
+          maturin-version: 1.8.7
           container: off
           command: upload
           args: --skip-existing */*.whl
