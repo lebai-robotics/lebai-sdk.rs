@@ -138,6 +138,7 @@ jobs:
           toolchain: stable
       - uses: actions/download-artifact@v4
       - name: skip riscv64
+        if: false
         run: mv Lebai_Python_SDK_Linux_riscv64/ ../
       - name: Release
         env:
@@ -149,6 +150,7 @@ jobs:
           command: upload
           args: --skip-existing */*.whl
       - name: skip riscv64
+        if: false
         run: mv ../Lebai_Python_SDK_Linux_riscv64/ ./
       - name: Zip Artifact
         run: for dir in `ls`; do zip -r ${dir}.zip ${dir}; done
