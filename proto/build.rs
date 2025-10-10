@@ -36,7 +36,7 @@ fn main() -> io::Result<()> {
         println!("cargo:rerun-if-changed={}", proto_file.display());
     }
 
-    tonic_build::configure()
+    tonic_prost_build::configure()
         .build_client(false)
         .build_server(false)
         .file_descriptor_set_path(&descriptor_path)
