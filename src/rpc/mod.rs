@@ -1,3 +1,4 @@
+pub mod auto;
 pub mod claw;
 pub mod dynamic;
 pub mod flange;

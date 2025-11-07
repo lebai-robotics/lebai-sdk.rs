@@ -8,6 +8,7 @@ mod runtime;
 mod lebai_sdk {
     use super::*;
     use cmod::Result;
+    use proto::lebai::auto::AutoCfg;
     use proto::lebai::claw::Claw;
     use proto::lebai::dynamic::Payload;
     use proto::lebai::io::DigitalMode;
@@ -588,6 +589,18 @@ mod lebai_sdk {
         #[cmod::tags(ret)]
         pub async fn get_phy_data(&self) -> Result<PhyData> {
             self.0.get_phy_data().await
+        }
+
+        // AUTO
+        #[classmethod]
+        #[cmod::tags(args(name))]
+        pub async fn set_auto(&self, name: AutoCfg, value: bool) -> Result<()> {
+            self.0.set_auto(name, value).await
+        }
+        #[classmethod]
+        #[cmod::tags(args(name), ret)]
+        pub async fn get_auto(&self, name: AutoCfg) -> Result<Option<bool>> {
+            self.0.get_auto(name).await
         }
 
         // DYNAMIC

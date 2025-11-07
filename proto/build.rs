@@ -12,6 +12,7 @@ fn main() -> io::Result<()> {
         root.join("posture.proto"),
         root.join("motor.proto"),
         root.join("system.proto"),
+        root.join("auto.proto"),
         root.join("storage.proto"),
         root.join("structure.proto"),
         root.join("dynamic.proto"),

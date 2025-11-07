@@ -39,6 +39,11 @@ pub mod lebai {
         include!(concat!(env!("OUT_DIR"), "/lebai.system.serde.rs"));
         include!(concat!(env!("OUT_DIR"), "/lebai.system.jsonrpc.rs"));
     }
+    pub mod auto {
+        include!(concat!(env!("OUT_DIR"), "/lebai.auto.rs"));
+        include!(concat!(env!("OUT_DIR"), "/lebai.auto.serde.rs"));
+        include!(concat!(env!("OUT_DIR"), "/lebai.auto.jsonrpc.rs"));
+    }
     pub mod storage {
         include!(concat!(env!("OUT_DIR"), "/lebai.storage.rs"));
         include!(concat!(env!("OUT_DIR"), "/lebai.storage.serde.rs"));
