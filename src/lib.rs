@@ -317,6 +317,16 @@ mod lebai_sdk {
 
         //Plugin
         #[classmethod]
+        #[cmod::tags(ret)]
+        pub async fn enable_plugin(&self, name: String) -> Result<proto::lebai::CommandStdout> {
+            self.0.enable_plugin(name).await
+        }
+        #[classmethod]
+        #[cmod::tags(ret)]
+        pub async fn disable_plugin(&self, name: String) -> Result<proto::lebai::CommandStdout> {
+            self.0.disable_plugin(name).await
+        }
+        #[classmethod]
         #[cmod::tags(args(params), ret)]
         pub async fn run_plugin_cmd(&self, name: String, params: Option<Vec<String>>) -> Result<proto::lebai::CommandStdout> {
             self.0.run_plugin_cmd(name, params).await
