@@ -58,7 +58,7 @@ jobs:
             target: x86_64-apple-darwin
           - archit: aarch64
             target: aarch64-apple-darwin
-    runs-on: macos-13
+    runs-on: macos-15
     steps:
       - name: Checkout
         uses: actions/checkout@v3
