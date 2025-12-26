@@ -31,7 +31,7 @@ cmod = {version = "0.4"}
 futures-timer = "3"
 futures-util = {version = "0.3", default-features = false}
 jsonrpsee-core = {version = "0.26", default-features = false}
-mdns-sd = {version = "0.15", default-features = false, features = ["async"], optional = true}
+mdns-sd = {version = "0.17", default-features = false, features = ["async"], optional = true}
 mlua = {version = "0.10", features = ["lua54"], optional = true}
 once_cell = {version = "1", default-features = false}
 pin-project-lite = "0.2"

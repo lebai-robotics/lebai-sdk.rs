@@ -17,6 +17,7 @@ mod lebai_sdk {
     use proto::serde::kinematic::KinData;
     use proto::serde::led::LedStyle;
     use proto::serde::posture::{CartesianPose, JointPose, Pose};
+    use rpc::RobotPort;
     use runtime::CompatExt as _;
 
     #[cmod::function]
@@ -55,8 +56,9 @@ mod lebai_sdk {
     }
 
     #[cmod::function]
-    pub async fn connect(ip: String, simu: bool) -> Result<Robot> {
-        let robot = rpc::connect(ip, simu).compat().await?;
+    #[cmod::tags(args(port))]
+    pub async fn connect(ip: String, port: Option<RobotPort>) -> Result<Robot> {
+        let robot = rpc::connect(ip, port).compat().await?;
         Ok(Robot(robot))
     }
 
