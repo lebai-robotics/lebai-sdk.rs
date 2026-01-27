@@ -8,6 +8,7 @@ pub mod led;
 pub mod modbus;
 pub mod motion;
 pub mod motor;
+pub mod network;
 pub mod plugin;
 pub mod posture;
 pub mod safety;

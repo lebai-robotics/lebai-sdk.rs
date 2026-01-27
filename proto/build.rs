@@ -32,6 +32,7 @@ fn main() -> io::Result<()> {
         root.join("backup.proto"),
         root.join("hardware.proto"),
         root.join("multi_devices.proto"),
+        root.join("network.proto"),
     ];
     for proto_file in &proto_files {
         println!("cargo:rerun-if-changed={}", proto_file.display());

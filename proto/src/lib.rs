@@ -139,4 +139,9 @@ pub mod lebai {
         include!(concat!(env!("OUT_DIR"), "/lebai.multi_devices.serde.rs"));
         include!(concat!(env!("OUT_DIR"), "/lebai.multi_devices.jsonrpc.rs"));
     }
+    pub mod network {
+        include!(concat!(env!("OUT_DIR"), "/lebai.network.rs"));
+        include!(concat!(env!("OUT_DIR"), "/lebai.network.serde.rs"));
+        include!(concat!(env!("OUT_DIR"), "/lebai.network.jsonrpc.rs"));
+    }
 }

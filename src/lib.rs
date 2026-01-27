@@ -12,6 +12,7 @@ mod lebai_sdk {
     use proto::lebai::claw::Claw;
     use proto::lebai::dynamic::Payload;
     use proto::lebai::io::DigitalMode;
+    use proto::lebai::network::{HttpRequest, HttpResponse};
     use proto::lebai::posture::Position;
     use proto::lebai::system::{EstopReason, PhyData, RobotState};
     use proto::serde::kinematic::KinData;
@@ -640,6 +641,13 @@ mod lebai_sdk {
         #[cmod::tags(ret)]
         pub async fn get_gravity(&self) -> Result<Position> {
             self.0.get_gravity().await
+        }
+
+        // Network
+        #[classmethod]
+        #[cmod::tags(args(req), ret)]
+        pub async fn http(&self, req: HttpRequest) -> Result<HttpResponse> {
+            self.0.http(req).await
         }
 
         // utils
