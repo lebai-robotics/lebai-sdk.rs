@@ -1,7 +1,7 @@
 use crate::lebai::posture;
 use serde::{Deserialize, Serialize};
 
-#[derive(Deserialize, Serialize)]
+#[derive(Debug, Deserialize, Serialize)]
 pub struct JointPose(pub Vec<f64>);
 impl From<JointPose> for posture::JointPose {
     fn from(p: JointPose) -> Self {
@@ -14,7 +14,7 @@ impl From<posture::JointPose> for JointPose {
     }
 }
 
-#[derive(Default, Serialize, Deserialize)]
+#[derive(Debug, Default, Serialize, Deserialize)]
 pub struct CartesianPose {
     pub x: f64,
     pub y: f64,
@@ -105,7 +105,7 @@ impl From<posture::CartesianPose> for posture::CartesianFrame {
     }
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum Pose {
     Joint(JointPose),
