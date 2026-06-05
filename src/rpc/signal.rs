@@ -1,6 +1,6 @@
 use super::Robot;
 use cmod::Result;
-use proto::lebai::signal::*;
+use proto::lebai::{cmp::Relation, signal::*};
 
 impl Robot {
     pub(crate) async fn set_signal(&self, index: u32, value: i32) -> Result<()> {
@@ -22,6 +22,15 @@ impl Robot {
         let req = GetSignalsRequest { key: index, len };
         let resp = self.c.get_signals(Some(req)).await.map_err(|e| e.to_string())?;
         Ok(resp.values)
+    }
+    pub(crate) async fn wait_signal(&self, index: u32, value: i32, relation: Option<Relation>) -> Result<()> {
+        let req = WaitSignalRequest {
+            key: index,
+            value,
+            relation: relation.unwrap_or(Relation::Eq) as i32,
+        };
+        let _ = self.c.wait_signal(Some(req)).await.map_err(|e| e.to_string())?;
+        Ok(())
     }
     pub(crate) async fn add_signal(&self, index: u32, value: i32) -> Result<()> {
         let req = SetSignalRequest { key: index, value };

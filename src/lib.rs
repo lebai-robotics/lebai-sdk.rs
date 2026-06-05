@@ -8,17 +8,18 @@ mod runtime;
 mod lebai_sdk {
     use super::*;
     use cmod::Result;
-    use proto::lebai::auto::AutoCfg;
-    use proto::lebai::claw::Claw;
-    use proto::lebai::dynamic::Payload;
-    use proto::lebai::io::DigitalMode;
-    use proto::lebai::network::{HttpRequest, HttpResponse};
-    use proto::lebai::posture::Position;
-    use proto::lebai::system::{EstopReason, PhyData, RobotState};
-    use proto::serde::kinematic::KinData;
-    use proto::serde::led::LedStyle;
-    use proto::serde::posture::{CartesianPose, JointPose, Pose};
-    use rpc::RobotPort;
+    pub use proto::lebai::auto::AutoCfg;
+    pub use proto::lebai::claw::Claw;
+    pub use proto::lebai::cmp::Relation;
+    pub use proto::lebai::dynamic::Payload;
+    pub use proto::lebai::io::DigitalMode;
+    pub use proto::lebai::network::{HttpRequest, HttpResponse};
+    pub use proto::lebai::posture::Position;
+    pub use proto::lebai::system::{EstopReason, PhyData, RobotState};
+    pub use proto::serde::kinematic::KinData;
+    pub use proto::serde::led::LedStyle;
+    pub use proto::serde::posture::{CartesianPose, JointPose, Pose};
+    pub use rpc::{ConnectOption, RobotPort};
     use runtime::CompatExt as _;
 
     #[cmod::function]
@@ -57,9 +58,9 @@ mod lebai_sdk {
     }
 
     #[cmod::function]
-    #[cmod::tags(args(port))]
-    pub async fn connect(ip: String, port: Option<RobotPort>) -> Result<Robot> {
-        let robot = rpc::connect(ip, port).compat().await?;
+    #[cmod::tags(args(port, option))]
+    pub async fn connect(ip: &str, port: Option<RobotPort>, option: Option<ConnectOption>) -> Result<Robot> {
+        let robot = rpc::connect(ip, port, option).compat().await?;
         Ok(Robot(robot))
     }
 
@@ -77,11 +78,11 @@ mod lebai_sdk {
             self.0.wait_disconnect().await
         }
         #[classmethod]
-        pub async fn call(&self, method: String, param: Option<String>) -> Result<String> {
+        pub async fn call(&self, method: &str, param: Option<&str>) -> Result<String> {
             self.0.call(method, param).await
         }
         #[classmethod]
-        pub async fn subscribe(&self, method: String, param: Option<String>) -> Result<RobotSubscription> {
+        pub async fn subscribe(&self, method: &str, param: Option<&str>) -> Result<RobotSubscription> {
             let subscription = self.0.subscribe(method, param).await?;
             Ok(RobotSubscription(subscription))
         }
@@ -296,6 +297,11 @@ mod lebai_sdk {
         #[cmod::tags(ret)]
         pub async fn get_signals(&self, index: u32, len: u32) -> Result<Vec<i32>> {
             self.0.get_signals(index, len).await
+        }
+        #[classmethod]
+        #[cmod::tags(args(relation))]
+        pub async fn wait_signal(&self, index: u32, value: i32, relation: Option<Relation>) -> Result<()> {
+            self.0.wait_signal(index, value, relation).await
         }
         #[classmethod]
         pub async fn add_signal(&self, index: u32, value: i32) -> Result<()> {
