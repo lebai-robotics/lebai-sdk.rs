@@ -36,15 +36,24 @@ pub enum RobotPort {
     Simu(bool),
     Port(u16),
 }
+impl From<u16> for RobotPort {
+    fn from(value: u16) -> Self {
+        Self::Port(value)
+    }
+}
+#[derive(Deserialize, Serialize)]
+pub struct ConnectOption {
+    pub request_timeout: u32,
+}
 
-async fn connect_ws(ip: &str, port: u16) -> Result<Client> {
+async fn connect_ws(ip: &str, port: u16, option: ConnectOption) -> Result<Client> {
     let mut builder = WsClientBuilder::default();
-    builder = builder.request_timeout(Duration::from_secs(30 * 60));
+    builder = builder.request_timeout(Duration::from_secs(option.request_timeout as u64));
     #[cfg(not(target_family = "wasm"))]
     let builder = builder.enable_ws_ping(PingConfig::new());
     builder.build(format!("ws://{}:{}", ip, port)).await.map_err(|e| e.to_string())
 }
-pub async fn connect(ip: String, port: Option<RobotPort>) -> Result<Robot> {
+pub async fn connect(ip: String, port: Option<RobotPort>, option: Option<ConnectOption>) -> Result<Robot> {
     let port: u16 = port
         .map(|x| match x {
             RobotPort::Simu(simu) => {
@@ -57,7 +66,8 @@ pub async fn connect(ip: String, port: Option<RobotPort>) -> Result<Robot> {
             RobotPort::Port(port) => port,
         })
         .unwrap_or(3031);
-    let c = Arc::new(connect_ws(&ip, port).await?);
+    let option = option.unwrap_or(ConnectOption { request_timeout: 30 * 60 });
+    let c = Arc::new(connect_ws(&ip, port, option).await?);
     Ok(Robot { c })
 }
 
