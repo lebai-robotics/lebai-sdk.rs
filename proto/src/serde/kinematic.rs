@@ -2,7 +2,7 @@ use crate::lebai::kinematic;
 use crate::serde::posture::{CartesianPose, JointPose};
 use serde::{Deserialize, Serialize};
 
-#[derive(Deserialize, Serialize)]
+#[derive(Debug, Deserialize, Serialize)]
 pub struct KinData {
     pub actual_joint_pose: JointPose,
     pub actual_joint_speed: JointPose,

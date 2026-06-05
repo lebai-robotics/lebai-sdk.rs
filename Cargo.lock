@@ -775,7 +775,7 @@ dependencies = [
 
 [[package]]
 name = "lebai-proto"
-version = "3.4.1"
+version = "3.4.2"
 dependencies = [
  "jsonrpsee",
  "pbjson",
@@ -790,7 +790,7 @@ dependencies = [
 
 [[package]]
 name = "lebai_sdk"
-version = "0.3.7"
+version = "0.3.8"
 dependencies = [
  "async-lock",
  "cmod",

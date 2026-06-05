@@ -5,9 +5,14 @@ use pin_project_lite::pin_project;
 
 #[cfg(all(not(target_family = "wasm"), feature = "module"))]
 pub static RT: once_cell::sync::Lazy<tokio::runtime::Runtime> = once_cell::sync::Lazy::new(|| {
+    #[cfg(not(feature = "ffi_py"))]
+    const THREAD_NUM: usize = 1;
+    #[cfg(feature = "ffi_py")]
+    const THREAD_NUM: usize = 2;
+
     tokio::runtime::Builder::new_multi_thread()
         .thread_name("lebai-sdk")
-        .worker_threads(1)
+        .worker_threads(THREAD_NUM)
         .thread_keep_alive(core::time::Duration::MAX)
         .enable_all()
         .build()
