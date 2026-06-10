@@ -46,28 +46,44 @@ pub struct ConnectOption {
     pub request_timeout: u32,
 }
 
-async fn connect_ws(ip: &str, port: u16, option: ConnectOption) -> Result<Client> {
+async fn connect_ws(url: &str, option: ConnectOption) -> Result<Client> {
     let mut builder = WsClientBuilder::default();
     builder = builder.request_timeout(Duration::from_secs(option.request_timeout as u64));
     #[cfg(not(target_family = "wasm"))]
     let builder = builder.enable_ws_ping(PingConfig::new());
-    builder.build(format!("ws://{}:{}", ip, port)).await.map_err(|e| e.to_string())
+    builder.build(url).await.map_err(|e| e.to_string())
 }
+
+/// IP样式1: 192.168.2.101
+/// IP样式2: user:passwd@22dadd5c5fd0.nodes.lebai.ltd
 pub async fn connect(ip: String, port: Option<RobotPort>, option: Option<ConnectOption>) -> Result<Robot> {
-    let port: u16 = port
-        .map(|x| match x {
-            RobotPort::Simu(simu) => {
-                if simu {
-                    3030
-                } else {
-                    3031
-                }
+    if let Some((scheme, _)) = ip.split_once("://") {
+        return Err(format!("ip format error: {}://", scheme));
+    }
+    if let Some(port) = ip.split(':').next_back()
+        && port.chars().all(|x| x.is_ascii_digit())
+    {
+        return Err(format!("ip format error: :{}", port));
+    }
+
+    let is_frpc = ip.contains("lebai.ltd");
+    let url = match port.unwrap_or(RobotPort::Simu(false)) {
+        RobotPort::Simu(simu) => match (is_frpc, simu) {
+            (true, true) => format!("ws://{}/sim/rpc/ws:80", ip),
+            (true, false) => format!("ws://{}/rpc/ws:80", ip),
+            (false, true) => format!("ws://{}:3030", ip),
+            (false, false) => format!("ws://{}:3031", ip),
+        },
+        RobotPort::Port(port) => {
+            if is_frpc {
+                format!("ws://{}/sim/rpc/ws:{}", ip, port)
+            } else {
+                format!("ws://{}:{}", ip, port)
             }
-            RobotPort::Port(port) => port,
-        })
-        .unwrap_or(3031);
+        }
+    };
     let option = option.unwrap_or(ConnectOption { request_timeout: 30 * 60 });
-    let c = Arc::new(connect_ws(&ip, port, option).await?);
+    let c = Arc::new(connect_ws(&url, option).await?);
     Ok(Robot { c })
 }
 
