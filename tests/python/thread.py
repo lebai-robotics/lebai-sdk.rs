@@ -3,12 +3,15 @@ import time
 import lebai_sdk
 
 print(lebai_sdk.version())
-lebai = lebai_sdk.connect("47.116.126.158", True)
+lebai = lebai_sdk.connect("192.168.2.101", True)
 
 def get_kin_data(i):
+    counter = 0
     while True:
-        kin_data = lebai.get_kin_data()['actual_joint_pose'][0]
-        print(i, kin_data)
+        lebai.get_kin_data()
+        counter += 1
+        if counter % 100 == 0:
+            print(f"{i}, count: {counter}")
 
 if __name__ == '__main__':
     threads = []
