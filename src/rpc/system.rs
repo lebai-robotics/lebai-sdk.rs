@@ -12,6 +12,10 @@ impl Robot {
         let _ = self.c.stop_sys(Some(Empty {})).await.map_err(|e| e.to_string())?;
         Ok(())
     }
+    pub(crate) async fn poweron(&self) -> Result<()> {
+        let _ = self.c.poweron(Some(Empty {})).await.map_err(|e| e.to_string())?;
+        Ok(())
+    }
     pub(crate) async fn powerdown(&self) -> Result<()> {
         let _ = self.c.powerdown(Some(Empty {})).await.map_err(|e| e.to_string())?;
         Ok(())

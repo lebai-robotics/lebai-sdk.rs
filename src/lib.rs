@@ -519,6 +519,10 @@ mod lebai_sdk {
             self.0.stop_sys().await
         }
         #[classmethod]
+        pub async fn poweron(&self) -> Result<()> {
+            self.0.poweron().await
+        }
+        #[classmethod]
         pub async fn powerdown(&self) -> Result<()> {
             self.0.powerdown().await
         }
