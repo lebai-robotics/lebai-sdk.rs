@@ -404,7 +404,7 @@ mod lebai_sdk {
         }
         #[classmethod]
         #[cmod::tags(ret)]
-        pub async fn read_serial(&self, device: String, len: u32) -> Result<Vec<u8>> {
+        pub async fn read_serial(&self, device: String, len: Option<u32>) -> Result<Vec<u8>> {
             self.0.read_serial(device, len).await
         }
         #[classmethod]

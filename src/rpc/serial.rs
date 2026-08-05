@@ -27,7 +27,8 @@ impl Robot {
         let _ = self.c.write_serial(Some(req)).await.map_err(|e| e.to_string())?;
         Ok(())
     }
-    pub(crate) async fn read_serial(&self, device: String, len: u32) -> Result<Vec<u8>> {
+    pub(crate) async fn read_serial(&self, device: String, len: Option<u32>) -> Result<Vec<u8>> {
+        let len = len.unwrap_or_default();
         let req = ReadSerialRequest { device, len };
         let resp = self.c.read_serial(Some(req)).await.map_err(|e| e.to_string())?;
         let data = resp.data.into_iter().map(|x| x as u8).collect();
