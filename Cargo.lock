@@ -142,9 +142,9 @@ dependencies = [
 
 [[package]]
 name = "cmod-macros"
-version = "0.4.6"
+version = "0.4.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "133169ac742334cdfc16cc48edbf4eb6764745b9b621b5a3bf06df65def3bfab"
+checksum = "d41a61ead2e9c397be8a1693ee339825ba3afd876b3e521684059c7a7882867d"
 dependencies = [
  "cfg-if",
  "proc-macro2",
@@ -822,7 +822,7 @@ dependencies = [
 
 [[package]]
 name = "lebai_sdk"
-version = "0.3.13"
+version = "0.3.14"
 dependencies = [
  "async-lock",
  "cmod",
